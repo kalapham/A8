@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lưu bút - Lớp A8</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <style>
     body {
-      background-image: url('images/1_72_.jpg');
+      background-image: url('images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg');
       background-size: cover;
       background-attachment: fixed;
       background-position: center;
@@ -60,6 +62,30 @@
       margin: 0 0 5px;
       color: #333;
     }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 30px;
+    }
+    form input, form textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    form button {
+      background-color: #2196F3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    form button:hover {
+      background-color: #1976D2;
+    }
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -91,15 +117,14 @@
   <main>
     <section class="section">
       <h2>Những dòng lưu bút</h2>
-      <div class="note">
-        <h4>Minh Anh</h4>
-        <p>Mỗi giờ học cùng lớp là một kỷ niệm đáng nhớ. Mãi yêu A8!</p>
-      </div>
-      <div class="note">
-        <h4>Hải Đăng</h4>
-        <p>Chúc cả lớp sẽ luôn giữ liên lạc và thành công trong tương lai.</p>
-      </div>
-      <!-- Thêm các lời nhắn khác tại đây -->
+      <div id="notes-container"></div>
+
+      <h3>Gửi lưu bút của bạn</h3>
+      <form onsubmit="submitNote(event)">
+        <input type="text" id="name" placeholder="Tên của bạn" required>
+        <textarea id="message" rows="4" placeholder="Lời nhắn..." required></textarea>
+        <button type="submit">Gửi</button>
+      </form>
     </section>
   </main>
 
@@ -108,12 +133,50 @@
   </footer>
 
   <script>
-    const links = document.querySelectorAll('nav a');
-    links.forEach(link => {
-      if (link.href === window.location.href) {
-        link.classList.add('active');
-      }
-    });
+    // Khởi tạo Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
+      authDomain: "lopa8-f84f8.firebaseapp.com",
+      projectId: "lopa8-f84f8",
+      storageBucket: "lopa8-f84f8.firebasestorage.app",
+      messagingSenderId: "955064222486",
+      appId: "1:955064222486:web:b8e57aadabb338082d8637",
+      measurementId: "G-436QXV62VQ"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function loadNotes() {
+      db.collection("guestbook").orderBy("timestamp", "desc").get().then(snapshot => {
+        const container = document.getElementById("notes-container");
+        container.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const noteDiv = document.createElement('div');
+          noteDiv.className = 'note';
+          noteDiv.innerHTML = `<h4>${data.name}</h4><p>${data.message}</p>`;
+          container.appendChild(noteDiv);
+        });
+      });
+    }
+
+    function submitNote(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+
+      db.collection("guestbook").add({
+        name: name,
+        message: message,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("name").value = "";
+        document.getElementById("message").value = "";
+        loadNotes();
+      });
+    }
+
+    window.onload = loadNotes;
   </script>
 </body>
 </html>
