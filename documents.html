@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thông tin & Sự kiện - Lớp A8</title>
+  <title>Tài liệu chung - Lớp A8</title>
   <link rel="stylesheet" href="style.css">
   <style>
     body {
@@ -56,6 +56,19 @@
       padding-left: 20px;
       line-height: 1.8;
     }
+    a.download-link {
+      display: inline-block;
+      margin: 5px 0;
+      padding: 8px 12px;
+      background: #4caf50;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    a.download-link:hover {
+      background: #388e3c;
+    }
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -78,19 +91,19 @@
         <li><a href="gallery.html">Album ảnh</a></li>
         <li><a href="guestbook.html">Lưu bút</a></li>
         <li><a href="classlist.html">Danh sách lớp</a></li>
-        <li><a href="events.html" class="active">Thông tin</a></li>
-        <li><a href="documents.html">Tài liệu</a></li>
+        <li><a href="events.html">Thông tin</a></li>
+        <li><a href="documents.html" class="active">Tài liệu</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
     <section class="content-box">
-      <h2>📌 Thông báo & Sự kiện</h2>
+      <h2>📚 Tài liệu chung của lớp</h2>
       <ul>
-        <li><strong>📅 20/6/2025:</strong> Buổi gặp mặt cuối cấp tại trường lúc 8h sáng.</li>
-        <li><strong>📌 01/7/2025:</strong> Hạn nộp bài viết cho kỷ yếu lớp.</li>
-        <li><strong>🎉 15/7/2025:</strong> Dã ngoại kỷ niệm tại Hồ Tây.</li>
+        <li><a href="docs/ke-hoach-tot-nghiep.pdf" class="download-link" download>Kế hoạch tổng kết cuối năm</a></li>
+        <li><a href="docs/danh-sach-nhom-du-an.docx" class="download-link" download>Danh sách nhóm thực hiện dự án</a></li>
+        <li><a href="docs/lich-tap-ky-yeu.xlsx" class="download-link" download>Lịch tập chụp kỷ yếu</a></li>
       </ul>
     </section>
   </main>
