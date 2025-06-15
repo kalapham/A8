@@ -3,100 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Album - Lớp A8</title>
+  <title>Album ảnh - Lớp A8</title>
   <link rel="stylesheet" href="style.css">
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('images/1_72_.jpg') no-repeat center center fixed;
+      background-image: url('images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg');
       background-size: cover;
-      color: #333;
-      animation: fadeIn 0.5s ease-in;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
     }
     header, footer {
-      background-color: rgba(255,255,255,0.9);
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
       text-align: center;
       padding: 20px;
-      border-radius: 0 0 20px 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
     nav ul {
       list-style: none;
       padding: 0;
+      margin: 0;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-    }
-    nav li {
-      margin: 10px;
+      gap: 20px;
     }
     nav a {
-      text-decoration: none;
-      color: #444;
-      font-weight: bold;
-      padding: 10px 20px;
-      background-color: #f2f2f2;
-      border-radius: 20px;
-      transition: all 0.3s;
-    }
-    nav a:hover,
-    nav a.active {
-      background-color: #4CAF50;
       color: white;
-      transform: scale(1.05);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background 0.3s;
     }
-    main {
+    nav a:hover, nav a.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .section {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 40px auto;
+      padding: 30px;
       max-width: 1000px;
-      margin: auto;
-      background-color: rgba(255,255,255,0.85);
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.6s ease-out;
     }
-    .gallery {
+    .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
     }
-    .gallery img {
+    .gallery-grid img {
       width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.3s;
     }
-    .gallery img:hover {
+    .gallery-grid img:hover {
       transform: scale(1.05);
     }
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Album ảnh - Lớp A8</h1>
+    <h1>Lớp A8 – Niên khóa 2021–2025</h1>
+    <p>Album ảnh - Những khoảnh khắc không thể quên</p>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="gallery.html" class="active">Album</a></li>
+        <li><a href="gallery.html" class="active">Album ảnh</a></li>
         <li><a href="guestbook.html">Lưu bút</a></li>
         <li><a href="classlist.html">Danh sách lớp</a></li>
-        <li><a href="events.html" class="active">Thông tin</a></li>
+        <li><a href="events.html">Thông tin</a></li>
         <li><a href="documents.html">Tài liệu</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <h2>Những khoảnh khắc đẹp</h2>
-    <div class="gallery">
-      <img src="images/photo1.jpg" alt="Ảnh lớp 1">
-      <img src="images/photo2.jpg" alt="Ảnh lớp 2">
-      <img src="images/photo3.jpg" alt="Ảnh lớp 3">
-      <img src="images/photo4.jpg" alt="Ảnh lớp 4">
-    </div>
+    <section class="section">
+      <h2>Hình ảnh đáng nhớ</h2>
+      <div class="gallery-grid">
+        <img src="images/photo1.jpg" alt="Ảnh 1">
+        <img src="images/photo2.jpg" alt="Ảnh 2">
+        <img src="images/photo3.jpg" alt="Ảnh 3">
+        <!-- Thêm ảnh khác tại đây -->
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -108,8 +112,6 @@
     links.forEach(link => {
       if (link.href === window.location.href) {
         link.classList.add('active');
-      } else {
-        link.classList.remove('active');
       }
     });
   </script>
