@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <style>
     body {
-      background-image: url('images/1_72_.jpg');
+      background-image: url('images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg');
       background-size: cover;
       background-attachment: fixed;
       background-position: center;
@@ -43,22 +43,38 @@
       background: rgba(255, 255, 255, 0.9);
       margin: 40px auto;
       padding: 30px;
-      max-width: 900px;
+      max-width: 1000px;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       animation: fadeInUp 0.6s ease-out;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .student {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    th, td {
-      padding: 12px;
-      border: 1px solid #ccc;
-      text-align: left;
+    .student img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.15);
     }
-    th {
-      background-color: #f2f2f2;
+    .student-info {
+      flex: 1;
+    }
+    .student-info h4 {
+      margin: 0;
+      color: #333;
+    }
+    .student-info p {
+      margin: 4px 0 0;
+      color: #666;
     }
     @keyframes fadeInUp {
       from {
@@ -75,7 +91,7 @@
 <body>
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
-    <p>Danh sách thành viên lớp</p>
+    <p>Danh sách lớp - Thông tin thành viên</p>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
@@ -90,22 +106,22 @@
 
   <main>
     <section class="section">
-      <h2>Danh sách lớp A8</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Họ tên</th>
-            <th>Ghi chú</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>Nguyễn Văn A</td><td>Lớp trưởng</td></tr>
-          <tr><td>2</td><td>Trần Thị B</td><td>Tổ 1</td></tr>
-          <tr><td>3</td><td>Lê Văn C</td><td>Tổ 2</td></tr>
-          <!-- Thêm danh sách ở đây -->
-        </tbody>
-      </table>
+      <h2>Thành viên lớp A8</h2>
+      <div class="student">
+        <img src="images/students/nguyen_van_a.jpg" alt="Nguyễn Văn A">
+        <div class="student-info">
+          <h4>Nguyễn Văn A</h4>
+          <p>Ngày sinh: 01/01/2010</p>
+        </div>
+      </div>
+      <div class="student">
+        <img src="images/students/tran_thi_b.jpg" alt="Trần Thị B">
+        <div class="student-info">
+          <h4>Trần Thị B</h4>
+          <p>Ngày sinh: 12/03/2010</p>
+        </div>
+      </div>
+      <!-- Thêm các học sinh khác ở đây -->
     </section>
   </main>
 
