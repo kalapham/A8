@@ -7,93 +7,100 @@
   <link rel="stylesheet" href="style.css">
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('images/1_72_.jpg') no-repeat center center fixed;
+      background-image: url('images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg');
       background-size: cover;
-      color: #333;
-      animation: fadeIn 0.5s ease-in;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
     }
     header, footer {
-      background-color: rgba(255,255,255,0.9);
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
       text-align: center;
       padding: 20px;
-      border-radius: 0 0 20px 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
     nav ul {
       list-style: none;
       padding: 0;
+      margin: 0;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-    }
-    nav li {
-      margin: 10px;
+      gap: 20px;
     }
     nav a {
-      text-decoration: none;
-      color: #444;
-      font-weight: bold;
-      padding: 10px 20px;
-      background-color: #f2f2f2;
-      border-radius: 20px;
-      transition: all 0.3s;
-    }
-    nav a:hover,
-    nav a.active {
-      background-color: #4CAF50;
       color: white;
-      transform: scale(1.05);
-    }
-    main {
-      max-width: 800px;
-      margin: auto;
-      background-color: rgba(255,255,255,0.85);
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
-    .message {
-      background-color: white;
-      border-left: 5px solid #4CAF50;
+      text-decoration: none;
       padding: 10px 20px;
-      margin: 10px 0;
-      border-radius: 10px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    nav a:hover, nav a.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .section {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 40px auto;
+      padding: 30px;
+      max-width: 900px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .note {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f0f0f0;
+      border-left: 5px solid #2196F3;
+      border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
+    .note h4 {
+      margin: 0 0 5px;
+      color: #333;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Lưu bút - Lớp A8</h1>
+    <h1>Lớp A8 – Niên khóa 2021–2025</h1>
+    <p>Lưu bút – Nơi chia sẻ những kỷ niệm</p>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="gallery.html">Album</a></li>
+        <li><a href="gallery.html">Album ảnh</a></li>
         <li><a href="guestbook.html" class="active">Lưu bút</a></li>
         <li><a href="classlist.html">Danh sách lớp</a></li>
-        <li><a href="events.html" class="active">Thông tin</a></li>
+        <li><a href="events.html">Thông tin</a></li>
         <li><a href="documents.html">Tài liệu</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <h2>Lưu bút của các thành viên</h2>
-    <div class="message">
-      <strong>Nguyễn Văn A:</strong>
-      <p>"Chúc mọi người luôn giữ được tình bạn đẹp như những năm tháng học trò!"</p>
-    </div>
-    <div class="message">
-      <strong>Trần Thị B:</strong>
-      <p>"Nhớ mãi những giờ học, những trò đùa, và cả những lần cùng nhau cố gắng!"</p>
-    </div>
-    <!-- Thêm nhiều lời nhắn tại đây -->
+    <section class="section">
+      <h2>Những dòng lưu bút</h2>
+      <div class="note">
+        <h4>Minh Anh</h4>
+        <p>Mỗi giờ học cùng lớp là một kỷ niệm đáng nhớ. Mãi yêu A8!</p>
+      </div>
+      <div class="note">
+        <h4>Hải Đăng</h4>
+        <p>Chúc cả lớp sẽ luôn giữ liên lạc và thành công trong tương lai.</p>
+      </div>
+      <!-- Thêm các lời nhắn khác tại đây -->
+    </section>
   </main>
 
   <footer>
@@ -105,8 +112,6 @@
     links.forEach(link => {
       if (link.href === window.location.href) {
         link.classList.add('active');
-      } else {
-        link.classList.remove('active');
       }
     });
   </script>
