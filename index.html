@@ -6,102 +6,76 @@
   <title>Trang chủ - Lớp A8</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Nền toàn trang */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: url('images/1_72_.jpg') no-repeat center center fixed;
+      background-image: url('images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg');
       background-size: cover;
-      color: #333;
-      animation: fadeIn 1s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    header {
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 20px;
-      text-align: center;
-      border-radius: 0 0 20px 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-
-    nav ul {
-      list-style-type: none;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
       padding: 0;
+    }
+    header, footer {
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
+      gap: 20px;
     }
-
-    nav li {
-      margin: 10px;
-    }
-
     nav a {
-      text-decoration: none;
-      color: #444;
-      font-weight: bold;
-      padding: 10px 20px;
-      background-color: #f2f2f2;
-      border-radius: 20px;
-      transition: all 0.3s ease;
-    }
-
-    nav a:hover,
-    nav a.active {
-      background-color: #4CAF50;
       color: white;
-      transform: scale(1.05);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background 0.3s;
     }
-
-    .banner {
-      width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    nav a:hover, nav a.active {
+      background: rgba(255, 255, 255, 0.2);
     }
-
     .intro {
-      background-color: rgba(255, 255, 255, 0.85);
-      margin: 30px auto;
-      padding: 20px;
-      width: 90%;
+      background: rgba(255, 255, 255, 0.9);
+      margin: 40px auto;
+      padding: 30px;
       max-width: 800px;
-      border-radius: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      animation: fadeIn 1.5s ease-in;
+      animation: fadeInUp 0.6s ease-out;
     }
-
+    .banner {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
     .button {
       display: inline-block;
       margin-top: 20px;
-      padding: 10px 25px;
-      font-size: 16px;
-      background-color: #4CAF50;
+      padding: 10px 20px;
+      background-color: #2196f3;
       color: white;
-      border-radius: 25px;
       text-decoration: none;
-      transition: background-color 0.3s, transform 0.2s;
+      border-radius: 10px;
+      transition: background 0.3s;
     }
-
     .button:hover {
-      background-color: #45a049;
-      transform: scale(1.05);
+      background-color: #1976d2;
     }
-
-    footer {
-      background-color: rgba(255, 255, 255, 0.8);
-      text-align: center;
-      padding: 10px;
-      border-radius: 20px 20px 0 0;
-      margin-top: 40px;
-      font-size: 14px;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -112,10 +86,10 @@
     <nav>
       <ul>
         <li><a href="index.html" class="active">Trang chủ</a></li>
-        <li><a href="gallery.html">Album</a></li>
+        <li><a href="gallery.html">Album ảnh</a></li>
         <li><a href="guestbook.html">Lưu bút</a></li>
         <li><a href="classlist.html">Danh sách lớp</a></li>
-        <li><a href="events.html" class="active">Thông tin</a></li>
+        <li><a href="events.html">Thông tin</a></li>
         <li><a href="documents.html">Tài liệu</a></li>
       </ul>
     </nav>
@@ -126,7 +100,7 @@
       <img src="images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg" alt="Ảnh lớp" class="banner">
       <h2>Chào mừng đến với website lớp A8</h2>
       <p>Trang web này được tạo để lưu giữ những hình ảnh, câu chuyện, và kỷ niệm đẹp nhất của chúng ta trong suốt những năm tháng học cấp 2.</p>
-      <a href="gallery.html" class="button">Xem album </a>
+      <a href="gallery.html" class="button">Xem album ảnh</a>
     </section>
   </main>
 
@@ -135,13 +109,10 @@
   </footer>
 
   <script>
-    // Giữ mục menu đang được chọn
     const links = document.querySelectorAll('nav a');
     links.forEach(link => {
       if (link.href === window.location.href) {
         link.classList.add('active');
-      } else {
-        link.classList.remove('active');
       }
     });
   </script>
