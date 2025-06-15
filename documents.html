@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tài liệu chung - Lớp A8</title>
+  <title>Tài liệu - Lớp A8</title>
   <link rel="stylesheet" href="style.css">
   <style>
     body {
-      background-image: url('images/1_72_.jpg');
+      background-image: url('images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg');
       background-size: cover;
       background-attachment: fixed;
       background-position: center;
@@ -39,35 +39,37 @@
     nav a:hover, nav a.active {
       background: rgba(255, 255, 255, 0.2);
     }
-    .content-box {
+    .section {
       background: rgba(255, 255, 255, 0.9);
       margin: 40px auto;
       padding: 30px;
-      max-width: 800px;
+      max-width: 900px;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       animation: fadeInUp 0.6s ease-out;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
+    ul.document-list {
+      list-style: none;
+      padding: 0;
     }
-    ul {
-      padding-left: 20px;
-      line-height: 1.8;
+    ul.document-list li {
+      margin-bottom: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
     }
-    a.download-link {
-      display: inline-block;
-      margin: 5px 0;
-      padding: 8px 12px;
-      background: #4caf50;
-      color: white;
-      border-radius: 8px;
+    ul.document-list li:hover {
+      transform: translateY(-3px);
+    }
+    ul.document-list a {
+      color: #333;
       text-decoration: none;
-      transition: background 0.3s;
+      font-weight: bold;
     }
-    a.download-link:hover {
-      background: #388e3c;
+    ul.document-list a:hover {
+      text-decoration: underline;
     }
     @keyframes fadeInUp {
       from {
@@ -84,7 +86,7 @@
 <body>
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
-    <p>Nơi lưu giữ những khoảnh khắc đáng nhớ</p>
+    <p>Kho tài liệu dùng chung</p>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
@@ -98,12 +100,13 @@
   </header>
 
   <main>
-    <section class="content-box">
-      <h2>📚 Tài liệu chung của lớp</h2>
-      <ul>
-        <li><a href="docs/ke-hoach-tot-nghiep.pdf" class="download-link" download>Kế hoạch tổng kết cuối năm</a></li>
-        <li><a href="docs/danh-sach-nhom-du-an.docx" class="download-link" download>Danh sách nhóm thực hiện dự án</a></li>
-        <li><a href="docs/lich-tap-ky-yeu.xlsx" class="download-link" download>Lịch tập chụp kỷ yếu</a></li>
+    <section class="section">
+      <h2>Tài liệu lớp học</h2>
+      <ul class="document-list">
+        <li><a href="#">Đề cương ôn tập học kì 2 môn Toán</a></li>
+        <li><a href="#">Danh sách phân công trực nhật</a></li>
+        <li><a href="#">Biên bản họp lớp tháng 4</a></li>
+        <!-- Thêm các mục tài liệu khác -->
       </ul>
     </section>
   </main>
