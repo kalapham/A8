@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tài liệu chung - Lớp A8</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Lớp A8 – Niên khóa 2020–2024</h1>
+    <p>Nơi lưu giữ những khoảnh khắc đáng nhớ</p>
+    <nav>
+      <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="gallery.html">Album ảnh</a></li>
+        <li><a href="guestbook.html">Lưu bút</a></li>
+        <li><a href="classlist.html">Danh sách lớp</a></li>
+        <li><a href="events.html">Thông tin</a></li>
+        <li><a href="documents.html" class="active">Tài liệu</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>📚 Tài liệu chung</h2>
+      <ul>
+        <li><a href="#">📄 Mẫu đơn xin nghỉ học</a></li>
+        <li><a href="#">📄 Nội quy lớp học</a></li>
+        <li><a href="#">📄 Hướng dẫn viết lưu bút</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
+  </footer>
+
+  <script>
+    const links = document.querySelectorAll('nav a');
+    links.forEach(link => {
+      if (link.href === window.location.href) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>
