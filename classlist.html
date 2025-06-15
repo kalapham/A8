@@ -2,48 +2,120 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Danh sách lớp - Lớp A8</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('images/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      animation: fadeIn 0.5s ease-in;
+    }
+    header, footer {
+      background-color: rgba(255,255,255,0.9);
+      text-align: center;
+      padding: 20px;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    nav li {
+      margin: 10px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #444;
+      font-weight: bold;
+      padding: 10px 20px;
+      background-color: #f2f2f2;
+      border-radius: 20px;
+      transition: all 0.3s;
+    }
+    nav a:hover,
+    nav a.active {
+      background-color: #4CAF50;
+      color: white;
+      transform: scale(1.05);
+    }
+    main {
+      max-width: 800px;
+      margin: auto;
+      background-color: rgba(255,255,255,0.85);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      background-color: white;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Danh sách lớp A8</h1>
+    <h1>Danh sách lớp - Lớp A8</h1>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
         <li><a href="gallery.html">Album ảnh</a></li>
         <li><a href="guestbook.html">Lưu bút</a></li>
+        <li><a href="classlist.html" class="active">Danh sách lớp</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
+    <h2>Danh sách thành viên lớp A8</h2>
     <table>
       <thead>
-        <tr>
-          <th>STT</th>
-          <th>Họ tên</th>
-          <th>Vai trò</th>
-        </tr>
+        <tr><th>STT</th><th>Họ tên</th><th>Ghi chú</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Nguyễn Văn A</td>
-          <td>Lớp trưởng</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Trần Thị B</td>
-          <td>Bí thư</td>
-        </tr>
-        <!-- Thêm học sinh khác tại đây -->
+        <tr><td>1</td><td>Nguyễn Văn A</td><td>Lớp trưởng</td></tr>
+        <tr><td>2</td><td>Trần Thị B</td><td>Thủ quỹ</td></tr>
+        <tr><td>3</td><td>Lê Văn C</td><td></td></tr>
+        <!-- Thêm danh sách học sinh tại đây -->
       </tbody>
     </table>
   </main>
 
   <footer>
-    <p>&copy; 2025 Lớp A8</p>
+    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
   </footer>
+
+  <script>
+    const links = document.querySelectorAll('nav a');
+    links.forEach(link => {
+      if (link.href === window.location.href) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 </html>
