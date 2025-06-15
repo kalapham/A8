@@ -5,6 +5,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thông tin & Sự kiện - Lớp A8</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-image: url('images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header, footer {
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    nav a:hover, nav a.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .content-box {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 40px auto;
+      padding: 30px;
+      max-width: 800px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.6s ease-out;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    ul {
+      padding-left: 20px;
+      line-height: 1.8;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -26,9 +88,9 @@
     <section class="content-box">
       <h2>📌 Thông báo & Sự kiện</h2>
       <ul>
-        <li>📅 20/6/2025: Buổi gặp mặt cuối cấp tại trường lúc 8h sáng.</li>
-        <li>📌 01/7/2025: Hạn nộp bài viết cho kỷ yếu lớp.</li>
-        <li>🎉 15/7/2025: Dã ngoại kỷ niệm tại Hồ Tây.</li>
+        <li><strong>📅 20/6/2025:</strong> Buổi gặp mặt cuối cấp tại trường lúc 8h sáng.</li>
+        <li><strong>📌 01/7/2025:</strong> Hạn nộp bài viết cho kỷ yếu lớp.</li>
+        <li><strong>🎉 15/7/2025:</strong> Dã ngoại kỷ niệm tại Hồ Tây.</li>
       </ul>
     </section>
   </main>
