@@ -3,12 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trang chủ - A8</title>
+  <title>Trang chủ - Lớp 9A1</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+      color: #333;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    body.dark-mode {
+      background: #1e1e1e;
+      color: #f1f1f1;
+    }
+
+    header {
+      background-color: #4a90e2;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      background-color: #357ABD;
+      margin: 0;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 15px;
+      display: block;
+    }
+
+    nav ul li a:hover {
+      background-color: #2b65a2;
+      border-radius: 5px;
+    }
+
+    .dark-mode nav ul {
+      background-color: #2b2b2b;
+    }
+
+    main {
+      padding: 40px 20px;
+      max-width: 960px;
+      margin: auto;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+
+    .dark-mode main {
+      background-color: #2e2e2e;
+    }
+
+    .banner {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: #4a90e2;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 15px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #357ABD;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #f1f1f1;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid #ccc;
+    }
+
+    .dark-mode footer {
+      background-color: #1c1c1c;
+      color: #aaa;
+    }
+
+    .dark-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .teacher-section, .video-section {
+      margin-top: 60px;
+    }
+
+    .teacher-photo {
+      width: 150px;
+      border-radius: 100px;
+      display: block;
+      margin: auto;
+    }
+
+    .video-wrapper iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Lớp A8 – Niên khóa 2021–2025</h1>
+    <h1>Lớp 9A1 – Niên khóa 2020–2024</h1>
     <p>Nơi lưu giữ những khoảnh khắc đáng nhớ</p>
     <nav>
       <ul>
@@ -21,16 +171,55 @@
   </header>
 
   <main>
-    <section class="intro">
+    <section class="intro fade-in">
       <img src="images/banner.jpg" alt="Ảnh lớp" class="banner">
-      <h2>Chào mừng đến với website lớp A8</h2>
+      <h2>Chào mừng đến với website lớp 9A1</h2>
       <p>Trang web này được tạo để lưu giữ những hình ảnh, câu chuyện, và kỷ niệm đẹp nhất của chúng ta trong suốt những năm tháng học cấp 2.</p>
       <a href="gallery.html" class="button">Xem album ảnh</a>
     </section>
+
+    <section class="teacher-section fade-in">
+      <h2>Giáo viên chủ nhiệm</h2>
+      <img src="images/teacher.jpg" alt="Cô giáo chủ nhiệm" class="teacher-photo">
+      <p style="text-align:center; max-width: 600px; margin: 10px auto;">
+        Cô Nguyễn Thị Hoa là người đã luôn đồng hành, dẫn dắt, và truyền cảm hứng cho chúng em trong suốt 4 năm học. Với lòng nhiệt huyết và sự tận tâm, cô đã để lại trong lòng mỗi học sinh những kỷ niệm không thể nào quên.
+      </p>
+    </section>
+
+    <section class="video-section fade-in">
+      <h2>Video kỷ niệm lớp</h2>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video kỷ niệm lớp 9A1" allowfullscreen></iframe>
+      </div>
+    </section>
   </main>
 
+  <button class="dark-toggle" onclick="toggleDarkMode()">🌓</button>
+
   <footer>
-    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
+    <p>&copy; 2025 Lớp 9A1 - Thiết kế bởi chúng ta</p>
   </footer>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    const faders = document.querySelectorAll('.fade-in');
+    const options = {
+      threshold: 0.2
+    };
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+  </script>
 </body>
 </html>
