@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Danh sách lớp - Lớp A8</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sách lớp A8</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       background-image: url('images/1_72_.jpg');
@@ -39,41 +39,44 @@
     nav a:hover, nav a.active {
       background: rgba(255, 255, 255, 0.2);
     }
-    .container {
-      max-width: 1100px;
+    .section {
+      background: rgba(255, 255, 255, 0.95);
       margin: 40px auto;
-      background: rgba(255, 255, 255, 0.9);
       padding: 30px;
+      max-width: 1000px;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       animation: fadeInUp 0.6s ease-out;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .student-grid {
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
     }
-    .student-card {
+    .student {
       background: #ffffff;
-      padding: 15px;
       border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 15px;
       text-align: center;
-      transition: transform 0.3s;
+      transition: transform 0.2s;
     }
-    .student-card:hover {
-      transform: translateY(-5px);
+    .student:hover {
+      transform: scale(1.03);
     }
-    .student-card img {
+    .student img {
       width: 100px;
       height: 100px;
-      border-radius: 50%;
       object-fit: cover;
+      border-radius: 50%;
       margin-bottom: 10px;
+    }
+    .student h4 {
+      margin: 5px 0 2px;
+    }
+    .student p {
+      margin: 0;
+      color: #666;
     }
     @keyframes fadeInUp {
       from {
@@ -90,7 +93,7 @@
 <body>
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
-    <p>Danh sách lớp</p>
+    <p>Danh sách thành viên lớp</p>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
@@ -102,72 +105,59 @@
       </ul>
     </nav>
   </header>
+
   <main>
-    <div class="container">
-      <h2>Danh sách thành viên lớp A8</h2>
-      <div class="student-grid">
-        <!-- Dữ liệu học sinh -->
-        <!-- Mỗi khối student-card gồm tên, ngày sinh và ảnh -->
-        
-        <!-- Mẫu (1 học sinh) -->
-        <!-- Bạn có thể thay avatar mặc định bằng ảnh cá nhân nếu có -->
-        <!-- Danh sách được tạo tự động bên dưới -->
-" + [
-  "Đặng Khánh An|27/08/2010",
-  "Nguyễn Thái An|14/08/2010",
-  "Cao Minh Anh|07/02/2010",
-  "Nguyễn Hoàng Minh Anh|15/10/2010",
-  "Nguyễn Vũ Thùy Anh|25/09/2010",
-  "Nguyễn Vũ Trúc Anh|02/09/2010",
-  "Lê Minh Ánh|26/01/2010",
-  "Cao Xuân Bách|25/02/1903",
-  "Phan Vũ Dương Cầm|11/08/2010",
-  "Nguyễn Đăng Công|20/10/2010",
-  "Hà Vũ Minh Đức|06/07/2010",
-  "Cao Thu Hà|11/09/2010",
-  "Đặng Ngọc Hà|27/08/2010",
-  "Nguyễn Trung Hiếu|17/07/2010",
-  "Phí Công Hiếu|07/09/2010",
-  "Lưu Tuyết Hoa|17/10/2010",
-  "Nguyễn Chí Vương Hoàng|19/08/2010",
-  "Đỗ Vũ Quang Huy|05/10/2010",
-  "Bùi Vân Khánh|03/01/2010",
-  "Nguyễn Ngọc Khánh|05/09/2010",
-  "Nguyễn Phương Khánh|23/11/2010",
-  "Nguyễn Đăng Khôi|02/04/2010",
-  "Ma Khánh Lâm|11/12/2010",
-  "Nguyễn Bảo Lâm|24/07/2010",
-  "Lưu Khánh Linh|18/10/2010",
-  "Nguyễn Diệu Linh|31/07/2010",
-  "Nguyễn Hà Linh|12/11/2010",
-  "Phùng Thanh Mai|21/06/2010",
-  "Trần Doãn Mạnh|29/11/2010",
-  "Đặng Gia Minh|22/08/2010",
-  "Nguyễn Hoàng Hà My|08/05/2010",
-  "Nguyễn Thu Ngân|07/05/2010",
-  "Đào Yến Nhi|13/10/2010",
-  "Đặng Nam Phong|08/11/2010",
-  "Trần Đặng Duy Quang|26/09/2010",
-  "Tô Hải Sơn|15/09/2010",
-  "Vũ Hải Sơn|25/09/2010",
-  "Phạm Ngọc Thạch|11/05/2010",
-  "Ngô Minh Thư|24/12/2010",
-  "Phạm Ngọc Quỳnh Thư|24/04/2010",
-  "Lê Nguyễn Đức Toàn|22/01/2010",
-  "Lưu Viết Tùng|19/09/2010",
-  "Lê Thủy Vi|14/04/2010",
-  "Nguyễn Tường Vy|11/12/2010"
-].map(s => {
-  const [name, dob] = s.split('|');
-  return `<div class="student-card">
-    <img src="images/avatar-default.png" alt="${name}">
-    <h4>${name}</h4>
-    <p>${dob}</p>
-  </div>`;
-}).join('') + "
+    <section class="section">
+      <h2>Danh sách học sinh</h2>
+      <div class="grid">
+        <div class="student"><img src="images/avatar-default.png"><h4>Đặng Khánh An</h4><p>27/08/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Thái An</h4><p>14/08/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Cao Minh Anh</h4><p>07/02/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Hoàng Minh Anh</h4><p>15/10/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Vũ Thùy Anh</h4><p>25/09/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Vũ Trúc Anh</h4><p>02/09/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Lê Minh Ánh</h4><p>26/01/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Cao Xuân Bách</h4><p>25/02/1903</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Phan Vũ Dương Cầm</h4><p>11/08/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Đăng Công</h4><p>20/10/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Hà Vũ Minh Đức</h4><p>06/07/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Cao Thu Hà</h4><p>11/09/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Đặng Ngọc Hà</h4><p>27/08/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Trung Hiếu</h4><p>17/07/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Phí Công Hiếu</h4><p>07/09/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Lưu Tuyết Hoa</h4><p>17/10/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Chí Vương Hoàng</h4><p>19/08/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Đỗ Vũ Quang Huy</h4><p>05/10/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Bùi Vân Khánh</h4><p>03/01/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Ngọc Khánh</h4><p>05/09/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Phương Khánh</h4><p>23/11/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Đăng Khôi</h4><p>02/04/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Ma Khánh Lâm</h4><p>11/12/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Bảo Lâm</h4><p>24/07/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Lưu Khánh Linh</h4><p>18/10/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Diệu Linh</h4><p>31/07/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Hà Linh</h4><p>12/11/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Phùng Thanh Mai</h4><p>21/06/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Trần Doãn Mạnh</h4><p>29/11/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Đặng Gia Minh</h4><p>22/08/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Hoàng Hà My</h4><p>08/05/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Thu Ngân</h4><p>07/05/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Đào Yến Nhi</h4><p>13/10/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Đặng Nam Phong</h4><p>08/11/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Trần Đặng Duy Quang</h4><p>26/09/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Tô Hải Sơn</h4><p>15/09/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Vũ Hải Sơn</h4><p>25/09/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Phạm Ngọc Thạch</h4><p>11/05/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Ngô Minh Thư</h4><p>24/12/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Phạm Ngọc Quỳnh Thư</h4><p>24/04/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Lê Nguyễn Đức Toàn</h4><p>22/01/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Lưu Viết Tùng</h4><p>19/09/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Lê Thủy Vi</h4><p>14/04/2010</p></div>
+        <div class="student"><img src="images/avatar-default.png"><h4>Nguyễn Tường Vy</h4><p>11/12/2010</p></div>
       </div>
-    </div>
+    </section>
   </main>
+
   <footer>
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
   </footer>
