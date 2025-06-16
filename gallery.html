@@ -1,8 +1,8 @@
+<!-- BẮT ĐẦU FILE HTML -->
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <link rel="icon" href="images/logo-a8.png" type="image/png">
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Album ảnh - Lớp A8</title>
@@ -67,14 +67,8 @@
       transform: scale(1.05);
     }
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Lightbox CSS */
@@ -139,12 +133,35 @@
       from { transform: scale(0.8); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
+
+    /* ----------- DARK MODE ----------- */
+    body.dark-mode {
+      background-color: #121212 !important;
+      background-image: none !important;
+      color: #ffffff;
+    }
+    body.dark-mode .section {
+      background: #1e1e1e;
+      color: white;
+    }
+    body.dark-mode header, body.dark-mode footer {
+      background: rgba(20, 20, 20, 0.8);
+    }
+    body.dark-mode nav a {
+      color: white;
+    }
+    body.dark-mode nav a:hover, body.dark-mode nav a.active {
+      background: rgba(255, 255, 255, 0.3);
+    }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Album ảnh - Những khoảnh khắc không thể quên</p>
+    <!-- Nút chuyển chế độ -->
+    <button onclick="toggleDarkMode()" id="theme-toggle" style="margin-top: 10px; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Chế độ tối</button>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
@@ -161,7 +178,7 @@
     <section class="section">
       <h2>Hình ảnh đáng nhớ</h2>
       <div class="gallery-grid" id="gallery">
-        <!-- 26 ảnh -->
+        <!-- 26 ảnh giữ nguyên như bạn đưa -->
         <img src="images/059A8665.jpg" alt="Ảnh 1">
         <img src="images/NTS_2183.jpg" alt="Ảnh 2">
         <img src="images/NTS_2622.jpg" alt="Ảnh 3">
@@ -247,6 +264,24 @@
       if (e.key === 'ArrowRight') nextImage();
       if (e.key === 'ArrowLeft') prevImage();
     });
+
+    // DARK MODE TOGGLE
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      document.getElementById('theme-toggle').textContent = isDark ? 'Chế độ sáng' : 'Chế độ tối';
+    }
+
+    // TẢI LẠI DARK MODE NẾU CÓ
+    window.addEventListener('DOMContentLoaded', () => {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-toggle').textContent = 'Chế độ sáng';
+      }
+    });
   </script>
 </body>
 </html>
+<!-- KẾT THÚC FILE -->
