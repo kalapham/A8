@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Danh sách lớp - Lớp A8</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       background-image: url('images/1_72_.jpg');
@@ -39,42 +39,41 @@
     nav a:hover, nav a.active {
       background: rgba(255, 255, 255, 0.2);
     }
-    .section {
-      background: rgba(255, 255, 255, 0.9);
+    .container {
+      max-width: 1100px;
       margin: 40px auto;
+      background: rgba(255, 255, 255, 0.9);
       padding: 30px;
-      max-width: 1000px;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       animation: fadeInUp 0.6s ease-out;
     }
-    .student {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-      padding: 15px;
-      background-color: #f9f9f9;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
     }
-    .student img {
-      width: 80px;
-      height: 80px;
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .student-card {
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .student-card:hover {
+      transform: translateY(-5px);
+    }
+    .student-card img {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      margin-right: 20px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.15);
-    }
-    .student-info {
-      flex: 1;
-    }
-    .student-info h4 {
-      margin: 0;
-      color: #333;
-    }
-    .student-info p {
-      margin: 4px 0 0;
-      color: #666;
+      margin-bottom: 10px;
     }
     @keyframes fadeInUp {
       from {
@@ -91,7 +90,7 @@
 <body>
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
-    <p>Danh sách lớp - Thông tin thành viên</p>
+    <p>Danh sách lớp</p>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
@@ -103,39 +102,74 @@
       </ul>
     </nav>
   </header>
-
   <main>
-    <section class="section">
-      <h2>Thành viên lớp A8</h2>
-      <div class="student">
-        <img src="images/students/nguyen_van_a.jpg" alt="Nguyễn Văn A">
-        <div class="student-info">
-          <h4>Nguyễn Văn A</h4>
-          <p>Ngày sinh: 01/01/2010</p>
-        </div>
+    <div class="container">
+      <h2>Danh sách thành viên lớp A8</h2>
+      <div class="student-grid">
+        <!-- Dữ liệu học sinh -->
+        <!-- Mỗi khối student-card gồm tên, ngày sinh và ảnh -->
+        
+        <!-- Mẫu (1 học sinh) -->
+        <!-- Bạn có thể thay avatar mặc định bằng ảnh cá nhân nếu có -->
+        <!-- Danh sách được tạo tự động bên dưới -->
+" + [
+  "Đặng Khánh An|27/08/2010",
+  "Nguyễn Thái An|14/08/2010",
+  "Cao Minh Anh|07/02/2010",
+  "Nguyễn Hoàng Minh Anh|15/10/2010",
+  "Nguyễn Vũ Thùy Anh|25/09/2010",
+  "Nguyễn Vũ Trúc Anh|02/09/2010",
+  "Lê Minh Ánh|26/01/2010",
+  "Cao Xuân Bách|25/02/1903",
+  "Phan Vũ Dương Cầm|11/08/2010",
+  "Nguyễn Đăng Công|20/10/2010",
+  "Hà Vũ Minh Đức|06/07/2010",
+  "Cao Thu Hà|11/09/2010",
+  "Đặng Ngọc Hà|27/08/2010",
+  "Nguyễn Trung Hiếu|17/07/2010",
+  "Phí Công Hiếu|07/09/2010",
+  "Lưu Tuyết Hoa|17/10/2010",
+  "Nguyễn Chí Vương Hoàng|19/08/2010",
+  "Đỗ Vũ Quang Huy|05/10/2010",
+  "Bùi Vân Khánh|03/01/2010",
+  "Nguyễn Ngọc Khánh|05/09/2010",
+  "Nguyễn Phương Khánh|23/11/2010",
+  "Nguyễn Đăng Khôi|02/04/2010",
+  "Ma Khánh Lâm|11/12/2010",
+  "Nguyễn Bảo Lâm|24/07/2010",
+  "Lưu Khánh Linh|18/10/2010",
+  "Nguyễn Diệu Linh|31/07/2010",
+  "Nguyễn Hà Linh|12/11/2010",
+  "Phùng Thanh Mai|21/06/2010",
+  "Trần Doãn Mạnh|29/11/2010",
+  "Đặng Gia Minh|22/08/2010",
+  "Nguyễn Hoàng Hà My|08/05/2010",
+  "Nguyễn Thu Ngân|07/05/2010",
+  "Đào Yến Nhi|13/10/2010",
+  "Đặng Nam Phong|08/11/2010",
+  "Trần Đặng Duy Quang|26/09/2010",
+  "Tô Hải Sơn|15/09/2010",
+  "Vũ Hải Sơn|25/09/2010",
+  "Phạm Ngọc Thạch|11/05/2010",
+  "Ngô Minh Thư|24/12/2010",
+  "Phạm Ngọc Quỳnh Thư|24/04/2010",
+  "Lê Nguyễn Đức Toàn|22/01/2010",
+  "Lưu Viết Tùng|19/09/2010",
+  "Lê Thủy Vi|14/04/2010",
+  "Nguyễn Tường Vy|11/12/2010"
+].map(s => {
+  const [name, dob] = s.split('|');
+  return `<div class="student-card">
+    <img src="images/avatar-default.png" alt="${name}">
+    <h4>${name}</h4>
+    <p>${dob}</p>
+  </div>`;
+}).join('') + "
       </div>
-      <div class="student">
-        <img src="images/students/tran_thi_b.jpg" alt="Trần Thị B">
-        <div class="student-info">
-          <h4>Trần Thị B</h4>
-          <p>Ngày sinh: 12/03/2010</p>
-        </div>
-      </div>
-      <!-- Thêm các học sinh khác ở đây -->
-    </section>
+    </div>
   </main>
-
   <footer>
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
   </footer>
-
-  <script>
-    const links = document.querySelectorAll('nav a');
-    links.forEach(link => {
-      if (link.href === window.location.href) {
-        link.classList.add('active');
-      }
-    });
-  </script>
 </body>
 </html>
