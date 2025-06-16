@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Album ảnh - Lớp A8</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       background-image: url('images/1_72_.jpg');
@@ -59,6 +59,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.3s;
+      cursor: pointer;
     }
     .gallery-grid img:hover {
       transform: scale(1.05);
@@ -72,6 +73,69 @@
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    /* Lightbox CSS */
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 12px;
+      animation: zoomIn 0.3s ease;
+    }
+    .lightbox-controls {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .lightbox-button {
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: white;
+      font-size: 2em;
+      cursor: pointer;
+      padding: 10px 20px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2em;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .download-btn {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+      background: #00c3ff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1em;
+      text-decoration: none;
+    }
+    .download-btn:hover {
+      background: #00a3d2;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
@@ -94,7 +158,8 @@
   <main>
     <section class="section">
       <h2>Hình ảnh đáng nhớ</h2>
-      <div class="gallery-grid">
+      <div class="gallery-grid" id="gallery">
+        <!-- 26 ảnh -->
         <img src="images/059A8665.jpg" alt="Ảnh 1">
         <img src="images/NTS_2183.jpg" alt="Ảnh 2">
         <img src="images/NTS_2622.jpg" alt="Ảnh 3">
@@ -108,21 +173,19 @@
         <img src="images/IMG_1729318457115_1729428802385.jpg" alt="Ảnh 11">
         <img src="images/z4892170970991_61238944d03f22e5135b84ad25275cee.jpg" alt="Ảnh 12">
         <img src="images/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.jpg" alt="Ảnh 13">
-        <img src="images/IMG_1725621899399_1725623748671.jpg" alt="Ảnh 3">
-        <img src="images/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.jpg" alt="Ảnh 14">
-        <img src="images/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.jpg" alt="Ảnh 15">
-        <img src="images/z4952619745070_d342574ad6404f68a00fc000b19bb888.jpg" alt="Ảnh 15">
-        <img src="images/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.jpg" alt="Ảnh 16">
-        <img src="images/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.jpg" alt="Ảnh 17">
-        <img src="images/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.jpg" alt="Ảnh 18">
-        <img src="images/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.jpg" alt="Ảnh 19">
-        <img src="images/z5110922636897_482186c6bcb196af33b00e1ba5737561.jpg" alt="Ảnh 20">
-        <img src="images/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.jpg" alt="Ảnh 21">
-        <img src="images/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.jpg" alt="Ảnh 22">
-        <img src="images/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.jpg" alt="Ảnh 23">
-        <img src="images/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.jpg" alt="Ảnh 24"><!-- Thêm ảnh khác tại đây -->
-        
-        
+        <img src="images/IMG_1725621899399_1725623748671.jpg" alt="Ảnh 14">
+        <img src="images/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.jpg" alt="Ảnh 15">
+        <img src="images/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.jpg" alt="Ảnh 16">
+        <img src="images/z4952619745070_d342574ad6404f68a00fc000b19bb888.jpg" alt="Ảnh 17">
+        <img src="images/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.jpg" alt="Ảnh 18">
+        <img src="images/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.jpg" alt="Ảnh 19">
+        <img src="images/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.jpg" alt="Ảnh 20">
+        <img src="images/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.jpg" alt="Ảnh 21">
+        <img src="images/z5110922636897_482186c6bcb196af33b00e1ba5737561.jpg" alt="Ảnh 22">
+        <img src="images/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.jpg" alt="Ảnh 23">
+        <img src="images/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.jpg" alt="Ảnh 24">
+        <img src="images/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.jpg" alt="Ảnh 25">
+        <img src="images/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.jpg" alt="Ảnh 26">
       </div>
     </section>
   </main>
@@ -131,12 +194,56 @@
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
   </footer>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="close-btn" onclick="closeLightbox()">&times;</button>
+    <div class="lightbox-controls">
+      <button class="lightbox-button" onclick="prevImage()">&#10094;</button>
+      <button class="lightbox-button" onclick="nextImage()">&#10095;</button>
+    </div>
+    <img id="lightbox-img" src="" alt="Phóng to ảnh" />
+    <a id="downloadLink" class="download-btn" href="#" download target="_blank">⬇️ Tải ảnh</a>
+  </div>
+
   <script>
-    const links = document.querySelectorAll('nav a');
-    links.forEach(link => {
-      if (link.href === window.location.href) {
-        link.classList.add('active');
-      }
+    const images = Array.from(document.querySelectorAll('.gallery-grid img'));
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const downloadLink = document.getElementById('downloadLink');
+    let currentIndex = 0;
+
+    images.forEach((img, index) => {
+      img.addEventListener('click', () => {
+        currentIndex = index;
+        showImage();
+      });
+    });
+
+    function showImage() {
+      const src = images[currentIndex].src;
+      lightboxImg.src = src;
+      downloadLink.href = src;
+      lightbox.style.display = 'flex';
+    }
+
+    function closeLightbox() {
+      lightbox.style.display = 'none';
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage();
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
     });
   </script>
 </body>
