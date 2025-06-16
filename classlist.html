@@ -5,6 +5,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Danh sách lớp A8</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -118,6 +119,65 @@
       background: rgba(255, 255, 255, 0.2);
       color: var(--text-color);
       font-weight: bold;
+    }
+
+    /* Responsive tweaks for small screens */
+    @media (max-width: 768px) {
+      header, footer {
+        padding: 12px;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      nav a {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+      }
+
+      main {
+        padding: 10px;
+      }
+
+      .controls label, .controls select {
+        font-size: 0.9rem;
+      }
+
+      .student-list {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
+        padding: 10px;
+      }
+
+      .student-card {
+        padding: 10px;
+      }
+
+      .student-card img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .student-card h4 {
+        font-size: 1rem;
+      }
+
+      .student-card p {
+        font-size: 0.9rem;
+      }
+
+      .toggle-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        margin-top: 8px;
+      }
     }
   </style>
 </head>
