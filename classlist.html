@@ -8,6 +8,24 @@
   <title>Danh sách lớp A8</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    :root {
+      --bg-color: white;
+      --text-color: black;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --section-bg: rgba(0, 0, 0, 0.6);
+      --header-text: white;
+      --nav-hover: rgba(255, 255, 255, 0.2);
+    }
+
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-color: #f0f0f0;
+      --card-bg: rgba(30, 30, 30, 0.95);
+      --section-bg: rgba(255, 255, 255, 0.1);
+      --header-text: #f0f0f0;
+      --nav-hover: rgba(255, 255, 255, 0.2);
+    }
+
     body {
       background-image: url('images/1_72_.jpg');
       background-size: cover;
@@ -16,13 +34,17 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
     }
+
     header, footer {
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
+      background: var(--section-bg);
+      color: var(--header-text);
       text-align: center;
       padding: 20px;
     }
+
     nav ul {
       list-style: none;
       padding: 0;
@@ -31,40 +53,48 @@
       justify-content: center;
       gap: 20px;
     }
+
     nav a {
-      color: white;
+      color: var(--header-text);
       text-decoration: none;
       padding: 10px 20px;
       border-radius: 8px;
       transition: background 0.3s;
     }
+
     nav a:hover, nav a.active {
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--nav-hover);
     }
+
     main {
       padding: 20px;
     }
+
     .controls {
       text-align: center;
       margin: 20px 0;
     }
+
     .student-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
       padding: 20px;
     }
+
     .student-card {
-      background: rgba(255, 255, 255, 0.95);
+      background: var(--card-bg);
       padding: 15px;
       border-radius: 16px;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       transition: transform 0.2s;
     }
+
     .student-card:hover {
       transform: scale(1.03);
     }
+
     .student-card img {
       width: 100px;
       height: 100px;
@@ -72,10 +102,22 @@
       border-radius: 50%;
       margin-bottom: 10px;
     }
+
     select {
       padding: 8px;
       border-radius: 8px;
       font-size: 1em;
+    }
+
+    .toggle-btn {
+      cursor: pointer;
+      padding: 8px 16px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--text-color);
+      font-weight: bold;
     }
   </style>
 </head>
@@ -83,6 +125,7 @@
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Danh sách thành viên</p>
+    <button class="toggle-btn" onclick="toggleDarkMode()">🌙/☀️</button>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
@@ -175,7 +218,6 @@
           <img src="avatars/${imageName}" alt="${student.name}">
           <h4>${student.name}</h4>
          <p>Ngày sinh: ${student.dob.split('-').reverse().join('/')}</p>
-
         `;
         container.appendChild(card);
       });
@@ -192,7 +234,17 @@
       renderStudents(sorted);
     }
 
-    sortStudents();
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+      localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+    }
+
+    window.onload = () => {
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+      sortStudents();
+    };
   </script>
 </body>
 </html>
