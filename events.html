@@ -2,7 +2,6 @@
 <html lang="vi">
 <head>
   <link rel="icon" href="images/logo-a8.png" type="image/png">
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thông tin & Sự kiện - Lớp A8</title>
@@ -44,6 +43,7 @@
       display: flex;
       justify-content: center;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
     nav a {
@@ -113,6 +113,43 @@
       to {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+
+      nav a {
+        padding: 8px 12px;
+        font-size: 16px;
+      }
+
+      .content-box {
+        margin: 20px 16px;
+        padding: 20px;
+      }
+
+      .toggle-theme {
+        top: 12px;
+        right: 12px;
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+
+      header p {
+        font-size: 16px;
+      }
+
+      h2 {
+        font-size: 20px;
       }
     }
   </style>
