@@ -16,13 +16,27 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
+      transition: background-color 0.3s, color 0.3s;
     }
+
+    body.dark {
+      background-color: #121212;
+      background-image: none;
+      color: #f1f1f1;
+    }
+
     header, footer {
       background: rgba(0, 0, 0, 0.6);
       color: white;
       text-align: center;
       padding: 20px;
     }
+
+    body.dark header, body.dark footer {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f1f1f1;
+    }
+
     nav ul {
       list-style: none;
       padding: 0;
@@ -31,6 +45,7 @@
       justify-content: center;
       gap: 20px;
     }
+
     nav a {
       color: white;
       text-decoration: none;
@@ -38,9 +53,11 @@
       border-radius: 8px;
       transition: background 0.3s;
     }
+
     nav a:hover, nav a.active {
       background: rgba(255, 255, 255, 0.2);
     }
+
     .content-box {
       background: rgba(255, 255, 255, 0.9);
       margin: 40px auto;
@@ -49,15 +66,45 @@
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       animation: fadeInUp 0.6s ease-out;
+      color: #333;
     }
+
+    body.dark .content-box {
+      background: rgba(30, 30, 30, 0.9);
+      color: #f1f1f1;
+    }
+
     h2 {
       text-align: center;
       margin-bottom: 20px;
     }
+
     ul {
       padding-left: 20px;
       line-height: 1.8;
     }
+
+    .toggle-theme {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    body.dark .toggle-theme {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .toggle-theme:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -71,6 +118,8 @@
   </style>
 </head>
 <body>
+  <button class="toggle-theme" onclick="toggleTheme()">🌙 / ☀️</button>
+
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Nơi lưu giữ những khoảnh khắc đáng nhớ</p>
@@ -106,6 +155,18 @@
     links.forEach(link => {
       if (link.href === window.location.href) {
         link.classList.add('active');
+      }
+    });
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark');
       }
     });
   </script>
