@@ -172,7 +172,8 @@
         card.innerHTML = `
           <img src="avatars/${imageName}" alt="${student.name}">
           <h4>${student.name}</h4>
-          <p>Ngày sinh: ${new Date(student.dob).toLocaleDateString('vi-VN')}</p>
+         <p>Ngày sinh: ${student.dob.split('-').reverse().join('/')}</p>
+
         `;
         container.appendChild(card);
       });
