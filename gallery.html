@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Album ảnh - Lớp A8</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preload" as="image" href="images/059A8665.jpg">
   <style>
     body {
       background-image: url('images/1_72_.jpg');
@@ -28,6 +29,7 @@
       padding: 0;
       margin: 0;
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
@@ -77,11 +79,18 @@
       top: 0; left: 0;
       width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.9);
-      display: none;
+      display: flex;
       justify-content: center;
       align-items: center;
       z-index: 9999;
       flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.show {
+      opacity: 1;
+      pointer-events: auto;
     }
     .lightbox img {
       max-width: 90%;
@@ -134,7 +143,16 @@
       to { transform: scale(1); opacity: 1; }
     }
 
-    /* ----------- DARK MODE ----------- */
+    @media (max-width: 600px) {
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+      }
+      .lightbox img {
+        max-height: 60vh;
+      }
+    }
+
     body.dark-mode {
       background-color: #121212 !important;
       background-image: none !important;
@@ -160,7 +178,6 @@
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Album ảnh - Những khoảnh khắc không thể quên</p>
-    <!-- Nút chuyển chế độ -->
     <button onclick="toggleDarkMode()" id="theme-toggle" style="margin-top: 10px; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Chế độ tối</button>
     <nav>
       <ul>
@@ -178,33 +195,33 @@
     <section class="section">
       <h2>Hình ảnh đáng nhớ</h2>
       <div class="gallery-grid" id="gallery">
-        <!-- 26 ảnh giữ nguyên như bạn đưa -->
-        <img src="images/059A8665.jpg" alt="Ảnh 1">
-        <img src="images/NTS_2183.jpg" alt="Ảnh 2">
-        <img src="images/NTS_2622.jpg" alt="Ảnh 3">
-        <img src="images/NTS_2758.jpg" alt="Ảnh 4">
-        <img src="images/NTS_3052.jpg" alt="Ảnh 5">
-        <img src="images/NTS_3068.jpg" alt="Ảnh 6">
-        <img src="images/NTS_3128.jpg" alt="Ảnh 7">
-        <img src="images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg" alt="Ảnh 8">
-        <img src="images/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.jpg" alt="Ảnh 9">
-        <img src="images/IMG_1732338423721_1732340735884.jpg" alt="Ảnh 10">
-        <img src="images/IMG_1729318457115_1729428802385.jpg" alt="Ảnh 11">
-        <img src="images/z4892170970991_61238944d03f22e5135b84ad25275cee.jpg" alt="Ảnh 12">
-        <img src="images/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.jpg" alt="Ảnh 13">
-        <img src="images/IMG_1725621899399_1725623748671.jpg" alt="Ảnh 14">
-        <img src="images/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.jpg" alt="Ảnh 15">
-        <img src="images/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.jpg" alt="Ảnh 16">
-        <img src="images/z4952619745070_d342574ad6404f68a00fc000b19bb888.jpg" alt="Ảnh 17">
-        <img src="images/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.jpg" alt="Ảnh 18">
-        <img src="images/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.jpg" alt="Ảnh 19">
-        <img src="images/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.jpg" alt="Ảnh 20">
-        <img src="images/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.jpg" alt="Ảnh 21">
-        <img src="images/z5110922636897_482186c6bcb196af33b00e1ba5737561.jpg" alt="Ảnh 22">
-        <img src="images/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.jpg" alt="Ảnh 23">
-        <img src="images/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.jpg" alt="Ảnh 24">
-        <img src="images/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.jpg" alt="Ảnh 25">
-        <img src="images/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.jpg" alt="Ảnh 26">
+        <!-- 26 ảnh, mỗi ảnh thêm loading="lazy" -->
+        <img src="images/059A8665.jpg" alt="Ảnh 1" loading="lazy">
+        <img src="images/NTS_2183.jpg" alt="Ảnh 2" loading="lazy">
+        <img src="images/NTS_2622.jpg" alt="Ảnh 3" loading="lazy">
+        <img src="images/NTS_2758.jpg" alt="Ảnh 4" loading="lazy">
+        <img src="images/NTS_3052.jpg" alt="Ảnh 5" loading="lazy">
+        <img src="images/NTS_3068.jpg" alt="Ảnh 6" loading="lazy">
+        <img src="images/NTS_3128.jpg" alt="Ảnh 7" loading="lazy">
+        <img src="images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg" alt="Ảnh 8" loading="lazy">
+        <img src="images/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.jpg" alt="Ảnh 9" loading="lazy">
+        <img src="images/IMG_1732338423721_1732340735884.jpg" alt="Ảnh 10" loading="lazy">
+        <img src="images/IMG_1729318457115_1729428802385.jpg" alt="Ảnh 11" loading="lazy">
+        <img src="images/z4892170970991_61238944d03f22e5135b84ad25275cee.jpg" alt="Ảnh 12" loading="lazy">
+        <img src="images/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.jpg" alt="Ảnh 13" loading="lazy">
+        <img src="images/IMG_1725621899399_1725623748671.jpg" alt="Ảnh 14" loading="lazy">
+        <img src="images/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.jpg" alt="Ảnh 15" loading="lazy">
+        <img src="images/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.jpg" alt="Ảnh 16" loading="lazy">
+        <img src="images/z4952619745070_d342574ad6404f68a00fc000b19bb888.jpg" alt="Ảnh 17" loading="lazy">
+        <img src="images/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.jpg" alt="Ảnh 18" loading="lazy">
+        <img src="images/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.jpg" alt="Ảnh 19" loading="lazy">
+        <img src="images/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.jpg" alt="Ảnh 20" loading="lazy">
+        <img src="images/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.jpg" alt="Ảnh 21" loading="lazy">
+        <img src="images/z5110922636897_482186c6bcb196af33b00e1ba5737561.jpg" alt="Ảnh 22" loading="lazy">
+        <img src="images/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.jpg" alt="Ảnh 23" loading="lazy">
+        <img src="images/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.jpg" alt="Ảnh 24" loading="lazy">
+        <img src="images/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.jpg" alt="Ảnh 25" loading="lazy">
+        <img src="images/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.jpg" alt="Ảnh 26" loading="lazy">
       </div>
     </section>
   </main>
@@ -242,11 +259,11 @@
       const src = images[currentIndex].src;
       lightboxImg.src = src;
       downloadLink.href = src;
-      lightbox.style.display = 'flex';
+      lightbox.classList.add('show');
     }
 
     function closeLightbox() {
-      lightbox.style.display = 'none';
+      lightbox.classList.remove('show');
     }
 
     function nextImage() {
@@ -265,7 +282,10 @@
       if (e.key === 'ArrowLeft') prevImage();
     });
 
-    // DARK MODE TOGGLE
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
       const isDark = document.body.classList.contains('dark-mode');
@@ -273,7 +293,6 @@
       document.getElementById('theme-toggle').textContent = isDark ? 'Chế độ sáng' : 'Chế độ tối';
     }
 
-    // TẢI LẠI DARK MODE NẾU CÓ
     window.addEventListener('DOMContentLoaded', () => {
       const theme = localStorage.getItem('theme');
       if (theme === 'dark') {
@@ -284,4 +303,4 @@
   </script>
 </body>
 </html>
-<!-- KẾT THÚC FILE -->
+<!-- KẾT THÚC FILE HTML -->
