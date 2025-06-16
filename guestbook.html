@@ -2,7 +2,6 @@
 <html lang="vi">
 <head>
   <link rel="icon" href="images/logo-a8.png" type="image/png">
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lưu bút - Lớp A8</title>
@@ -18,13 +17,40 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
+      transition: background 0.5s, color 0.5s;
     }
+
+    body.dark {
+      background-image: none;
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+
     header, footer {
       background: rgba(0, 0, 0, 0.6);
       color: white;
       text-align: center;
       padding: 20px;
+      position: relative;
     }
+
+    .toggle-mode {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .toggle-mode:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
     nav ul {
       list-style: none;
       padding: 0;
@@ -33,6 +59,7 @@
       justify-content: center;
       gap: 20px;
     }
+
     nav a {
       color: white;
       text-decoration: none;
@@ -40,9 +67,11 @@
       border-radius: 8px;
       transition: background 0.3s;
     }
+
     nav a:hover, nav a.active {
       background: rgba(255, 255, 255, 0.2);
     }
+
     .section {
       background: rgba(255, 255, 255, 0.9);
       margin: 40px auto;
@@ -51,7 +80,14 @@
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       animation: fadeInUp 0.6s ease-out;
+      color: #000;
     }
+
+    body.dark .section {
+      background: rgba(40, 40, 40, 0.95);
+      color: #e0e0e0;
+    }
+
     .note {
       margin-bottom: 20px;
       padding: 15px;
@@ -60,22 +96,42 @@
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
+
+    body.dark .note {
+      background-color: #2a2a2a;
+      border-left-color: #90CAF9;
+    }
+
     .note h4 {
       margin: 0 0 5px;
       color: #333;
     }
+
+    body.dark .note h4 {
+      color: #fff;
+    }
+
     form {
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-top: 30px;
     }
+
     form input, form textarea {
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
       font-size: 1em;
     }
+
+    body.dark form input,
+    body.dark form textarea {
+      background-color: #333;
+      color: white;
+      border: 1px solid #555;
+    }
+
     form button {
       background-color: #2196F3;
       color: white;
@@ -85,9 +141,11 @@
       cursor: pointer;
       transition: background 0.3s;
     }
+
     form button:hover {
       background-color: #1976D2;
     }
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -104,6 +162,7 @@
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Lưu bút – Nơi chia sẻ những kỷ niệm</p>
+    <button class="toggle-mode" onclick="toggleMode()">🌙 Chế độ tối</button>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
@@ -135,7 +194,6 @@
   </footer>
 
   <script>
-    // Khởi tạo Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
       authDomain: "lopa8-f84f8.firebaseapp.com",
@@ -178,7 +236,21 @@
       });
     }
 
-    window.onload = loadNotes;
+    function toggleMode() {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      document.querySelector(".toggle-mode").innerText = isDark ? "☀️ Chế độ sáng" : "🌙 Chế độ tối";
+      localStorage.setItem("darkMode", isDark);
+    }
+
+    window.onload = function () {
+      const isDark = localStorage.getItem("darkMode") === "true";
+      if (isDark) {
+        document.body.classList.add("dark");
+        document.querySelector(".toggle-mode").innerText = "☀️ Chế độ sáng";
+      }
+      loadNotes();
+    };
   </script>
 </body>
 </html>
