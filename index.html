@@ -2,7 +2,6 @@
 <html lang="vi">
 <head>
   <link rel="icon" href="images/logo-a8.png" type="image/png">
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trang chủ - Lớp A8</title>
@@ -53,18 +52,20 @@
     nav ul {
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 10px 0 0 0;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      padding: 10px 20px;
+      padding: 8px 16px;
       border-radius: 8px;
       transition: background 0.3s;
+      font-size: 16px;
     }
 
     nav a:hover, nav a.active {
@@ -119,6 +120,38 @@
         transform: translateY(0);
       }
     }
+
+    @media (max-width: 600px) {
+      header, footer {
+        padding: 10px;
+      }
+
+      .toggle-mode {
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+
+      nav ul {
+        gap: 8px;
+      }
+
+      nav a {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+
+      .intro {
+        margin: 20px 10px;
+        padding: 20px;
+      }
+
+      .button {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -159,7 +192,6 @@
       }
     });
 
-    // Chế độ tối / sáng
     function toggleMode() {
       document.body.classList.toggle('dark');
       const isDark = document.body.classList.contains('dark');
@@ -167,7 +199,6 @@
       localStorage.setItem('darkMode', isDark);
     }
 
-    // Tải trạng thái dark mode từ localStorage
     window.onload = function () {
       const isDark = localStorage.getItem('darkMode') === 'true';
       if (isDark) {
