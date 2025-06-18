@@ -15,7 +15,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.4s, color 0.4s;
     }
 
     body.dark {
@@ -29,6 +29,7 @@
       color: white;
       text-align: center;
       padding: 20px;
+      transition: background 0.3s, color 0.3s;
     }
 
     body.dark header, body.dark footer {
@@ -115,21 +116,26 @@
       position: absolute;
       top: 20px;
       right: 30px;
-      background: rgba(255, 255, 255, 0.2);
+      background: none;
       border: none;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: transform 0.3s ease;
+      padding: 0;
     }
 
-    body.dark .toggle-theme {
-      background: rgba(255, 255, 255, 0.15);
+    .toggle-theme svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
+      transition: transform 0.5s ease, fill 0.3s ease;
     }
 
-    .toggle-theme:hover {
-      background: rgba(255, 255, 255, 0.4);
+    body.dark .toggle-theme svg {
+      fill: #f1f1f1;
+    }
+
+    .toggle-theme:hover svg {
+      transform: rotate(180deg);
     }
 
     @keyframes fadeInUp {
@@ -163,8 +169,11 @@
       .toggle-theme {
         top: 10px;
         right: 10px;
-        padding: 6px 12px;
-        font-size: 14px;
+      }
+
+      .toggle-theme svg {
+        width: 24px;
+        height: 24px;
       }
 
       header h1 {
@@ -178,7 +187,12 @@
   </style>
 </head>
 <body>
-  <button class="toggle-theme" onclick="toggleTheme()">🌙 / ☀️</button>
+  <button class="toggle-theme" onclick="toggleTheme()" aria-label="Chuyển chế độ sáng tối">
+    <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 0 0-18zm0 16a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"/>
+    </svg>
+  </button>
+
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Kho tài liệu dùng chung</p>
@@ -221,6 +235,15 @@
     function toggleTheme() {
       document.body.classList.toggle('dark');
       localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+      updateIcon();
+    }
+
+    function updateIcon() {
+      const icon = document.getElementById('theme-icon');
+      const isDark = document.body.classList.contains('dark');
+      icon.innerHTML = isDark
+        ? '<path d="M21.64 13.65A9 9 0 0 1 10.35 2.36a9 9 0 1 0 11.3 11.3z"/>'
+        : '<path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 0 0-18zm0 16a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"/>';
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -228,6 +251,7 @@
       if (savedTheme === 'dark') {
         document.body.classList.add('dark');
       }
+      updateIcon();
     });
   </script>
 </body>
