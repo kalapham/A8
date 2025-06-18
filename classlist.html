@@ -2,10 +2,8 @@
 <html lang="vi">
 <head>
   <link rel="icon" href="images/logo-a8.png" type="image/png">
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Danh sách lớp A8</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -37,6 +35,7 @@
       padding: 0;
       background-color: var(--bg-color);
       color: var(--text-color);
+      transition: background-color 0.4s, color 0.4s;
     }
 
     header, footer {
@@ -44,6 +43,7 @@
       color: var(--header-text);
       text-align: center;
       padding: 20px;
+      transition: background 0.4s, color 0.4s;
     }
 
     nav ul {
@@ -112,41 +112,38 @@
 
     .toggle-btn {
       cursor: pointer;
-      padding: 8px 16px;
-      margin-top: 10px;
+      padding: 8px;
+      margin: 10px auto;
+      background: none;
       border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.2);
-      color: var(--text-color);
-      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* Responsive tweaks for small screens */
+    .toggle-btn svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--header-text);
+      transition: transform 0.3s ease, fill 0.3s ease;
+    }
+
+    .toggle-btn:hover svg {
+      transform: rotate(180deg);
+    }
+
     @media (max-width: 768px) {
       header, footer {
         padding: 12px;
       }
 
-      h1 {
-        font-size: 1.4rem;
-      }
-
       nav ul {
         flex-wrap: wrap;
         gap: 10px;
-        justify-content: center;
       }
 
       nav a {
         padding: 6px 10px;
-        font-size: 0.9rem;
-      }
-
-      main {
-        padding: 10px;
-      }
-
-      .controls label, .controls select {
         font-size: 0.9rem;
       }
 
@@ -165,18 +162,9 @@
         height: 80px;
       }
 
-      .student-card h4 {
-        font-size: 1rem;
-      }
-
-      .student-card p {
-        font-size: 0.9rem;
-      }
-
-      .toggle-btn {
-        font-size: 0.8rem;
-        padding: 6px 12px;
-        margin-top: 8px;
+      .toggle-btn svg {
+        width: 24px;
+        height: 24px;
       }
     }
   </style>
@@ -185,7 +173,9 @@
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Danh sách thành viên</p>
-    <button class="toggle-btn" onclick="toggleDarkMode()">🌙/☀️</button>
+    <button class="toggle-btn" onclick="toggleDarkMode()" title="Đổi chế độ sáng/tối">
+      <svg id="themeIcon" viewBox="0 0 24 24"><path d=""></path></svg>
+    </button>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
@@ -263,6 +253,9 @@
       { name: "Nguyễn Tường Vy", dob: "2010-12-11" }
     ];
 
+    const sunIcon = `<path d="M12 4.5a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1zm0 14a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1zm9-6a1 1 0 0 1 1 1v0a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1zm-14 0a1 1 0 0 1 1 1v0a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1zm9.07-6.07a1 1 0 0 1 1.41 0v0a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71zM7.34 16.66a1 1 0 0 1 1.41 0v0a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71zm0-11.32a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71zm11.32 11.32a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1-1.41-1.41l.71-.71zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>`;
+    const moonIcon = `<path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79z"/>`;
+
     function normalize(str) {
       return str.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/\s+/g, "_");
     }
@@ -277,7 +270,7 @@
         card.innerHTML = `
           <img src="avatars/${imageName}" alt="${student.name}">
           <h4>${student.name}</h4>
-         <p>Ngày sinh: ${student.dob.split('-').reverse().join('/')}</p>
+          <p>Ngày sinh: ${student.dob.split('-').reverse().join('/')}</p>
         `;
         container.appendChild(card);
       });
@@ -295,14 +288,18 @@
     }
 
     function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-      localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+      const body = document.body;
+      const icon = document.getElementById("themeIcon");
+      body.classList.toggle("dark-mode");
+      localStorage.setItem("darkMode", body.classList.contains("dark-mode"));
+      icon.innerHTML = body.classList.contains("dark-mode") ? sunIcon : moonIcon;
     }
 
     window.onload = () => {
       if (localStorage.getItem("darkMode") === "true") {
         document.body.classList.add("dark-mode");
       }
+      document.getElementById("themeIcon").innerHTML = document.body.classList.contains("dark-mode") ? sunIcon : moonIcon;
       sortStudents();
     };
   </script>
