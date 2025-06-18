@@ -38,17 +38,34 @@
       position: absolute;
       right: 20px;
       top: 20px;
-      background-color: rgba(255, 255, 255, 0.2);
-      color: white;
+      background: none;
       border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
+      padding: 0;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s ease;
     }
 
-    .toggle-mode:hover {
-      background-color: rgba(255, 255, 255, 0.4);
+    .toggle-mode svg {
+      width: 28px;
+      height: 28px;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .toggle-mode .sun {
+      opacity: 0;
+    }
+
+    body.dark .toggle-mode .moon {
+      opacity: 0;
+    }
+
+    body.dark .toggle-mode .sun {
+      opacity: 1;
     }
 
     nav ul {
@@ -159,7 +176,6 @@
       }
     }
 
-    /* Responsive design */
     @media (max-width: 600px) {
       header, footer {
         padding: 15px 10px;
@@ -168,7 +184,8 @@
       .toggle-mode {
         right: 10px;
         top: 10px;
-        padding: 6px 12px;
+        width: 32px;
+        height: 32px;
       }
 
       nav ul {
@@ -180,14 +197,6 @@
         margin: 20px 10px;
         padding: 16px;
       }
-
-      form input, form textarea {
-        font-size: 1em;
-      }
-
-      form button {
-        font-size: 1em;
-      }
     }
   </style>
 </head>
@@ -195,95 +204,5 @@
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Lưu bút – Nơi chia sẻ những kỷ niệm</p>
-    <button class="toggle-mode" onclick="toggleMode()">🌙 Chế độ tối</button>
-    <nav>
-      <ul>
-        <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="gallery.html">Album ảnh</a></li>
-        <li><a href="guestbook.html" class="active">Lưu bút</a></li>
-        <li><a href="classlist.html">Danh sách lớp</a></li>
-        <li><a href="events.html">Thông tin</a></li>
-        <li><a href="documents.html">Tài liệu</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <section class="section">
-      <h2>Những dòng lưu bút</h2>
-      <div id="notes-container"></div>
-
-      <h3>Gửi lưu bút của bạn</h3>
-      <form onsubmit="submitNote(event)">
-        <input type="text" id="name" placeholder="Tên của bạn" required />
-        <textarea id="message" rows="4" placeholder="Lời nhắn..." required></textarea>
-        <button type="submit">Gửi</button>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
-  </footer>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
-      authDomain: "lopa8-f84f8.firebaseapp.com",
-      projectId: "lopa8-f84f8",
-      storageBucket: "lopa8-f84f8.firebasestorage.app",
-      messagingSenderId: "955064222486",
-      appId: "1:955064222486:web:b8e57aadabb338082d8637",
-      measurementId: "G-436QXV62VQ"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    function loadNotes() {
-      db.collection("guestbook").orderBy("timestamp", "desc").get().then(snapshot => {
-        const container = document.getElementById("notes-container");
-        container.innerHTML = "";
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const noteDiv = document.createElement('div');
-          noteDiv.className = 'note';
-          noteDiv.innerHTML = `<h4>${data.name}</h4><p>${data.message}</p>`;
-          container.appendChild(noteDiv);
-        });
-      });
-    }
-
-    function submitNote(event) {
-      event.preventDefault();
-      const name = document.getElementById("name").value;
-      const message = document.getElementById("message").value;
-
-      db.collection("guestbook").add({
-        name: name,
-        message: message,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        document.getElementById("name").value = "";
-        document.getElementById("message").value = "";
-        loadNotes();
-      });
-    }
-
-    function toggleMode() {
-      document.body.classList.toggle("dark");
-      const isDark = document.body.classList.contains("dark");
-      document.querySelector(".toggle-mode").innerText = isDark ? "☀️ Chế độ sáng" : "🌙 Chế độ tối";
-      localStorage.setItem("darkMode", isDark);
-    }
-
-    window.onload = function () {
-      const isDark = localStorage.getItem("darkMode") === "true";
-      if (isDark) {
-        document.body.classList.add("dark");
-        document.querySelector(".toggle-mode").innerText = "☀️ Chế độ sáng";
-      }
-      loadNotes();
-    };
-  </script>
-</body>
-</html>
+    <button class="toggle-mode" onclick="toggleMode()">
+      <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="orange"><path d="M12 4.5a1 1 0 0 1 1-1h1.5a1 1 0 1 1 0 2H13a1 1 0 0 1-1-1zm6.364 1.636a1 1 0 0 1 1.414 1.414l-1.06 1.06a1 1 0 1 1-1.414-1.414l1.06-1.06zM19.5 11a1 1 0 0 1 1 1v1.5a1 1 0 1 1-2 0V12a1 1 0 0 1 1-1zM17.778 17.778a1 1 0 1 1-1.414 1.414l-1.06-1.06a1 1 0 0 1 1.414-1.414l1.06 1.06zM12 19.5a1 1 0 0 1-1 1h-1.5a1 1 0 1 1 0-2H11a1 1 0 0 1 1 1zM6.222 17.778a1 1 0 0 1-1.414-1.414l1.06-1.06a1 1 0 0 1 1.414 1.414l-1.06 1.06zM
