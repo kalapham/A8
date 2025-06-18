@@ -17,13 +17,41 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
+
     header, footer {
       background: rgba(0, 0, 0, 0.6);
       color: white;
       text-align: center;
       padding: 20px;
+      position: relative;
     }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle:hover svg {
+      transform: rotate(30deg);
+    }
+
     nav ul {
       list-style: none;
       padding: 0;
@@ -51,7 +79,9 @@
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       animation: fadeInUp 0.6s ease-out;
+      transition: background 0.3s ease, color 0.3s ease;
     }
+
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -68,12 +98,12 @@
     .gallery-grid img:hover {
       transform: scale(1.05);
     }
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Lightbox CSS */
     .lightbox {
       position: fixed;
       top: 0; left: 0;
@@ -178,7 +208,9 @@
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Album ảnh - Những khoảnh khắc không thể quên</p>
-    <button onclick="toggleDarkMode()" id="theme-toggle" style="margin-top: 10px; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Chế độ tối</button>
+    <button class="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle theme">
+      <svg id="theme-icon" viewBox="0 0 24 24"><path d=""></path></svg>
+    </button>
     <nav>
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
@@ -195,7 +227,7 @@
     <section class="section">
       <h2>Hình ảnh đáng nhớ</h2>
       <div class="gallery-grid" id="gallery">
-        <!-- 26 ảnh, mỗi ảnh thêm loading="lazy" -->
+        <!-- Danh sách 26 ảnh -->
         <img src="images/059A8665.jpg" alt="Ảnh 1" loading="lazy">
         <img src="images/NTS_2183.jpg" alt="Ảnh 2" loading="lazy">
         <img src="images/NTS_2622.jpg" alt="Ảnh 3" loading="lazy">
@@ -230,7 +262,6 @@
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
   </footer>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <button class="close-btn" onclick="closeLightbox()">&times;</button>
     <div class="lightbox-controls">
@@ -286,21 +317,28 @@
       if (e.target === lightbox) closeLightbox();
     });
 
+    // Dark mode toggle
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
       const isDark = document.body.classList.contains('dark-mode');
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      document.getElementById('theme-toggle').textContent = isDark ? 'Chế độ sáng' : 'Chế độ tối';
+      updateIcon(isDark);
+    }
+
+    function updateIcon(isDark) {
+      const icon = document.getElementById('theme-icon');
+      icon.innerHTML = isDark
+        ? '<path d="M21.64 13.14a1 1 0 0 1-.95.68A9 9 0 0 1 10.18 2.3a1 1 0 0 1 .68-.95A10 10 0 1 0 21.64 13.14z"/>'
+        : '<path d="M12 4.5a1 1 0 0 1 1 1V7a1 1 0 0 1-2 0V5.5a1 1 0 0 1 1-1zm6.364 1.636a1 1 0 0 1 1.414 0l1.06 1.06a1 1 0 1 1-1.414 1.414l-1.06-1.06a1 1 0 0 1 0-1.414zM19.5 11a1 1 0 0 1 1 1v1.5a1 1 0 0 1-2 0V12a1 1 0 0 1 1-1zM6.222 6.222a1 1 0 0 1 1.414 0l1.06 1.06a1 1 0 0 1-1.414 1.414L6.222 7.636a1 1 0 0 1 0-1.414zM4.5 11a1 1 0 0 1 1 1v1.5a1 1 0 0 1-2 0V12a1 1 0 0 1 1-1zM12 16.5a1 1 0 0 1 1 1V19a1 1 0 0 1-2 0v-1.5a1 1 0 0 1 1-1zM17.778 17.778a1 1 0 0 1 0 1.414l-1.06 1.06a1 1 0 1 1-1.414-1.414l1.06-1.06a1 1 0 0 1 1.414 0zM6.222 17.778a1 1 0 0 1 1.414 0l1.06 1.06a1 1 0 1 1-1.414 1.414l-1.06-1.06a1 1 0 0 1 0-1.414z"/>'
     }
 
     window.addEventListener('DOMContentLoaded', () => {
       const theme = localStorage.getItem('theme');
-      if (theme === 'dark') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('theme-toggle').textContent = 'Chế độ sáng';
-      }
+      const isDark = theme === 'dark';
+      if (isDark) document.body.classList.add('dark-mode');
+      updateIcon(isDark);
     });
   </script>
 </body>
 </html>
-<!-- KẾT THÚC FILE HTML -->
+
