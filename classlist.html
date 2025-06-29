@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Danh sách lớp A8</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-color: white;
@@ -26,7 +27,7 @@
     }
 
     body {
-      background-image: url('images/1_72_.jpg');
+      background-image: url('images/cover-camera-chair.jpg');
       background-size: cover;
       background-attachment: fixed;
       background-position: center;
@@ -35,7 +36,7 @@
       padding: 0;
       background-color: var(--bg-color);
       color: var(--text-color);
-      transition: background-color 0.4s, color 0.4s;
+      transition: background-color 0.4s, color 0.4s, background-image 0.4s;
     }
 
     header, footer {
@@ -44,7 +45,43 @@
       text-align: center;
       padding: 20px;
       transition: background 0.4s, color 0.4s;
+      position: relative;
     }
+
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(145deg, #ffffff50, #ffffff20);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: rotate(15deg);
+    }
+
+    .toggle-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+      transition: opacity 0.3s ease;
+      position: absolute;
+    }
+
+    .icon-sun { opacity: 0; }
+    body.dark-mode .icon-moon { opacity: 0; }
+    body.dark-mode .icon-sun { opacity: 1; }
 
     nav ul {
       list-style: none;
@@ -53,18 +90,20 @@
       display: flex;
       justify-content: center;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
     nav a {
       color: var(--header-text);
       text-decoration: none;
       padding: 10px 20px;
-      border-radius: 8px;
-      transition: background 0.3s;
+      border-radius: 9999px;
+      transition: background 0.3s, box-shadow 0.3s;
     }
 
     nav a:hover, nav a.active {
-      background: var(--nav-hover);
+      background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     main {
@@ -110,43 +149,7 @@
       font-size: 1em;
     }
 
-    .toggle-btn {
-      cursor: pointer;
-      padding: 8px;
-      margin: 10px auto;
-      background: none;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .toggle-btn svg {
-      width: 28px;
-      height: 28px;
-      fill: var(--header-text);
-      transition: transform 0.3s ease, fill 0.3s ease;
-    }
-
-    .toggle-btn:hover svg {
-      transform: rotate(180deg);
-    }
-
     @media (max-width: 768px) {
-      header, footer {
-        padding: 12px;
-      }
-
-      nav ul {
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      nav a {
-        padding: 6px 10px;
-        font-size: 0.9rem;
-      }
-
       .student-list {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 16px;
@@ -161,11 +164,6 @@
         width: 80px;
         height: 80px;
       }
-
-      .toggle-btn svg {
-        width: 24px;
-        height: 24px;
-      }
     }
   </style>
 </head>
@@ -174,7 +172,18 @@
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Danh sách thành viên</p>
     <button class="toggle-btn" onclick="toggleDarkMode()" title="Đổi chế độ sáng/tối">
-      <svg id="themeIcon" viewBox="0 0 24 24"><path d=""></path></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0111.21 3a7 7 0 000 14A9 9 0 0021 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
     </button>
     <nav>
       <ul>
@@ -253,9 +262,6 @@
       { name: "Nguyễn Tường Vy", dob: "2010-12-11" }
     ];
 
-    const sunIcon = `<path d="M12 4.5a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1zm0 14a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1zm9-6a1 1 0 0 1 1 1v0a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1zm-14 0a1 1 0 0 1 1 1v0a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1zm9.07-6.07a1 1 0 0 1 1.41 0v0a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71zM7.34 16.66a1 1 0 0 1 1.41 0v0a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71zm0-11.32a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71zm11.32 11.32a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1-1.41-1.41l.71-.71zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>`;
-    const moonIcon = `<path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79z"/>`;
-
     function normalize(str) {
       return str.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/\s+/g, "_");
     }
@@ -289,17 +295,14 @@
 
     function toggleDarkMode() {
       const body = document.body;
-      const icon = document.getElementById("themeIcon");
       body.classList.toggle("dark-mode");
       localStorage.setItem("darkMode", body.classList.contains("dark-mode"));
-      icon.innerHTML = body.classList.contains("dark-mode") ? sunIcon : moonIcon;
     }
 
     window.onload = () => {
       if (localStorage.getItem("darkMode") === "true") {
         document.body.classList.add("dark-mode");
       }
-      document.getElementById("themeIcon").innerHTML = document.body.classList.contains("dark-mode") ? sunIcon : moonIcon;
       sortStudents();
     };
   </script>
