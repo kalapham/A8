@@ -94,22 +94,13 @@
       text-decoration: none;
       padding: 8px 16px;
       border-radius: 9999px;
-      transition: all 0.3s ease;
+      transition: background 0.3s, box-shadow 0.3s;
       font-size: 16px;
-      background-color: rgba(255, 176, 133, 0.15);
     }
 
     nav a:hover, nav a.active {
-      background-color: rgba(255, 176, 133, 0.3);
-      color: #fff;
-    }
-
-    body.dark nav a {
-      background-color: rgba(200, 170, 255, 0.15);
-    }
-
-    body.dark nav a:hover {
-      background-color: rgba(200, 170, 255, 0.35);
+      background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .intro {
