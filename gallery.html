@@ -9,7 +9,7 @@
   <link rel="preload" as="image" href="images/059A8665.jpg">
   <style>
     body {
-      background-image: url('images/cover-camera-chair.jpg');
+      background-image: url('images/bg-classroom-camera.jpg');
       background-size: cover;
       background-attachment: fixed;
       background-position: center;
@@ -18,7 +18,6 @@
       padding: 0;
       transition: background-color 0.4s, color 0.4s, background-image 0.4s;
     }
-
     body::before {
       content: "";
       position: fixed;
@@ -27,16 +26,13 @@
       background: rgba(0,0,0,0.15);
       z-index: -1;
     }
-
     body.dark::before {
       background: linear-gradient(to bottom, rgba(20,20,20,0.7), rgba(10,10,10,0.85));
     }
-
     body.dark {
       background-color: #111;
       color: #e0e0e0;
     }
-
     header, footer {
       background: rgba(0, 0, 0, 0.6);
       color: white;
@@ -45,7 +41,6 @@
       position: relative;
       transition: background 0.4s;
     }
-
     .toggle-mode {
       position: absolute;
       top: 20px;
@@ -62,12 +57,10 @@
       transition: background 0.3s, transform 0.3s;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
-
     .toggle-mode:hover {
       background: rgba(255, 255, 255, 0.4);
       transform: rotate(15deg);
     }
-
     .toggle-mode svg {
       width: 24px;
       height: 24px;
@@ -75,11 +68,9 @@
       transition: opacity 0.3s ease;
       position: absolute;
     }
-
     .icon-sun { opacity: 0; }
     body.dark .icon-moon { opacity: 0; }
     body.dark .icon-sun { opacity: 1; }
-
     nav ul {
       list-style: none;
       padding: 0;
@@ -89,20 +80,18 @@
       gap: 10px;
       flex-wrap: wrap;
     }
-
     nav a {
       color: white;
       text-decoration: none;
       padding: 8px 16px;
       border-radius: 16px;
-      transition: background 0.3s;
+      transition: background 0.3s, box-shadow 0.3s;
       font-size: 16px;
     }
-
     nav a:hover, nav a.active {
-      background: rgba(255, 255, 255, 0.2);
+      background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
-
     .intro {
       background: rgba(255, 255, 255, 0.95);
       margin: 40px auto;
@@ -114,19 +103,16 @@
       text-align: center;
       transition: background-color 0.4s, color 0.4s;
     }
-
     body.dark .intro {
       background: rgba(30, 30, 30, 0.9);
       color: #f0f0f0;
     }
-
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 16px;
       margin-top: 20px;
     }
-
     .gallery-grid img {
       width: 100%;
       height: auto;
@@ -135,20 +121,79 @@
       transition: transform 0.3s;
       cursor: pointer;
     }
-
     .gallery-grid img:hover {
       transform: scale(1.05);
     }
-
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .lightbox.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 12px;
+      animation: zoomIn 0.3s ease;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .lightbox-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    .lightbox-button {
+      background: rgba(255,255,255,0.3);
+      border: none;
+      color: white;
+      font-size: 2em;
+      cursor: pointer;
+      padding: 10px 20px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2em;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .download-btn {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+      background: #00c3ff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1em;
+      text-decoration: none;
+    }
+    .download-btn:hover {
+      background: #00a3d2;
+    }
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -187,7 +232,6 @@
     <section class="intro">
       <h2>Hình ảnh đáng nhớ</h2>
       <div class="gallery-grid">
-        <!-- toàn bộ ảnh giữ nguyên như trước (đã có) -->
         <img src="images/059A8665.jpg" alt="Ảnh 1" loading="lazy">
         <img src="images/NTS_2183.jpg" alt="Ảnh 2" loading="lazy">
         <img src="images/NTS_2622.jpg" alt="Ảnh 3" loading="lazy">
@@ -220,17 +264,62 @@
   <footer>
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
   </footer>
+  <div class="lightbox" id="lightbox">
+    <button class="close-btn" onclick="closeLightbox()">&times;</button>
+    <div class="lightbox-controls">
+      <button class="lightbox-button" onclick="prevImage()">&#10094;</button>
+      <button class="lightbox-button" onclick="nextImage()">&#10095;</button>
+    </div>
+    <img id="lightbox-img" src="" alt="Phóng to ảnh">
+    <a id="downloadLink" class="download-btn" href="#" download target="_blank">⬇️ Tải ảnh</a>
+  </div>
   <script>
+    const images = Array.from(document.querySelectorAll('.gallery-grid img'));
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const downloadLink = document.getElementById('downloadLink');
+    let currentIndex = 0;
+    images.forEach((img, index) => {
+      img.addEventListener('click', () => {
+        currentIndex = index;
+        showImage();
+      });
+    });
+    function showImage() {
+      const src = images[currentIndex].src;
+      lightboxImg.src = src;
+      downloadLink.href = src;
+      lightbox.classList.add('show');
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('show');
+    }
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage();
+    }
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage();
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) closeLightbox();
+    });
     function toggleMode() {
       document.body.classList.toggle('dark');
       const isDark = document.body.classList.contains('dark');
       localStorage.setItem('darkMode', isDark);
+   
+
     }
     window.addEventListener('DOMContentLoaded', () => {
       const isDark = localStorage.getItem('darkMode') === 'true';
-      if (isDark) {
-        document.body.classList.add('dark');
-      }
+      if (isDark) document.body.classList.add('dark');
     });
   </script>
 </body>
