@@ -9,7 +9,7 @@
   <link rel="preload" as="image" href="images/059A8665.jpg">
   <style>
     body {
-      background-image: url('images/bg-classroom-camera.jpg');
+      background-image: url('images/cover-camera-chair.jpg');
       background-size: cover;
       background-attachment: fixed;
       background-position: center;
@@ -19,9 +19,21 @@
       transition: background-color 0.4s, color 0.4s, background-image 0.4s;
     }
 
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.15);
+      z-index: -1;
+    }
+
+    body.dark::before {
+      background: linear-gradient(to bottom, rgba(20,20,20,0.7), rgba(10,10,10,0.85));
+    }
+
     body.dark {
-      background-image: url('images/bg-classroom-camera.jpg');
-      background-color: rgba(15, 15, 15, 0.9);
+      background-color: #111;
       color: #e0e0e0;
     }
 
@@ -92,7 +104,7 @@
     }
 
     .intro {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       margin: 40px auto;
       padding: 30px;
       max-width: 1000px;
@@ -104,8 +116,8 @@
     }
 
     body.dark .intro {
-      background: rgba(30, 30, 30, 0.95);
-      color: #e0e0e0;
+      background: rgba(30, 30, 30, 0.9);
+      color: #f0f0f0;
     }
 
     .gallery-grid {
@@ -175,6 +187,7 @@
     <section class="intro">
       <h2>Hình ảnh đáng nhớ</h2>
       <div class="gallery-grid">
+        <!-- toàn bộ ảnh giữ nguyên như trước (đã có) -->
         <img src="images/059A8665.jpg" alt="Ảnh 1" loading="lazy">
         <img src="images/NTS_2183.jpg" alt="Ảnh 2" loading="lazy">
         <img src="images/NTS_2622.jpg" alt="Ảnh 3" loading="lazy">
