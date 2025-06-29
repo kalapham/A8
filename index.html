@@ -22,7 +22,8 @@
 
     body.dark {
       background-image: none;
-      background-color: #1b1b1b;
+      background-color: #2c2c40;
+      background-image: linear-gradient(to bottom right, #2c2c40, #3f3f58);
       color: #e0e0e0;
     }
 
@@ -49,9 +50,10 @@
       right: 20px;
       width: 40px;
       height: 40px;
-      background: rgba(255, 255, 255, 0.2);
+      background: linear-gradient(145deg, #ffffff50, #ffffff20);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.3);
       border-radius: 50%;
-      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -91,13 +93,23 @@
       color: white;
       text-decoration: none;
       padding: 8px 16px;
-      border-radius: 8px;
-      transition: background 0.3s;
+      border-radius: 9999px;
+      transition: all 0.3s ease;
       font-size: 16px;
+      background-color: rgba(255, 176, 133, 0.15);
     }
 
     nav a:hover, nav a.active {
-      background: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 176, 133, 0.3);
+      color: #fff;
+    }
+
+    body.dark nav a {
+      background-color: rgba(200, 170, 255, 0.15);
+    }
+
+    body.dark nav a:hover {
+      background-color: rgba(200, 170, 255, 0.35);
     }
 
     .intro {
@@ -151,28 +163,12 @@
     }
 
     @media (max-width: 600px) {
-      header, footer {
-        padding: 10px;
-      }
-      .toggle-mode {
-        top: 10px;
-        right: 10px;
-        width: 36px;
-        height: 36px;
-      }
+      header, footer { padding: 10px; }
+      .toggle-mode { top: 10px; right: 10px; width: 36px; height: 36px; }
       nav ul { gap: 8px; }
-      nav a {
-        font-size: 14px;
-        padding: 6px 12px;
-      }
-      .intro {
-        margin: 20px 10px;
-        padding: 20px;
-      }
-      .button {
-        padding: 8px 16px;
-        font-size: 14px;
-      }
+      nav a { font-size: 14px; padding: 6px 12px; }
+      .intro { margin: 20px 10px; padding: 20px; }
+      .button { padding: 8px 16px; font-size: 14px; }
     }
   </style>
 </head>
