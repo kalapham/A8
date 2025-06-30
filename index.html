@@ -27,14 +27,13 @@
       color: #e0e0e0;
     }
 
-    header {
-      background: rgba(0, 0, 0, 0.75);
+    header, footer {
+      background: rgba(0, 0, 0, 0.6);
       color: white;
       text-align: center;
       padding: 20px;
       position: relative;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(6px);
+      transition: background 0.4s;
     }
 
     .slogan {
@@ -91,24 +90,17 @@
     }
 
     nav a {
-      color: #ffffff;
+      color: white;
       text-decoration: none;
       padding: 8px 16px;
       border-radius: 9999px;
-      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      transition: background 0.3s, box-shadow 0.3s;
       font-size: 16px;
     }
 
-    nav a:hover {
-      background-color: #00d4ff20;
-      color: #00d4ff;
-      box-shadow: 0 0 10px #00d4ff40;
-    }
-
-    nav a.active {
-      background: #00d4ff;
-      color: #000;
-      box-shadow: 0 0 10px #00d4ff90;
+    nav a:hover, nav a.active {
+      background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .intro {
@@ -161,14 +153,6 @@
       }
     }
 
-    footer {
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-
     @media (max-width: 600px) {
       header, footer { padding: 10px; }
       .toggle-mode { top: 10px; right: 10px; width: 36px; height: 36px; }
@@ -210,7 +194,6 @@
       </ul>
     </nav>
   </header>
-
   <main>
     <section class="intro">
       <img src="images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg" alt="Ảnh lớp" class="banner">
@@ -219,11 +202,9 @@
       <a href="gallery.html" class="button">Xem album ảnh</a>
     </section>
   </main>
-
   <footer>
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
   </footer>
-
   <script>
     const links = document.querySelectorAll('nav a');
     links.forEach(link => {
