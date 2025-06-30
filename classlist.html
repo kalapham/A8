@@ -5,7 +5,6 @@
   <title>Danh sách lớp A8</title>
   <link rel="icon" href="images/logo-a8.png" type="image/png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -16,7 +15,6 @@
       --header-text: white;
       --nav-hover: rgba(255, 255, 255, 0.2);
     }
-
     body.dark-mode {
       --bg-color: #121212;
       --text-color: #f0f0f0;
@@ -25,7 +23,6 @@
       --header-text: #f0f0f0;
       --nav-hover: rgba(255, 255, 255, 0.2);
     }
-
     body {
       background-image: url('images/cover-camera-chair.jpg');
       background-size: cover;
@@ -38,7 +35,6 @@
       color: var(--text-color);
       transition: background-color 0.4s, color 0.4s, background-image 0.4s;
     }
-
     header, footer {
       background: var(--section-bg);
       color: var(--header-text);
@@ -47,7 +43,6 @@
       position: relative;
       transition: background 0.4s, color 0.4s;
     }
-
     .toggle-btn {
       position: absolute;
       top: 20px;
@@ -65,12 +60,10 @@
       transition: background 0.3s, transform 0.3s;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
-
     .toggle-btn:hover {
       background: rgba(255, 255, 255, 0.4);
       transform: rotate(15deg);
     }
-
     .toggle-btn svg {
       width: 24px;
       height: 24px;
@@ -78,7 +71,6 @@
       transition: opacity 0.3s ease;
       position: absolute;
     }
-
     .icon-sun { opacity: 0; }
     body.dark-mode .icon-moon { opacity: 0; }
     body.dark-mode .icon-sun { opacity: 1; }
@@ -92,7 +84,6 @@
       gap: 20px;
       flex-wrap: wrap;
     }
-
     nav a {
       color: var(--header-text);
       text-decoration: none;
@@ -100,7 +91,6 @@
       border-radius: 9999px;
       transition: background 0.3s, box-shadow 0.3s;
     }
-
     nav a:hover, nav a.active {
       background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -109,19 +99,16 @@
     main {
       padding: 20px;
     }
-
     .controls {
       text-align: center;
       margin: 20px 0;
     }
-
     .student-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
       padding: 20px;
     }
-
     .student-card {
       background: var(--card-bg);
       padding: 15px;
@@ -130,11 +117,9 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       transition: transform 0.2s;
     }
-
     .student-card:hover {
       transform: scale(1.03);
     }
-
     .student-card img {
       width: 100px;
       height: 100px;
@@ -144,11 +129,9 @@
       cursor: pointer;
       transition: transform 0.3s ease;
     }
-
     .student-card img:hover {
       transform: scale(1.1);
     }
-
     select {
       padding: 8px;
       border-radius: 8px;
@@ -161,11 +144,9 @@
         gap: 16px;
         padding: 10px;
       }
-
       .student-card {
         padding: 10px;
       }
-
       .student-card img {
         width: 80px;
         height: 80px;
@@ -183,12 +164,10 @@
       z-index: 1000;
       backdrop-filter: blur(4px);
     }
-
     .popup-overlay.show {
       display: flex;
       animation: fadeIn 0.3s ease;
     }
-
     .popup-content {
       background: var(--card-bg);
       padding: 20px;
@@ -200,7 +179,6 @@
       position: relative;
       animation: popUp 0.4s ease;
     }
-
     .popup-content img {
       max-width: 300px;
       max-height: 300px;
@@ -208,13 +186,11 @@
       margin-bottom: 10px;
       object-fit: cover;
     }
-
     .popup-content #popupInfo {
       font-size: 1rem;
       color: var(--text-color);
       white-space: pre-line;
     }
-
     .close-btn {
       position: absolute;
       top: 10px; right: 15px;
@@ -223,15 +199,8 @@
       color: var(--text-color);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0 }
-      to { opacity: 1 }
-    }
-
-    @keyframes popUp {
-      0% { transform: scale(0.8); opacity: 0 }
-      100% { transform: scale(1); opacity: 1 }
-    }
+    @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+    @keyframes popUp { 0% { transform: scale(0.8); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
   </style>
 </head>
 <body>
@@ -298,7 +267,10 @@
       "Đào Yến Nhi", "Đặng Nam Phong", "Trần Đặng Duy Quang", "Tô Hải Sơn", "Vũ Hải Sơn", "Phạm Ngọc Thạch", "Ngô Minh Thư",
       "Phạm Ngọc Quỳnh Thư", "Lê Nguyễn Đức Toàn", "Lưu Viết Tùng", "Lê Thủy Vi", "Nguyễn Tường Vy"
     ].map((name, i) => ({
-      name, dob: "", img: `avatars/anh${i + 1}.jpg`
+      name,
+      dob: "",
+      thumb: `thumb/anh${i + 1}.webp`,
+      full: `avatars/anh${i + 1}.jpg`
     }));
 
     function renderStudents(list) {
@@ -308,7 +280,7 @@
         const card = document.createElement('div');
         card.className = 'student-card';
         card.innerHTML = `
-          <img src="${student.img}" alt="${student.name}" onclick="openPopup('${student.img}', 'Tên: ${student.name}')">
+          <img src="${student.thumb}" loading="lazy" alt="${student.name}" onclick="openPopup('${student.full}', 'Tên: ${student.name}')">
           <h4>${student.name}</h4>
         `;
         container.appendChild(card);
