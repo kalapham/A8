@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <link rel="icon" href="images/logo-a8.png" type="image/png">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Danh sách lớp A8</title>
+  <link rel="icon" href="images/logo-a8.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
@@ -44,8 +44,8 @@
       color: var(--header-text);
       text-align: center;
       padding: 20px;
-      transition: background 0.4s, color 0.4s;
       position: relative;
+      transition: background 0.4s, color 0.4s;
     }
 
     .toggle-btn {
@@ -141,6 +141,12 @@
       object-fit: cover;
       border-radius: 50%;
       margin-bottom: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .student-card img:hover {
+      transform: scale(1.1);
     }
 
     select {
@@ -164,6 +170,67 @@
         width: 80px;
         height: 80px;
       }
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+
+    .popup-overlay.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .popup-content {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      position: relative;
+      animation: popUp 0.4s ease;
+    }
+
+    .popup-content img {
+      max-width: 300px;
+      max-height: 300px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      object-fit: cover;
+    }
+
+    .popup-content #popupInfo {
+      font-size: 1rem;
+      color: var(--text-color);
+      white-space: pre-line;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0 }
+      to { opacity: 1 }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0 }
+      100% { transform: scale(1); opacity: 1 }
     }
   </style>
 </head>
@@ -206,10 +273,16 @@
       </select>
     </div>
 
-    <div class="student-list" id="studentList">
-      <!-- Danh sách học sinh sẽ được hiển thị tại đây -->
-    </div>
+    <div class="student-list" id="studentList"></div>
   </main>
+
+  <div id="imagePopup" class="popup-overlay" onclick="closePopup(event)">
+    <div class="popup-content">
+      <img id="popupImg" src="" alt="">
+      <div id="popupInfo"></div>
+      <span class="close-btn" onclick="closePopup(event)">&times;</span>
+    </div>
+  </div>
 
   <footer>
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
@@ -217,54 +290,16 @@
 
   <script>
     const students = [
-      { name: "Đặng Khánh An", dob: "2010-08-27" },
-      { name: "Nguyễn Thái An", dob: "2010-08-14" },
-      { name: "Cao Minh Anh", dob: "2010-02-07" },
-      { name: "Nguyễn Hoàng Minh Anh", dob: "2010-10-15" },
-      { name: "Nguyễn Vũ Thùy Anh", dob: "2010-09-25" },
-      { name: "Nguyễn Vũ Trúc Anh", dob: "2010-09-02" },
-      { name: "Lê Minh Ánh", dob: "2010-01-26" },
-      { name: "Cao Xuân Bách", dob: "2010-02-25" },
-      { name: "Phan Vũ Dương Cầm", dob: "2010-08-11" },
-      { name: "Nguyễn Đăng Công", dob: "2010-10-20" },
-      { name: "Hà Vũ Minh Đức", dob: "2010-07-06" },
-      { name: "Cao Thu Hà", dob: "2010-09-11" },
-      { name: "Đặng Ngọc Hà", dob: "2010-08-27" },
-      { name: "Nguyễn Trung Hiếu", dob: "2010-07-17" },
-      { name: "Phí Công Hiếu", dob: "2010-09-07" },
-      { name: "Lưu Tuyết Hoa", dob: "2010-10-17" },
-      { name: "Nguyễn Chí Vương Hoàng", dob: "2010-08-19" },
-      { name: "Đỗ Vũ Quang Huy", dob: "2010-10-05" },
-      { name: "Bùi Vân Khánh", dob: "2010-01-03" },
-      { name: "Nguyễn Ngọc Khánh", dob: "2010-09-05" },
-      { name: "Nguyễn Phương Khánh", dob: "2010-11-23" },
-      { name: "Ma Khánh Lâm", dob: "2010-12-11" },
-      { name: "Nguyễn Bảo Lâm", dob: "2010-07-24" },
-      { name: "Lưu Khánh Linh", dob: "2010-10-18" },
-      { name: "Nguyễn Diệu Linh", dob: "2010-07-31" },
-      { name: "Nguyễn Hà Linh", dob: "2010-11-12" },
-      { name: "Phùng Thanh Mai", dob: "2010-06-21" },
-      { name: "Trần Doãn Mạnh", dob: "2010-11-29" },
-      { name: "Đặng Gia Minh", dob: "2010-08-22" },
-      { name: "Nguyễn Hoàng Hà My", dob: "2010-05-08" },
-      { name: "Nguyễn Thu Ngân", dob: "2010-05-07" },
-      { name: "Đào Yến Nhi", dob: "2010-10-13" },
-      { name: "Đặng Nam Phong", dob: "2010-11-08" },
-      { name: "Trần Đặng Duy Quang", dob: "2010-09-26" },
-      { name: "Tô Hải Sơn", dob: "2010-09-15" },
-      { name: "Vũ Hải Sơn", dob: "2010-09-25" },
-      { name: "Phạm Ngọc Thạch", dob: "2010-05-11" },
-      { name: "Ngô Minh Thư", dob: "2010-12-24" },
-      { name: "Phạm Ngọc Quỳnh Thư", dob: "2010-04-24" },
-      { name: "Lê Nguyễn Đức Toàn", dob: "2010-01-22" },
-      { name: "Lưu Viết Tùng", dob: "2010-09-19" },
-      { name: "Lê Thủy Vi", dob: "2010-04-14" },
-      { name: "Nguyễn Tường Vy", dob: "2010-12-11" }
-    ];
-
-    function normalize(str) {
-      return str.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/\s+/g, "_");
-    }
+      "Đặng Khánh An", "Nguyễn Thái An", "Cao Minh Anh", "Nguyễn Hoàng Minh Anh", "Nguyễn Vũ Thùy Anh", "Nguyễn Vũ Trúc Anh",
+      "Lê Minh Ánh", "Cao Xuân Bách", "Phan Vũ Dương Cầm", "Nguyễn Đăng Công", "Hà Vũ Minh Đức", "Cao Thu Hà", "Đặng Ngọc Hà",
+      "Nguyễn Trung Hiếu", "Phí Công Hiếu", "Lưu Tuyết Hoa", "Nguyễn Chí Vương Hoàng", "Đỗ Vũ Quang Huy", "Bùi Vân Khánh",
+      "Nguyễn Ngọc Khánh", "Nguyễn Phương Khánh", "Ma Khánh Lâm", "Nguyễn Bảo Lâm", "Lưu Khánh Linh", "Nguyễn Diệu Linh",
+      "Nguyễn Hà Linh", "Phùng Thanh Mai", "Trần Doãn Mạnh", "Đặng Gia Minh", "Nguyễn Hoàng Hà My", "Nguyễn Thu Ngân",
+      "Đào Yến Nhi", "Đặng Nam Phong", "Trần Đặng Duy Quang", "Tô Hải Sơn", "Vũ Hải Sơn", "Phạm Ngọc Thạch", "Ngô Minh Thư",
+      "Phạm Ngọc Quỳnh Thư", "Lê Nguyễn Đức Toàn", "Lưu Viết Tùng", "Lê Thủy Vi", "Nguyễn Tường Vy"
+    ].map((name, i) => ({
+      name, dob: "", img: `avatars/anh${i + 1}.jpg`
+    }));
 
     function renderStudents(list) {
       const container = document.getElementById('studentList');
@@ -272,14 +307,18 @@
       list.forEach(student => {
         const card = document.createElement('div');
         card.className = 'student-card';
-        const imageName = normalize(student.name) + '.jpg';
         card.innerHTML = `
-          <img src="avatars/${imageName}" alt="${student.name}">
+          <img src="${student.img}" alt="${student.name}" onclick="openPopup('${student.img}', 'Tên: ${student.name}')">
           <h4>${student.name}</h4>
-          <p>Ngày sinh: ${student.dob.split('-').reverse().join('/')}</p>
         `;
         container.appendChild(card);
       });
+    }
+
+    function toggleDarkMode() {
+      const body = document.body;
+      body.classList.toggle("dark-mode");
+      localStorage.setItem("darkMode", body.classList.contains("dark-mode"));
     }
 
     function sortStudents() {
@@ -287,16 +326,20 @@
       const sorted = [...students];
       if (by === 'name') {
         sorted.sort((a, b) => a.name.split(" ").pop().localeCompare(b.name.split(" ").pop()));
-      } else {
-        sorted.sort((a, b) => new Date(a.dob) - new Date(b.dob));
       }
       renderStudents(sorted);
     }
 
-    function toggleDarkMode() {
-      const body = document.body;
-      body.classList.toggle("dark-mode");
-      localStorage.setItem("darkMode", body.classList.contains("dark-mode"));
+    function openPopup(imageSrc, infoText) {
+      document.getElementById('popupImg').src = imageSrc;
+      document.getElementById('popupInfo').innerText = infoText;
+      document.getElementById('imagePopup').classList.add('show');
+    }
+
+    function closePopup(event) {
+      if (event.target.id === "imagePopup" || event.target.classList.contains("close-btn")) {
+        document.getElementById('imagePopup').classList.remove('show');
+      }
     }
 
     window.onload = () => {
