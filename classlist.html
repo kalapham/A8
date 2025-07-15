@@ -5,263 +5,72 @@
   <title>Danh sách lớp A8</title>
   <link rel="icon" href="images/logo-a8.png" type="image/png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-color: white;
-      --text-color: black;
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --section-bg: rgba(0, 0, 0, 0.6);
-      --header-text: white;
-      --select-bg: linear-gradient(120deg, #a1c4fd, #c2e9fb);
-    }
-
-    body.dark-mode {
-      --bg-color: #121212;
-      --text-color: #f0f0f0;
-      --card-bg: rgba(30, 30, 30, 0.95);
-      --section-bg: rgba(255, 255, 255, 0.1);
-      --header-text: #f0f0f0;
-    }
-
-    body {
-      background-image: url('images/cover-camera-chair.jpg');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color 0.4s, color 0.4s;
-    }
-
-    header, footer {
-      background: var(--section-bg);
-      color: var(--header-text);
-      text-align: center;
-      padding: 20px;
-      position: relative;
-    }
-
-    .toggle-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(145deg, #ffffff50, #ffffff20);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .toggle-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
-      transform: rotate(15deg);
-    }
-
-    .toggle-btn svg {
-      width: 24px;
-      height: 24px;
-      fill: white;
-      position: absolute;
-    }
-
-    .icon-sun { opacity: 0; }
-    body.dark-mode .icon-moon { opacity: 0; }
-    body.dark-mode .icon-sun { opacity: 1; }
-
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: var(--header-text);
-      text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 9999px;
-    }
-
-    nav a:hover, nav a.active {
-      background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    main { padding: 20px; }
-
-    .controls {
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .controls label {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-
-    select {
-      padding: 10px 20px;
-      border-radius: 9999px;
-      border: none;
-      font-size: 1rem;
-      background: var(--select-bg);
-      color: #333;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    select:hover {
-      opacity: 0.95;
-      transform: scale(1.03);
-    }
-
-    .student-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-
-    .student-card {
-      background: var(--card-bg);
-      padding: 15px;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .student-card img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-
-    .popup-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.8);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(4px);
-    }
-
-    .popup-overlay.show {
-      display: flex;
-    }
-
-    .popup-content {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 90%;
-      max-height: 90%;
-    }
-
-    .popup-content img {
-      max-width: 300px;
-      max-height: 300px;
-      border-radius: 20px;
-      margin-bottom: 10px;
-      object-fit: cover;
-    }
-
-    .popup-content #popupInfo {
-      font-size: 1rem;
-      color: var(--text-color);
-      white-space: pre-line;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px; right: 15px;
-      font-size: 28px;
-      cursor: pointer;
-      color: var(--text-color);
-    }
-
-    @media (max-width: 768px) {
-      .student-list {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      }
-
-      .student-card img {
-        width: 80px;
-        height: 80px;
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Lớp A8 – Niên khóa 2021–2025</h1>
-    <p>Danh sách thành viên</p>
-    <button class="toggle-btn" onclick="toggleDarkMode()" title="Đổi chế độ sáng/tối">
-      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0111.21 3a7 7 0 000 14A9 9 0 0021 12.79z"/></svg>
-      <svg class="icon-sun" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3"/>
-        <line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="3" y2="12"/>
-        <line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-      </svg>
-    </button>
-    <nav>
-      <ul>
-        <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="gallery.html">Album ảnh</a></li>
-        <li><a href="guestbook.html">Lưu bút</a></li>
-        <li><a href="classlist.html" class="active">Danh sách lớp</a></li>
-        <li><a href="events.html">Thông tin</a></li>
-        <li><a href="documents.html">Tài liệu</a></li>
-      </ul>
-    </nav>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-title">Lớp A8 – Niên khóa 2021–2025</h1>
+      <p class="site-slogan">Danh sách thành viên</p>
+      <button class="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 0111.21 3a7 7 0 000 14A9 9 0 0021 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html" class="nav-link">🏠 Trang chủ</a></li>
+          <li><a href="gallery.html" class="nav-link">📷 Album ảnh</a></li>
+          <li><a href="guestbook.html" class="nav-link">✍️ Lưu bút</a></li>
+          <li><a href="classlist.html" class="nav-link active">👥 Danh sách lớp</a></li>
+          <li><a href="events.html" class="nav-link">📅 Thông tin</a></li>
+          <li><a href="documents.html" class="nav-link">📚 Tài liệu</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <div class="controls">
-      <label for="sort"><strong>Sắp xếp theo:</strong></label>
-      <select id="sort" onchange="sortStudents()">
-        <option value="name">Tên</option>
-        <option value="dob">Ngày sinh</option>
-      </select>
+  <main class="main-content">
+    <div class="container">
+      <div class="controls">
+        <label for="sort"><strong>🔤 Sắp xếp theo:</strong></label>
+        <select id="sort" onchange="sortStudents()" class="form-select" style="display: inline-block; width: auto; margin-left: var(--space-sm);">
+          <option value="name">Tên</option>
+          <option value="dob">Ngày sinh</option>
+        </select>
+      </div>
+      
+      <section class="content-section">
+        <h2 class="section-title">👨‍🎓 Thành viên lớp A8</h2>
+        <div class="student-grid" id="studentList"></div>
+      </section>
     </div>
-    <div class="student-list" id="studentList"></div>
   </main>
 
   <div id="imagePopup" class="popup-overlay" onclick="closePopup(event)">
     <div class="popup-content">
-      <img id="popupImg" src="" alt="">
+      <img id="popupImg" src="" alt="" class="popup-img">
       <div id="popupInfo"></div>
-      <span class="close-btn" onclick="closePopup(event)">&times;</span>
+      <span class="popup-close" onclick="closePopup(event)">&times;</span>
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
+    </div>
   </footer>
 
   <script>
@@ -306,18 +115,18 @@
       container.innerHTML = '';
       list.forEach(student => {
         const card = document.createElement('div');
-        card.className = 'student-card';
+        card.className = 'student-card card';
         card.innerHTML = `
-          <img src="${student.thumb}" loading="lazy" alt="${student.name}" onclick="openPopup('${student.full}', 'Tên: ${student.name}\\nNgày sinh: ${formatDate(student.dob)}')">
-          <h4>${student.name}</h4>
+          <img src="${student.thumb}" loading="lazy" alt="${student.name}" onclick="openPopup('${student.full}', 'Tên: ${student.name}\\nNgày sinh: ${formatDate(student.dob)}')" class="student-avatar">
+          <h4 class="student-name">${student.name}</h4>
         `;
         container.appendChild(card);
       });
     }
 
     function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-      localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+      document.body.classList.toggle("dark");
+      localStorage.setItem("darkMode", document.body.classList.contains("dark"));
     }
 
     function sortStudents() {
@@ -338,14 +147,14 @@
     }
 
     function closePopup(event) {
-      if (event.target.id === "imagePopup" || event.target.classList.contains("close-btn")) {
+      if (event.target.id === "imagePopup" || event.target.classList.contains("popup-close")) {
         document.getElementById('imagePopup').classList.remove('show');
       }
     }
 
     window.onload = () => {
       if (localStorage.getItem("darkMode") === "true") {
-        document.body.classList.add("dark-mode");
+        document.body.classList.add("dark");
       }
       sortStudents();
     };
