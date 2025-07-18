@@ -1,313 +1,208 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lưu bút lớp A8</title>
-  <link rel="icon" href="images/logo-a8.png" type="image/png" />
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <link rel="icon" href="images/logo-a8.png" type="image/png">
   <style>
+    :root {
+      --bg-light: #fefefe;
+      --bg-dark: #121212;
+      --text-light: #000;
+      --text-dark: #eee;
+      --card-light: #ffffff;
+      --card-dark: #1e1e1e;
+    }
+
+    [data-theme="light"] {
+      background-color: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    [data-theme="dark"] {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
     body {
-      background-image: url('images/cover-camera-chair.jpg');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 1rem;
       margin: 0;
-      padding: 0;
-      color: #000;
-      transition: background-color 0.4s, color 0.4s, background-image 0.4s;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    body.dark {
-      background-color: rgba(0, 0, 0, 0.7);
-      background-image: url('images/cover-camera-chair.jpg');
-      background-blend-mode: multiply;
-      color: #e0e0e0;
-    }
-
-    header, footer {
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
+    header {
       text-align: center;
-      padding: 20px;
-      position: relative;
-      transition: background 0.4s;
+      margin-bottom: 2rem;
     }
 
-    .toggle-mode {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(145deg, #ffffff50, #ffffff20);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    button.toggle-theme {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      z-index: 100;
     }
 
-    .toggle-mode:hover {
-      background: rgba(255, 255, 255, 0.4);
-      transform: rotate(15deg);
-    }
-
-    .toggle-mode svg {
-      width: 24px;
-      height: 24px;
-      fill: white;
-      transition: opacity 0.3s ease;
-      position: absolute;
-    }
-
-    .icon-sun { opacity: 0; }
-    body.dark .icon-moon { opacity: 0; }
-    body.dark .icon-sun { opacity: 1; }
-
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 20px 0 0;
+    form {
+      max-width: 600px;
+      margin: 0 auto 2rem;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 9999px;
-      transition: background 0.3s, box-shadow 0.3s;
-      font-size: 16px;
-    }
-
-    nav a:hover, nav a.active {
-      background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .section {
-      background: rgba(255, 255, 255, 0.9);
-      margin: 30px auto;
-      padding: 20px;
-      max-width: 900px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      animation: fadeInUp 0.6s ease-out;
-      color: #000;
-    }
-
-    body.dark .section {
-      background: rgba(30, 30, 30, 0.95);
-      color: #e0e0e0;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    form input, form textarea, form button {
-      display: block;
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 8px;
+    input, textarea {
+      padding: 0.75rem;
       border: 1px solid #ccc;
-      font-size: 16px;
+      border-radius: 10px;
+      font-size: 1rem;
     }
 
-    form button {
-      background: #fda085;
+    button[type="submit"] {
+      background-color: #007bff;
       color: white;
       border: none;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s;
     }
 
-    form button:hover {
-      background: #f76b1c;
+    #notes-container {
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .note {
-      border-bottom: 1px solid #ccc;
-      margin-bottom: 15px;
-      padding-bottom: 10px;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: var(--card-light);
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    [data-theme="dark"] .note {
+      background-color: var(--card-dark);
     }
 
     .note h4 {
-      margin: 0;
+      margin: 0 0 0.3rem;
     }
 
     .note small {
       display: block;
       color: gray;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
 <body>
+  <button class="toggle-theme">🌙</button>
   <header>
-    <h1>Lớp A8 – Niên khóa 2021–2025</h1>
-    <p class="slogan">Nơi lưu giữ những khoảnh khắc đáng nhớ</p>
-    <button class="toggle-mode" onclick="toggleMode()">
-      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M21 12.79A9 9 0 0111.21 3a7 7 0 000 14A9 9 0 0021 12.79z"/>
-      </svg>
-      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3"/>
-        <line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="3" y2="12"/>
-        <line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-      </svg>
-    </button>
-    <nav>
-      <ul>
-        <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="gallery.html">Album ảnh</a></li>
-        <li><a href="guestbook.html" class="active">Lưu bút</a></li>
-        <li><a href="classlist.html">Danh sách lớp</a></li>
-        <li><a href="events.html">Thông tin</a></li>
-        <li><a href="documents.html">Tài liệu</a></li>
-      </ul>
-    </nav>
+    <h1>Lưu bút lớp A8</h1>
   </header>
 
   <main>
-    <section class="section">
-      <h2>📖 Lưu bút</h2>
-      <form id="note-form">
-        <input type="text" id="name" placeholder="Tên của bạn" required>
-        <textarea id="message" placeholder="Nhập lưu bút..." required></textarea>
-        <button type="submit">Gửi</button>
-      </form>
+    <form id="note-form">
+      <input type="text" id="name" placeholder="Tên của bạn" required>
+      <textarea id="message" placeholder="Nhập lưu bút..." required></textarea>
+      <button type="submit">Gửi</button>
+    </form>
 
-      <div id="notes-container">
-        <p>Đang tải lưu bút...</p>
-      </div>
+    <section id="notes-container">
+      <p>Đang tải lưu bút...</p>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
-  </footer>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script>
-    function toggleMode() {
-      document.body.classList.toggle("dark");
-      const isDark = document.body.classList.contains("dark");
-      localStorage.setItem("darkMode", isDark);
-    }
-
-    window.onload = function () {
-      const isDark = localStorage.getItem("darkMode") === "true";
-      if (isDark) document.body.classList.add("dark");
-      loadNotes();
-    };
-
+    // Cấu hình Firebase (đã điền sẵn của bạn)
     const firebaseConfig = {
       apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
       authDomain: "lopa8-f84f8.firebaseapp.com",
       projectId: "lopa8-f84f8",
       storageBucket: "lopa8-f84f8.firebasestorage.app",
       messagingSenderId: "955064222486",
-      appId: "1:955064222486:web:b8e57aadabb338082d8637"
+      appId: "1:955064222486:web:b8e57aadabb338082d8637",
       measurementId: "G-436QXV62VQ"
     };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    // Chuyển sáng/tối
+    const toggleBtn = document.querySelector(".toggle-theme");
+    toggleBtn.onclick = () => {
+      const html = document.documentElement;
+      const current = html.getAttribute("data-theme");
+      const next = current === "light" ? "dark" : "light";
+      html.setAttribute("data-theme", next);
+      toggleBtn.textContent = next === "dark" ? "☀️" : "🌙";
+    };
+
+    // Tải lưu bút
     function loadNotes() {
       const container = document.getElementById("notes-container");
       container.innerHTML = "<p>Đang tải lưu bút...</p>";
 
-      db.collection("guestbook").get()
+      db.collection("guestbook").orderBy("timestamp", "desc").get()
         .then(snapshot => {
-          const notes = [];
-
-          snapshot.forEach(doc => {
-            const data = doc.data();
-            notes.push({
-              name: data.name,
-              message: data.message,
-              timestamp: data.timestamp ? data.timestamp.toDate() : null
-            });
-          });
-
-          notes.sort((a, b) => {
-            if (!a.timestamp) return 1;
-            if (!b.timestamp) return -1;
-            return b.timestamp - a.timestamp;
-          });
-
           container.innerHTML = "";
-
-          if (notes.length === 0) {
+          if (snapshot.empty) {
             container.innerHTML = "<p>Chưa có lưu bút nào.</p>";
             return;
           }
 
-          for (const note of notes) {
-            const noteDiv = document.createElement("div");
-            noteDiv.className = "note";
-            const timeHTML = note.timestamp
-              ? `<small>${note.timestamp.toLocaleString('vi-VN')}</small>`
-              : "";
-            noteDiv.innerHTML = `<h4>${note.name}</h4>${timeHTML}<p>${note.message}</p>`;
-            container.appendChild(noteDiv);
-          }
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            const div = document.createElement("div");
+            div.className = "note";
+            const time = data.timestamp?.toDate().toLocaleString('vi-VN') || "";
+            div.innerHTML = `
+              <h4>${data.name}</h4>
+              <small>${time}</small>
+              <p>${data.message}</p>
+            `;
+            container.appendChild(div);
+          });
         })
         .catch(error => {
           container.innerHTML = `<p style="color:red;">Không thể tải lưu bút: ${error.message}</p>`;
-          console.error("Lỗi khi tải lưu bút:", error);
         });
     }
 
+    loadNotes();
+
+    // Gửi lưu bút
     const form = document.getElementById("note-form");
-    form.addEventListener("submit", function (e) {
+    form.onsubmit = (e) => {
       e.preventDefault();
       const name = document.getElementById("name").value.trim();
       const message = document.getElementById("message").value.trim();
       if (!name || !message) return;
 
       db.collection("guestbook").add({
-        name: name,
-        message: message,
+        name,
+        message,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
         form.reset();
         loadNotes();
-      }).catch(error => {
-        alert("Lỗi khi gửi lưu bút: " + error.message);
+      }).catch(err => {
+        alert("Không gửi được lưu bút: " + err.message);
       });
-    });
+    };
   </script>
 </body>
 </html>
