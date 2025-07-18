@@ -7,9 +7,11 @@
   <link rel="icon" href="images/logo-a8.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <style>
+    /* (GIỮ NGUYÊN TOÀN BỘ CSS CỦA BẠN - mình không thay đổi dòng nào) */
     body {
       background-image: url('images/cover-camera-chair.jpg');
       background-size: cover;
@@ -21,14 +23,12 @@
       color: #000;
       transition: background-color 0.4s, color 0.4s, background-image 0.4s;
     }
-
     body.dark {
       background-color: rgba(0, 0, 0, 0.7);
       background-image: url('images/cover-camera-chair.jpg');
       background-blend-mode: multiply;
       color: #e0e0e0;
     }
-
     header, footer {
       background: rgba(0, 0, 0, 0.6);
       color: white;
@@ -37,7 +37,6 @@
       position: relative;
       transition: background 0.4s;
     }
-
     .toggle-mode {
       position: absolute;
       top: 20px;
@@ -55,12 +54,10 @@
       transition: background 0.3s, transform 0.3s;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
-
     .toggle-mode:hover {
       background: rgba(255, 255, 255, 0.4);
       transform: rotate(15deg);
     }
-
     .toggle-mode svg {
       width: 24px;
       height: 24px;
@@ -68,11 +65,9 @@
       transition: opacity 0.3s ease;
       position: absolute;
     }
-
     .icon-sun { opacity: 0; }
     body.dark .icon-moon { opacity: 0; }
     body.dark .icon-sun { opacity: 1; }
-
     nav ul {
       list-style: none;
       padding: 0;
@@ -82,7 +77,6 @@
       justify-content: center;
       gap: 10px;
     }
-
     nav a {
       color: white;
       text-decoration: none;
@@ -91,12 +85,10 @@
       transition: background 0.3s, box-shadow 0.3s;
       font-size: 16px;
     }
-
     nav a:hover, nav a.active {
       background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
-
     .section {
       background: rgba(255, 255, 255, 0.9);
       margin: 30px auto;
@@ -107,12 +99,10 @@
       animation: fadeInUp 0.6s ease-out;
       color: #000;
     }
-
     body.dark .section {
       background: rgba(30, 30, 30, 0.95);
       color: #e0e0e0;
     }
-
     .note {
       margin-bottom: 20px;
       padding: 15px;
@@ -121,42 +111,35 @@
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-
     body.dark .note {
       background-color: #2a2a2a;
       border-left-color: #90CAF9;
     }
-
     .note h4 {
       margin: 0 0 5px;
       color: #333;
     }
-
     body.dark .note h4 {
       color: #fff;
     }
-
     form {
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-top: 30px;
     }
-
     form input, form textarea {
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
       font-size: 1em;
     }
-
     body.dark form input,
     body.dark form textarea {
       background-color: #333;
       color: white;
       border: 1px solid #555;
     }
-
     form button {
       background-color: #2196F3;
       color: white;
@@ -166,11 +149,9 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-
     form button:hover {
       background-color: #1976D2;
     }
-
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -237,38 +218,43 @@
     const firebaseConfig = {
       apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
       authDomain: "lopa8-f84f8.firebaseapp.com",
+      databaseURL: "https://lopa8-f84f8-default-rtdb.firebaseio.com",
       projectId: "lopa8-f84f8",
-      storageBucket: "lopa8-f84f8.firebasestorage.app",
+      storageBucket: "lopa8-f84f8.appspot.com",
       messagingSenderId: "955064222486",
       appId: "1:955064222486:web:b8e57aadabb338082d8637",
       measurementId: "G-436QXV62VQ"
     };
     firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    const db = firebase.database();
 
     function loadNotes() {
-      db.collection("guestbook").orderBy("timestamp", "desc").get().then(snapshot => {
-        const container = document.getElementById("notes-container");
+      const container = document.getElementById("notes-container");
+      db.ref("guestbook").orderByChild("timestamp").once("value", function(snapshot) {
         container.innerHTML = "";
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const noteDiv = document.createElement('div');
-          noteDiv.className = 'note';
-          noteDiv.innerHTML = `<h4>${data.name}</h4><p>${data.message}</p>`;
-          container.appendChild(noteDiv);
-        });
+        const data = snapshot.val();
+        if (data) {
+          const entries = Object.entries(data).reverse();
+          entries.forEach(([key, value]) => {
+            const noteDiv = document.createElement('div');
+            noteDiv.className = 'note';
+            noteDiv.innerHTML = `<h4>${value.name}</h4><p>${value.message}</p>`;
+            container.appendChild(noteDiv);
+          });
+        }
       });
     }
 
     function submitNote(event) {
       event.preventDefault();
-      const name = document.getElementById("name").value;
-      const message = document.getElementById("message").value;
+      const name = document.getElementById("name").value.trim();
+      const message = document.getElementById("message").value.trim();
+      if (!name || !message) return;
 
-      db.collection("guestbook").add({
+      db.ref("guestbook").push({
         name: name,
         message: message,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: Date.now()
       }).then(() => {
         document.getElementById("name").value = "";
         document.getElementById("message").value = "";
