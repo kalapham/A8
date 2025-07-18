@@ -3,55 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sổ lưu bút | Lớp A8</title>
-  <link rel="icon" href="favicon.png" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
-  <script>
-    if (localStorage.getItem("theme") === "dark" ||
-      (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  </script>
-</head>
-<body class="bg-zinc-100 text-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 transition-colors duration-500">
-
-  <!-- Header -->
-  <header class="bg-white dark:bg-zinc-800 shadow sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Sổ Lưu Bút A8</h1>
-      <button id="theme-toggle" class="text-xl p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition">
-        🌙
-      </button>
-    </div>
-    <nav class="max-w-5xl mx-auto px-4 py-2 flex space-x-4 text-sm font-semibold text-orange-600 dark:text-orange-400">
-      <a href="index.html" class="hover:underline">Trang chủ</a>
-      <a href="classlist.html" class="hover:underline">Danh sách lớp</a>
-      <a href="documents.html" class="hover:underline">Tài liệu</a>
-      <a href="events.html" class="hover:underline">Sự kiện</a>
-      <a href="gallery.html" class="hover:underline">Thư viện ảnh</a>
-      <a href="guestbook.html" class="underline text-orange-700 dark:text-orange-300">Lưu bút</a>
-    </nav>
-  </header>
-
-  <!-- Main Content -->
-  <main class="max-w-3xl mx-auto px-4 py-8 space-y-6">
-    <h2 class="text-3xl font-bold text-center mb-6">Lưu bút từ các thành viên</h2>
-    <div id="guestbook-entries" class="space-y-4">
-      <p class="text-center text-zinc-500 dark:text-zinc-400">Đang tải lưu bút...</p>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="text-center py-6 text-sm text-zinc-500 dark:text-zinc-400">
-    &copy; 2025 Lớp A8. All rights reserved.
-  </footer>
-
-  <!-- Firebase + JS Logic -->
+  <title>Lưu bút - Lớp A8</title>
+  <link rel="icon" href="images/logo-a8.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
@@ -66,45 +24,240 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const guestbookDiv = document.getElementById("guestbook-entries");
-
-    async function loadGuestbook() {
-      try {
-        const snapshot = await getDocs(collection(db, "guestbook"));
-        if (snapshot.empty) {
-          guestbookDiv.innerHTML = "<p class='text-center text-zinc-400'>Chưa có lưu bút nào.</p>";
-          return;
-        }
-        guestbookDiv.innerHTML = "";
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const entry = document.createElement("div");
-          entry.className = "bg-white dark:bg-zinc-800 shadow-md rounded-lg p-4";
-          entry.innerHTML = `
-            <p class="font-bold text-orange-700 dark:text-orange-400">${data.name || "Ẩn danh"}</p>
-            <p class="whitespace-pre-line mt-1 text-zinc-700 dark:text-zinc-200">${data.message || "(Không có nội dung)"}</p>
-          `;
-          guestbookDiv.appendChild(entry);
-        });
-      } catch (err) {
-        guestbookDiv.innerHTML = "<p class='text-red-500 text-center'>Lỗi khi tải lưu bút.</p>";
-        console.error("Lỗi lấy dữ liệu:", err);
-      }
+    async function loadNotes() {
+      const q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"));
+      const querySnapshot = await getDocs(q);
+      const container = document.getElementById("notes-container");
+      container.innerHTML = "";
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const noteDiv = document.createElement("div");
+        noteDiv.className = "note";
+        noteDiv.innerHTML = `<h4>${data.name}</h4><p>${data.message}</p>`;
+        container.appendChild(noteDiv);
+      });
     }
 
-    loadGuestbook();
-  </script>
+    async function submitNote(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+      await addDoc(collection(db, "guestbook"), {
+        name,
+        message,
+        timestamp: serverTimestamp(),
+      });
+      document.getElementById("name").value = "";
+      document.getElementById("message").value = "";
+      loadNotes();
+    }
 
-  <!-- Dark mode toggle -->
-  <script>
-    const themeToggle = document.getElementById("theme-toggle");
-    themeToggle.addEventListener("click", () => {
-      const html = document.documentElement;
-      html.classList.toggle("dark");
-      const isDark = html.classList.contains("dark");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-      themeToggle.textContent = isDark ? "☀️" : "🌙";
+    window.addEventListener("DOMContentLoaded", () => {
+      loadNotes();
+      const isDark = localStorage.getItem("darkMode") === "true";
+      if (isDark) {
+        document.body.classList.add("dark");
+        document.getElementById("theme-icon").classList.remove("fa-moon");
+        document.getElementById("theme-icon").classList.add("fa-sun");
+        document.getElementById("theme-toggle").classList.add("rotate");
+      }
     });
+
+    window.submitNote = submitNote;
+  </script>
+  <style>
+    body {
+      background-image: url('images/cover-camera-chair.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #000;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    body.dark {
+      background-image: url('images/cover-camera-chair.jpg');
+      filter: brightness(0.65);
+      color: #eee;
+    }
+
+    header, footer {
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .toggle-mode {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      color: white;
+      transition: transform 0.4s ease;
+    }
+
+    .toggle-mode.rotate {
+      transform: rotate(180deg);
+      color: #fdd835;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      transition: background 0.3s, box-shadow 0.3s;
+      font-size: 0.95em;
+    }
+
+    nav a:hover, nav a.active {
+      background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 30px auto;
+      padding: 20px;
+      max-width: 900px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    body.dark .section {
+      background: rgba(30, 30, 30, 0.8);
+    }
+
+    .note {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f0f0f0;
+      border-left: 5px solid #2196F3;
+      border-radius: 12px;
+    }
+
+    body.dark .note {
+      background-color: #2a2a2a;
+      border-left-color: #90CAF9;
+    }
+
+    .note h4 {
+      margin: 0 0 5px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    form input, form textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    body.dark form input,
+    body.dark form textarea {
+      background-color: #333;
+      color: white;
+      border: 1px solid #555;
+    }
+
+    form button {
+      background-color: #2196F3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    form button:hover {
+      background-color: #1976D2;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lớp A8 – Niên khóa 2021–2025</h1>
+    <p>Lưu bút – Nơi chia sẻ những kỷ niệm</p>
+    <button class="toggle-mode" onclick="toggleMode()" id="theme-toggle" aria-label="Chuyển chế độ sáng/tối">
+      <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+    <nav>
+      <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="gallery.html">Album ảnh</a></li>
+        <li><a href="guestbook.html" class="active">Lưu bút</a></li>
+        <li><a href="classlist.html">Danh sách lớp</a></li>
+        <li><a href="events.html">Thông tin</a></li>
+        <li><a href="documents.html">Tài liệu</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2>Những dòng lưu bút</h2>
+      <div id="notes-container"></div>
+
+      <h3>Gửi lưu bút của bạn</h3>
+      <form id="noteForm">
+        <input type="text" id="name" placeholder="Tên của bạn" required />
+        <textarea id="message" rows="4" placeholder="Lời nhắn..." required></textarea>
+        <button type="submit">Gửi</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
+  </footer>
+
+  <script>
+    function toggleMode() {
+      const body = document.body;
+      const icon = document.getElementById("theme-icon");
+      const button = document.getElementById("theme-toggle");
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      if (isDark) {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+        button.classList.add("rotate");
+      } else {
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+        button.classList.remove("rotate");
+      }
+      localStorage.setItem("darkMode", isDark);
+    }
   </script>
 </body>
 </html>
