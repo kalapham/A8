@@ -6,6 +6,7 @@
   <title>Lưu bút - Lớp A8</title>
   <link rel="icon" href="images/logo-a8.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <style>
@@ -47,18 +48,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.2em;
+      color: white;
+      transition: transform 0.4s ease;
     }
 
-    .toggle-mode svg {
-      width: 24px;
-      height: 24px;
-      fill: white;
-      transition: transform 0.3s ease, fill 0.3s ease;
-    }
-
-    body.dark .toggle-mode svg {
-      fill: #fdd835;
+    .toggle-mode.rotate {
       transform: rotate(180deg);
+      color: #fdd835;
     }
 
     nav ul {
@@ -79,7 +76,7 @@
       font-size: 0.95em;
     }
 
-     nav a:hover, nav a.active {
+    nav a:hover, nav a.active {
       background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
@@ -154,10 +151,8 @@
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Lưu bút – Nơi chia sẻ những kỷ niệm</p>
-    <button class="toggle-mode" onclick="toggleMode()" aria-label="Chuyển chế độ sáng/tối">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 2a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm6.364 3.636a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707zM21 11a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1zm-2.222 6.364a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM12 19a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm-6.364-1.636a1 1 0 0 1 1.414 0l.707.707a1 1 0 1 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zM4 11a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2h1zm2.222-6.364a1 1 0 0 1 0 1.414l-.707.707A1 1 0 0 1 4.1 5.05l.707-.707a1 1 0 0 1 1.414 0zM12 6a6 6 0 1 0 0 12A6 6 0 0 0 12 6z"/>
-      </svg>
+    <button class="toggle-mode" onclick="toggleMode()" id="theme-toggle" aria-label="Chuyển chế độ sáng/tối">
+      <i class="fas fa-moon" id="theme-icon"></i>
     </button>
     <nav>
       <ul>
@@ -232,8 +227,23 @@
     }
 
     function toggleMode() {
-      document.body.classList.toggle("dark");
-      const isDark = document.body.classList.contains("dark");
+      const body = document.body;
+      const icon = document.getElementById("theme-icon");
+      const button = document.getElementById("theme-toggle");
+
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+
+      if (isDark) {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+        button.classList.add("rotate");
+      } else {
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+        button.classList.remove("rotate");
+      }
+
       localStorage.setItem("darkMode", isDark);
     }
 
@@ -241,6 +251,9 @@
       const isDark = localStorage.getItem("darkMode") === "true";
       if (isDark) {
         document.body.classList.add("dark");
+        document.getElementById("theme-icon").classList.remove("fa-moon");
+        document.getElementById("theme-icon").classList.add("fa-sun");
+        document.getElementById("theme-toggle").classList.add("rotate");
       }
       loadNotes();
     };
