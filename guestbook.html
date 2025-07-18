@@ -146,6 +146,12 @@
       padding: 10px 0;
     }
 
+    .message-time {
+      font-size: 0.9rem;
+      color: gray;
+      margin-bottom: 4px;
+    }
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -212,7 +218,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
@@ -239,7 +245,7 @@
         await addDoc(collection(db, "guestbook"), {
           name,
           message,
-          timestamp: new Date()
+          timestamp: serverTimestamp()
         });
         form.reset();
       }
@@ -250,9 +256,21 @@
       messagesDiv.innerHTML = "";
       snapshot.forEach((doc) => {
         const data = doc.data();
+        const timestamp = data.timestamp?.toDate?.();
+        const timeString = timestamp ? timestamp.toLocaleString('vi-VN', {
+          hour: '2-digit',
+          minute: '2-digit',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        }) : 'Không rõ thời gian';
+
         const div = document.createElement("div");
         div.classList.add("message");
-        div.innerHTML = `<strong>${data.name}</strong>: ${data.message}`;
+        div.innerHTML = `
+          <strong>${data.name}</strong> <div class="message-time">Đăng lúc: ${timeString}</div>
+          <div>${data.message}</div>
+        `;
         messagesDiv.appendChild(div);
       });
     });
