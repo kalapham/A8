@@ -5,14 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lưu bút - Lớp A8</title>
   <link rel="icon" href="images/logo-a8.png" type="image/png" />
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
+      authDomain: "lopa8-f84f8.firebaseapp.com",
+      projectId: "lopa8-f84f8",
+      storageBucket: "lopa8-f84f8.firebasestorage.app",
+      messagingSenderId: "955064222486",
+      appId: "1:955064222486:web:b8e57aadabb338082d8637",
+      measurementId: "G-436QXV62VQ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadNotes() {
+      const container = document.getElementById("notes-container");
+      container.innerHTML = "<p>Đang tải lưu bút...</p>";
+      try {
+        const querySnapshot = await getDocs(collection(db, "guestbook"));
+        const notes = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          notes.push({
+            name: data.name,
+            message: data.message,
+            timestamp: data.timestamp ? data.timestamp.toDate() : null
+          });
+        });
+
+        notes.sort((a, b) => {
+          if (!a.timestamp) return 1;
+          if (!b.timestamp) return -1;
+          return b.timestamp - a.timestamp;
+        });
+
+        container.innerHTML = "";
+        if (notes.length === 0) {
+          container.innerHTML = "<p>Chưa có lưu bút nào.</p>";
+          return;
+        }
+
+        for (const note of notes) {
+          const noteDiv = document.createElement("div");
+          noteDiv.className = "note";
+          const timeHTML = note.timestamp ? `<small>${note.timestamp.toLocaleString('vi-VN')}</small>` : "";
+          noteDiv.innerHTML = `<h4>${note.name}</h4>${timeHTML}<p>${note.message}</p>`;
+          container.appendChild(noteDiv);
+        }
+      } catch (err) {
+        container.innerHTML = `<p style="color:red;">Không thể tải lưu bút: ${err.message}</p>`;
+        console.error("Lỗi khi tải lưu bút:", err);
+      }
     }
 
+    async function submitNote(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const message = document.getElementById("message").value.trim();
+      if (!name || !message) return;
+
+      try {
+        await addDoc(collection(db, "guestbook"), {
+          name: name,
+          message: message,
+          timestamp: serverTimestamp()
+        });
+        document.getElementById("name").value = "";
+        document.getElementById("message").value = "";
+        loadNotes();
+      } catch (err) {
+        alert("Không thể gửi lưu bút: " + err.message);
+        console.error("Lỗi gửi lưu bút:", err);
+      }
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark");
+      }
+      loadNotes();
+    });
+
+    window.submitNote = submitNote;
+    window.toggleMode = toggleMode;
+  </script>
+  <style>
+    * { box-sizing: border-box; }
     body {
       background-image: url('images/cover-camera-chair.jpg');
       background-size: cover;
@@ -24,13 +111,11 @@
       color: #000;
       transition: background 0.5s, color 0.5s;
     }
-
     body.dark {
       background-image: none;
       background-color: #121212;
       color: #e0e0e0;
     }
-
     header, footer {
       background: rgba(0, 0, 0, 0.6);
       color: white;
@@ -38,7 +123,6 @@
       padding: 20px;
       position: relative;
     }
-
     .toggle-mode {
       position: absolute;
       right: 20px;
@@ -54,19 +138,16 @@
       justify-content: center;
       transition: transform 0.3s;
     }
-
     .toggle-mode svg {
       width: 24px;
       height: 24px;
       fill: white;
       transition: transform 0.3s ease, fill 0.3s ease;
     }
-
     body.dark .toggle-mode svg {
       fill: #fdd835;
       transform: rotate(180deg);
     }
-
     nav ul {
       list-style: none;
       padding: 0;
@@ -76,7 +157,6 @@
       justify-content: center;
       gap: 10px;
     }
-
     nav a {
       color: white;
       text-decoration: none;
@@ -85,12 +165,10 @@
       transition: background 0.3s;
       font-size: 0.95em;
     }
-
     nav a:hover, nav a.active {
       background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
-
     .section {
       background: rgba(255, 255, 255, 0.9);
       margin: 30px auto;
@@ -101,12 +179,10 @@
       animation: fadeInUp 0.6s ease-out;
       color: #000;
     }
-
     body.dark .section {
       background: rgba(40, 40, 40, 0.95);
       color: #e0e0e0;
     }
-
     .note {
       margin-bottom: 20px;
       padding: 15px;
@@ -115,42 +191,35 @@
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-
     body.dark .note {
       background-color: #2a2a2a;
       border-left-color: #90CAF9;
     }
-
     .note h4 {
       margin: 0 0 5px;
       color: #333;
     }
-
     body.dark .note h4 {
       color: #fff;
     }
-
     form {
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-top: 30px;
     }
-
     form input, form textarea {
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
       font-size: 1em;
     }
-
     body.dark form input,
     body.dark form textarea {
       background-color: #333;
       color: white;
       border: 1px solid #555;
     }
-
     form button {
       background-color: #2196F3;
       color: white;
@@ -160,49 +229,19 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-
     form button:hover {
       background-color: #1976D2;
     }
-
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
     @media (max-width: 600px) {
-      header, footer {
-        padding: 15px 10px;
-      }
-
-      .toggle-mode {
-        right: 10px;
-        top: 10px;
-      }
-
-      nav ul {
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .section {
-        margin: 20px 10px;
-        padding: 16px;
-      }
-
-      form input, form textarea {
-        font-size: 1em;
-      }
-
-      form button {
-        font-size: 1em;
-      }
+      header, footer { padding: 15px 10px; }
+      .toggle-mode { right: 10px; top: 10px; }
+      nav ul { flex-direction: column; gap: 8px; }
+      .section { margin: 20px 10px; padding: 16px; }
+      form input, form textarea, form button { font-size: 1em; }
     }
   </style>
 </head>
@@ -244,63 +283,5 @@
   <footer>
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
   </footer>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
-      authDomain: "lopa8-f84f8.firebaseapp.com",
-      projectId: "lopa8-f84f8",
-      storageBucket: "lopa8-f84f8.firebasestorage.app",
-      messagingSenderId: "955064222486",
-      appId: "1:955064222486:web:b8e57aadabb338082d8637",
-      measurementId: "G-436QXV62VQ"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    function loadNotes() {
-      db.collection("guestbook").orderBy("timestamp", "desc").get().then(snapshot => {
-        const container = document.getElementById("notes-container");
-        container.innerHTML = "";
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const noteDiv = document.createElement('div');
-          noteDiv.className = 'note';
-          noteDiv.innerHTML = `<h4>${data.name}</h4><p>${data.message}</p>`;
-          container.appendChild(noteDiv);
-        });
-      });
-    }
-
-    function submitNote(event) {
-      event.preventDefault();
-      const name = document.getElementById("name").value;
-      const message = document.getElementById("message").value;
-
-      db.collection("guestbook").add({
-        name: name,
-        message: message,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        document.getElementById("name").value = "";
-        document.getElementById("message").value = "";
-        loadNotes();
-      });
-    }
-
-    function toggleMode() {
-      document.body.classList.toggle("dark");
-      const isDark = document.body.classList.contains("dark");
-      localStorage.setItem("darkMode", isDark);
-    }
-
-    window.onload = function () {
-      const isDark = localStorage.getItem("darkMode") === "true";
-      if (isDark) {
-        document.body.classList.add("dark");
-      }
-      loadNotes();
-    };
-  </script>
 </body>
 </html>
