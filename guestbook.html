@@ -1,128 +1,250 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Guestbook - Lớp A8</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lưu bút - Lớp A8</title>
+  <link rel="icon" href="images/logo-a8.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f3f3f3;
-      padding: 20px;
+      background-image: url('images/cover-camera-chair.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #000;
+      transition: background 0.5s, color 0.5s;
     }
-    h1 {
-      text-align: center;
-      color: #444;
+
+    body.dark {
+      background-image: url('images/cover-camera-chair.jpg');
+      filter: brightness(0.65);
+      color: #eee;
     }
-    form {
-      max-width: 500px;
-      margin: auto;
-      margin-bottom: 30px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    button {
-      padding: 10px 20px;
-      background: #007bff;
+
+    header, footer {
+      background: rgba(0, 0, 0, 0.6);
       color: white;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .toggle-mode {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      background: none;
       border: none;
-      border-radius: 6px;
       cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    button:hover {
-      background: #0056b3;
+
+    .toggle-mode svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+      transition: transform 0.3s ease, fill 0.3s ease;
     }
-    #guestbook-entries {
-      max-width: 600px;
-      margin: auto;
+
+    body.dark .toggle-mode svg {
+      fill: #fdd835;
+      transform: rotate(180deg);
     }
-    .entry {
-      background: #fff;
-      margin-bottom: 15px;
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      transition: background 0.3s, box-shadow 0.3s;
+      font-size: 0.95em;
+    }
+
+    nav a:hover, nav a.active {
+      background: linear-gradient(45deg, #ff9800, #ffc107);
+      color: black;
+      box-shadow: 0 0 10px rgba(255,193,7,0.6);
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 30px auto;
+      padding: 20px;
+      max-width: 900px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    body.dark .section {
+      background: rgba(30, 30, 30, 0.8);
+    }
+
+    .note {
+      margin-bottom: 20px;
       padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      background-color: #f0f0f0;
+      border-left: 5px solid #2196F3;
+      border-radius: 12px;
     }
-    .entry strong {
-      color: #333;
+
+    body.dark .note {
+      background-color: #2a2a2a;
+      border-left-color: #90CAF9;
+    }
+
+    .note h4 {
+      margin: 0 0 5px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    form input, form textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    body.dark form input,
+    body.dark form textarea {
+      background-color: #333;
+      color: white;
+      border: 1px solid #555;
+    }
+
+    form button {
+      background-color: #2196F3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    form button:hover {
+      background-color: #1976D2;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Lớp A8 – Niên khóa 2021–2025</h1>
+    <p>Lưu bút – Nơi chia sẻ những kỷ niệm</p>
+    <button class="toggle-mode" onclick="toggleMode()" aria-label="Chuyển chế độ sáng/tối">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm6.364 3.636a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707zM21 11a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1zm-2.222 6.364a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM12 19a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm-6.364-1.636a1 1 0 0 1 1.414 0l.707.707a1 1 0 1 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zM4 11a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2h1zm2.222-6.364a1 1 0 0 1 0 1.414l-.707.707A1 1 0 0 1 4.1 5.05l.707-.707a1 1 0 0 1 1.414 0zM12 6a6 6 0 1 0 0 12A6 6 0 0 0 12 6z"/>
+      </svg>
+    </button>
+    <nav>
+      <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="gallery.html">Album ảnh</a></li>
+        <li><a href="guestbook.html" class="active">Lưu bút</a></li>
+        <li><a href="classlist.html">Danh sách lớp</a></li>
+        <li><a href="events.html">Thông tin</a></li>
+        <li><a href="documents.html">Tài liệu</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <h1>Sổ lưu bút Lớp A8 💌</h1>
+  <main>
+    <section class="section">
+      <h2>Những dòng lưu bút</h2>
+      <div id="notes-container"></div>
 
-  <form id="guestbook-form">
-    <input type="text" id="name" placeholder="Tên bạn..." required>
-    <textarea id="message" placeholder="Lời nhắn của bạn..." required></textarea>
-    <button type="submit">Gửi lưu bút</button>
-  </form>
+      <h3>Gửi lưu bút của bạn</h3>
+      <form onsubmit="submitNote(event)">
+        <input type="text" id="name" placeholder="Tên của bạn" required />
+        <textarea id="message" rows="4" placeholder="Lời nhắn..." required></textarea>
+        <button type="submit">Gửi</button>
+      </form>
+    </section>
+  </main>
 
-  <div id="guestbook-entries"></div>
-
-  <!-- Firebase SDK v8 -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <footer>
+    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
+  </footer>
 
   <script>
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
       authDomain: "lopa8-f84f8.firebaseapp.com",
-      databaseURL: "https://lopa8-f84f8-default-rtdb.firebaseio.com",
       projectId: "lopa8-f84f8",
       storageBucket: "lopa8-f84f8.appspot.com",
       messagingSenderId: "955064222486",
       appId: "1:955064222486:web:b8e57aadabb338082d8637",
       measurementId: "G-436QXV62VQ"
     };
-
-    // Khởi tạo Firebase
     firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-    const db = firebase.database();
-    const guestbookRef = db.ref("guestbook");
-
-    // Gửi form
-    document.getElementById("guestbook-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const message = document.getElementById("message").value.trim();
-      if (name && message) {
-        guestbookRef.push({
-          name: name,
-          message: message,
-          timestamp: Date.now()
+    function loadNotes() {
+      db.collection("guestbook").orderBy("timestamp", "desc").get().then(snapshot => {
+        const container = document.getElementById("notes-container");
+        container.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const noteDiv = document.createElement('div');
+          noteDiv.className = 'note';
+          noteDiv.innerHTML = `<h4>${data.name}</h4><p>${data.message}</p>`;
+          container.appendChild(noteDiv);
         });
-        document.getElementById("guestbook-form").reset();
-      }
-    });
+      });
+    }
 
-    // Hiển thị comment
-    guestbookRef.orderByChild("timestamp").on("value", function(snapshot) {
-      const guestbookEntries = document.getElementById("guestbook-entries");
-      guestbookEntries.innerHTML = "";
-      const data = snapshot.val();
-      if (data) {
-        const entries = Object.entries(data).sort((a, b) => b[1].timestamp - a[1].timestamp);
-        entries.forEach(([key, entry]) => {
-          const div = document.createElement("div");
-          div.className = "entry";
-          div.innerHTML = `<strong>${entry.name}:</strong><br>${entry.message}`;
-          guestbookEntries.appendChild(div);
-        });
+    function submitNote(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+      db.collection("guestbook").add({
+        name: name,
+        message: message,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("name").value = "";
+        document.getElementById("message").value = "";
+        loadNotes();
+      });
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      localStorage.setItem("darkMode", isDark);
+    }
+
+    window.onload = function () {
+      const isDark = localStorage.getItem("darkMode") === "true";
+      if (isDark) {
+        document.body.classList.add("dark");
       }
-    });
+      loadNotes();
+    };
   </script>
-
 </body>
 </html>
