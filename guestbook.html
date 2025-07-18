@@ -5,101 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lưu bút - Lớp A8</title>
   <link rel="icon" href="images/logo-a8.png" type="image/png" />
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
-      authDomain: "lopa8-f84f8.firebaseapp.com",
-      projectId: "lopa8-f84f8",
-      storageBucket: "lopa8-f84f8.firebasestorage.app",
-      messagingSenderId: "955064222486",
-      appId: "1:955064222486:web:b8e57aadabb338082d8637",
-      measurementId: "G-436QXV62VQ"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    async function loadNotes() {
-      const container = document.getElementById("notes-container");
-      container.innerHTML = "<p>Đang tải lưu bút...</p>";
-      try {
-        const querySnapshot = await getDocs(collection(db, "guestbook"));
-        const notes = [];
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          notes.push({
-            name: data.name,
-            message: data.message,
-            timestamp: data.timestamp ? data.timestamp.toDate() : null
-          });
-        });
-
-        notes.sort((a, b) => {
-          if (!a.timestamp) return 1;
-          if (!b.timestamp) return -1;
-          return b.timestamp - a.timestamp;
-        });
-
-        container.innerHTML = "";
-        if (notes.length === 0) {
-          container.innerHTML = "<p>Chưa có lưu bút nào.</p>";
-          return;
-        }
-
-        for (const note of notes) {
-          const noteDiv = document.createElement("div");
-          noteDiv.className = "note";
-          const timeHTML = note.timestamp ? `<small>${note.timestamp.toLocaleString('vi-VN')}</small>` : "";
-          noteDiv.innerHTML = `<h4>${note.name}</h4>${timeHTML}<p>${note.message}</p>`;
-          container.appendChild(noteDiv);
-        }
-      } catch (err) {
-        container.innerHTML = `<p style="color:red;">Không thể tải lưu bút: ${err.message}</p>`;
-        console.error("Lỗi khi tải lưu bút:", err);
-      }
-    }
-
-    async function submitNote(event) {
-      event.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const message = document.getElementById("message").value.trim();
-      if (!name || !message) return;
-
-      try {
-        await addDoc(collection(db, "guestbook"), {
-          name: name,
-          message: message,
-          timestamp: serverTimestamp()
-        });
-        document.getElementById("name").value = "";
-        document.getElementById("message").value = "";
-        loadNotes();
-      } catch (err) {
-        alert("Không thể gửi lưu bút: " + err.message);
-        console.error("Lỗi gửi lưu bút:", err);
-      }
-    }
-
-    function toggleMode() {
-      document.body.classList.toggle("dark");
-      localStorage.setItem("darkMode", document.body.classList.contains("dark"));
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      if (localStorage.getItem("darkMode") === "true") {
-        document.body.classList.add("dark");
-      }
-      loadNotes();
-    });
-
-    window.submitNote = submitNote;
-    window.toggleMode = toggleMode;
-  </script>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
     body {
       background-image: url('images/cover-camera-chair.jpg');
       background-size: cover;
@@ -109,45 +17,60 @@
       margin: 0;
       padding: 0;
       color: #000;
-      transition: background 0.5s, color 0.5s;
+      transition: background-color 0.4s, color 0.4s, background-image 0.4s;
     }
+
     body.dark {
-      background-image: none;
-      background-color: #121212;
+      background-color: rgba(0, 0, 0, 0.7);
+      background-image: url('images/cover-camera-chair.jpg');
+      background-blend-mode: multiply;
       color: #e0e0e0;
     }
+
     header, footer {
       background: rgba(0, 0, 0, 0.6);
       color: white;
       text-align: center;
       padding: 20px;
       position: relative;
+      transition: background 0.4s;
     }
+
     .toggle-mode {
       position: absolute;
-      right: 20px;
       top: 20px;
-      background: none;
-      border: none;
-      cursor: pointer;
+      right: 20px;
       width: 40px;
       height: 40px;
-      padding: 0;
+      background: linear-gradient(145deg, #ffffff50, #ffffff20);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.3s;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
+
+    .toggle-mode:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: rotate(15deg);
+    }
+
     .toggle-mode svg {
       width: 24px;
       height: 24px;
       fill: white;
-      transition: transform 0.3s ease, fill 0.3s ease;
+      transition: opacity 0.3s ease;
+      position: absolute;
     }
-    body.dark .toggle-mode svg {
-      fill: #fdd835;
-      transform: rotate(180deg);
-    }
+
+    .icon-sun { opacity: 0; }
+    body.dark .icon-moon { opacity: 0; }
+    body.dark .icon-sun { opacity: 1; }
+
     nav ul {
       list-style: none;
       padding: 0;
@@ -157,18 +80,21 @@
       justify-content: center;
       gap: 10px;
     }
+
     nav a {
       color: white;
       text-decoration: none;
       padding: 8px 16px;
-      border-radius: 8px;
-      transition: background 0.3s;
-      font-size: 0.95em;
+      border-radius: 9999px;
+      transition: background 0.3s, box-shadow 0.3s;
+      font-size: 16px;
     }
+
     nav a:hover, nav a.active {
       background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
+
     .section {
       background: rgba(255, 255, 255, 0.9);
       margin: 30px auto;
@@ -179,79 +105,77 @@
       animation: fadeInUp 0.6s ease-out;
       color: #000;
     }
+
     body.dark .section {
-      background: rgba(40, 40, 40, 0.95);
+      background: rgba(30, 30, 30, 0.95);
       color: #e0e0e0;
     }
-    .note {
+
+    h2 {
+      text-align: center;
       margin-bottom: 20px;
-      padding: 15px;
-      background-color: #f0f0f0;
-      border-left: 5px solid #2196F3;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    body.dark .note {
-      background-color: #2a2a2a;
-      border-left-color: #90CAF9;
-    }
-    .note h4 {
-      margin: 0 0 5px;
-      color: #333;
-    }
-    body.dark .note h4 {
-      color: #fff;
-    }
+
     form {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 30px;
     }
-    form input, form textarea {
+
+    input, textarea, button {
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 1em;
+      font-size: 16px;
     }
-    body.dark form input,
-    body.dark form textarea {
-      background-color: #333;
+
+    button {
+      background-color: #4CAF50;
       color: white;
-      border: 1px solid #555;
-    }
-    form button {
-      background-color: #2196F3;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
       cursor: pointer;
+      border: none;
       transition: background 0.3s;
     }
-    form button:hover {
-      background-color: #1976D2;
+
+    button:hover {
+      background-color: #45a049;
     }
+
+    .message {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @media (max-width: 600px) {
-      header, footer { padding: 15px 10px; }
-      .toggle-mode { right: 10px; top: 10px; }
-      nav ul { flex-direction: column; gap: 8px; }
-      .section { margin: 20px 10px; padding: 16px; }
-      form input, form textarea, form button { font-size: 1em; }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
-    <p>Lưu bút – Nơi chia sẻ những kỷ niệm</p>
-    <button class="toggle-mode" onclick="toggleMode()" aria-label="Chuyển chế độ sáng/tối">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 2a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm6.364 3.636a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707zM21 11a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1zm-2.222 6.364a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM12 19a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm-6.364-1.636a1 1 0 0 1 1.414 0l.707.707a1 1 0 1 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zM4 11a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2h1zm2.222-6.364a1 1 0 0 1 0 1.414l-.707.707A1 1 0 0 1 4.1 5.05l.707-.707a1 1 0 0 1 1.414 0zM12 6a6 6 0 1 0 0 12A6 6 0 0 0 12 6z"/>
+    <p class="slogan">Nơi lưu giữ những khoảnh khắc đáng nhớ</p>
+    <button class="toggle-mode" onclick="toggleMode()">
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 0111.21 3a7 7 0 000 14A9 9 0 0021 12.79z"/>
+      </svg>
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
       </svg>
     </button>
     <nav>
@@ -268,20 +192,85 @@
 
   <main>
     <section class="section">
-      <h2>Những dòng lưu bút</h2>
-      <div id="notes-container"></div>
-
-      <h3>Gửi lưu bút của bạn</h3>
-      <form onsubmit="submitNote(event)">
-        <input type="text" id="name" placeholder="Tên của bạn" required />
-        <textarea id="message" rows="4" placeholder="Lời nhắn..." required></textarea>
-        <button type="submit">Gửi</button>
+      <h2>✍️ Viết lưu bút</h2>
+      <form id="guestbook-form">
+        <input type="text" id="name" placeholder="Tên bạn" required />
+        <textarea id="message" placeholder="Lời nhắn" rows="4" required></textarea>
+        <button type="submit">Gửi lời nhắn</button>
       </form>
+    </section>
+
+    <section class="section">
+      <h2>📖 Những lời nhắn</h2>
+      <div id="messages"></div>
     </section>
   </main>
 
   <footer>
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
   </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyqMBaXEDcZ32aWZJyAt8DCg94SpzjdLc",
+      authDomain: "lopa8-f84f8.firebaseapp.com",
+      projectId: "lopa8-f84f8",
+      storageBucket: "lopa8-f84f8.appspot.com",
+      messagingSenderId: "955064222486",
+      appId: "1:955064222486:web:b8e57aadabb338082d8637",
+      measurementId: "G-436QXV62VQ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("guestbook-form");
+    const messagesDiv = document.getElementById("messages");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+
+      if (name && message) {
+        await addDoc(collection(db, "guestbook"), {
+          name,
+          message,
+          timestamp: new Date()
+        });
+        form.reset();
+      }
+    });
+
+    const q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"));
+    onSnapshot(q, (snapshot) => {
+      messagesDiv.innerHTML = "";
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.classList.add("message");
+        div.innerHTML = `<strong>${data.name}</strong>: ${data.message}`;
+        messagesDiv.appendChild(div);
+      });
+    });
+  </script>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      localStorage.setItem("darkMode", isDark);
+    }
+
+    window.onload = function () {
+      const isDark = localStorage.getItem("darkMode") === "true";
+      if (isDark) {
+        document.body.classList.add("dark");
+      }
+    };
+  </script>
 </body>
 </html>
