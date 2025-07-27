@@ -152,6 +152,63 @@
       margin-bottom: 4px;
     }
 
+    .rules-toggle {
+      display: block;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 20px;
+      color: #007BFF;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 15px;
+    }
+
+    .rules-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .rules-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .rules-box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: scaleIn 0.3s ease;
+    }
+
+    body.dark .rules-box {
+      background: #2c2c2c;
+      color: #fff;
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -199,6 +256,7 @@
   <main>
     <section class="section">
       <h2>✍️ Viết lưu bút</h2>
+      <span class="rules-toggle" onclick="toggleRules()">› Xem nội quy trước khi bình luận</span>
       <form id="guestbook-form">
         <input type="text" id="name" placeholder="Tên bạn" required />
         <textarea id="message" placeholder="Lời nhắn" rows="4" required></textarea>
@@ -211,6 +269,13 @@
       <div id="messages"></div>
     </section>
   </main>
+
+  <div id="rules-modal" class="rules-modal" onclick="toggleRules()">
+    <div class="rules-box" onclick="event.stopPropagation()">
+      <h3>Nội quy ghi lưu bút</h3>
+      <p>Viết nội dung lịch sự, đúng chủ đề, không dùng những ngôn từ mạnh, gây khó chịu, đả kích người khác, không spam. Nếu vi phạm quy định đã nêu, comment sẽ bị xoá và chặn ip vĩnh viễn.</p>
+    </div>
+  </div>
 
   <footer>
     <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
@@ -236,15 +301,27 @@
     const form = document.getElementById("guestbook-form");
     const messagesDiv = document.getElementById("messages");
 
+    async function getUserIP() {
+      try {
+        const res = await fetch("https://api.ipify.org?format=json");
+        const data = await res.json();
+        return data.ip;
+      } catch (err) {
+        return "Không rõ";
+      }
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const name = document.getElementById("name").value;
       const message = document.getElementById("message").value;
+      const ip = await getUserIP();
 
       if (name && message) {
         await addDoc(collection(db, "guestbook"), {
           name,
           message,
+          ip,
           timestamp: serverTimestamp()
         });
         form.reset();
@@ -281,6 +358,10 @@
       document.body.classList.toggle("dark");
       const isDark = document.body.classList.contains("dark");
       localStorage.setItem("darkMode", isDark);
+    }
+
+    function toggleRules() {
+      document.getElementById("rules-modal").classList.toggle("active");
     }
 
     window.onload = function () {
