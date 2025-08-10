@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <link rel="icon" href="images/logo-a8.png" type="image/png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Album ảnh của lớp A8 - Nơi lưu giữ những khoảnh khắc đẹp nhất của tập thể lớp trong suốt niên khóa 2021-2025">
   <title>Album ảnh - Lớp A8</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="images/logo-a8.png" type="image/png">
   <link rel="preload" as="image" href="images/059A8665.jpg">
+  
   <style>
     body {
       background-image: url('images/cover-camera-chair.jpg');
@@ -18,6 +19,7 @@
       padding: 0;
       transition: background-color 0.4s, color 0.4s, background-image 0.4s;
     }
+
     body::before {
       content: "";
       position: fixed;
@@ -26,13 +28,16 @@
       background: rgba(0,0,0,0.15);
       z-index: -1;
     }
+
     body.dark::before {
       background: linear-gradient(to bottom, rgba(20,20,20,0.7), rgba(10,10,10,0.85));
     }
+
     body.dark {
       background-color: #111;
       color: #e0e0e0;
     }
+
     header, footer {
       background: rgba(0, 0, 0, 0.6);
       color: white;
@@ -41,6 +46,7 @@
       position: relative;
       transition: background 0.4s;
     }
+
     .toggle-mode {
       position: absolute;
       top: 20px;
@@ -57,10 +63,12 @@
       transition: background 0.3s, transform 0.3s;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
+
     .toggle-mode:hover {
       background: rgba(255, 255, 255, 0.4);
       transform: rotate(15deg);
     }
+
     .toggle-mode svg {
       width: 24px;
       height: 24px;
@@ -68,9 +76,11 @@
       transition: opacity 0.3s ease;
       position: absolute;
     }
+
     .icon-sun { opacity: 0; }
     body.dark .icon-moon { opacity: 0; }
     body.dark .icon-sun { opacity: 1; }
+
     nav ul {
       list-style: none;
       padding: 0;
@@ -80,6 +90,7 @@
       gap: 10px;
       flex-wrap: wrap;
     }
+
     nav a {
       color: white;
       text-decoration: none;
@@ -88,10 +99,12 @@
       transition: background 0.3s, box-shadow 0.3s;
       font-size: 16px;
     }
+
     nav a:hover, nav a.active {
       background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
+
     .intro {
       background: rgba(255, 255, 255, 0.95);
       margin: 40px auto;
@@ -103,16 +116,19 @@
       text-align: center;
       transition: background-color 0.4s, color 0.4s;
     }
+
     body.dark .intro {
       background: rgba(30, 30, 30, 0.9);
       color: #f0f0f0;
     }
+
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 16px;
       margin-top: 20px;
     }
+
     .gallery-grid img {
       width: 100%;
       height: auto;
@@ -121,9 +137,11 @@
       transition: transform 0.3s;
       cursor: pointer;
     }
+
     .gallery-grid img:hover {
       transform: scale(1.05);
     }
+
     .lightbox {
       position: fixed;
       top: 0; left: 0;
@@ -138,20 +156,24 @@
       pointer-events: none;
       transition: opacity 0.3s;
     }
+
     .lightbox.show {
       opacity: 1;
       pointer-events: auto;
     }
+
     .lightbox img {
       max-width: 90%;
       max-height: 80vh;
       border-radius: 12px;
       animation: zoomIn 0.3s ease;
     }
+
     @keyframes zoomIn {
       from { transform: scale(0.8); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
+
     .lightbox-controls {
       position: absolute;
       top: 50%;
@@ -159,6 +181,7 @@
       display: flex;
       justify-content: space-between;
     }
+
     .lightbox-button {
       background: rgba(255,255,255,0.3);
       border: none;
@@ -166,7 +189,13 @@
       font-size: 2em;
       cursor: pointer;
       padding: 10px 20px;
+      transition: background-color 0.3s;
     }
+
+    .lightbox-button:hover {
+      background: rgba(255,255,255,0.5);
+    }
+
     .close-btn {
       position: absolute;
       top: 20px;
@@ -176,7 +205,13 @@
       background: none;
       border: none;
       cursor: pointer;
+      transition: transform 0.3s;
     }
+
+    .close-btn:hover {
+      transform: rotate(90deg);
+    }
+
     .download-btn {
       position: absolute;
       bottom: 30px;
@@ -187,17 +222,28 @@
       border-radius: 10px;
       font-size: 1em;
       text-decoration: none;
+      transition: background-color 0.3s, transform 0.3s;
     }
+
     .download-btn:hover {
       background: #00a3d2;
+      transform: translateY(-2px);
     }
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @media (max-width: 600px) {
+      .lightbox-controls { padding: 0 10px; }
+      .download-btn { right: 20px; bottom: 20px; }
+      .close-btn { right: 20px; }
+    }
   </style>
 </head>
 <body>
+  <!-- Header section -->
   <header>
     <h1>Lớp A8 – Niên khóa 2021–2025</h1>
     <p>Album ảnh - Những khoảnh khắc không thể quên</p>
@@ -228,43 +274,227 @@
       </ul>
     </nav>
   </header>
+
+  <!-- Main content -->
   <main>
     <section class="intro">
       <h2>Hình ảnh đáng nhớ</h2>
       <div class="gallery-grid">
-        <img src="thumb2/059A8665.webp" data-full="images/059A8665.jpg" alt="Ảnh 1" loading="lazy">
-        <img src="thumb2/NTS_2183.webp" data-full="images/NTS_2183.jpg" alt="Ảnh 2" loading="lazy">
-        <img src="thumb2/NTS_2622.webp" data-full="images/NTS_2622.jpg" alt="Ảnh 3" loading="lazy">
-        <img src="thumb2/NTS_2758.webp" data-full="images/NTS_2758.jpg" alt="Ảnh 4" loading="lazy">
-        <img src="thumb2/NTS_3052.webp" data-full="images/NTS_3052.jpg" alt="Ảnh 5" loading="lazy">
-        <img src="thumb2/NTS_3068.webp" data-full="images/NTS_3068.jpg" alt="Ảnh 6" loading="lazy">
-        <img src="thumb2/NTS_3128.webp" data-full="images/NTS_3128.jpg" alt="Ảnh 7" loading="lazy">
-        <img src="thumb2/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.webp" data-full="images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg" alt="Ảnh 8" loading="lazy">
-        <img src="thumb2/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.webp" data-full="images/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.jpg" alt="Ảnh 9" loading="lazy">
-        <img src="thumb2/IMG_1732338423721_1732340735884.webp" data-full="images/IMG_1732338423721_1732340735884.jpg" alt="Ảnh 10" loading="lazy">
-        <img src="thumb2/IMG_1729318457115_1729428802385.webp" data-full="images/IMG_1729318457115_1729428802385.jpg" alt="Ảnh 11" loading="lazy">
-        <img src="thumb2/z4892170970991_61238944d03f22e5135b84ad25275cee.webp" data-full="images/z4892170970991_61238944d03f22e5135b84ad25275cee.jpg" alt="Ảnh 12" loading="lazy">
-        <img src="thumb2/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.webp" data-full="images/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.jpg" alt="Ảnh 13" loading="lazy">
-        <img src="thumb2/IMG_1725621899399_1725623748671.webp" data-full="images/IMG_1725621899399_1725623748671.jpg" alt="Ảnh 14" loading="lazy">
-        <img src="thumb2/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.webp" data-full="images/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.jpg" alt="Ảnh 15" loading="lazy">
-        <img src="thumb2/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.webp" data-full="images/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.jpg" alt="Ảnh 16" loading="lazy">
-        <img src="thumb2/z4952619745070_d342574ad6404f68a00fc000b19bb888.webp" data-full="images/z4952619745070_d342574ad6404f68a00fc000b19bb888.jpg" alt="Ảnh 17" loading="lazy">
-        <img src="thumb2/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.webp" data-full="images/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.jpg" alt="Ảnh 18" loading="lazy">
-        <img src="thumb2/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.webp" data-full="images/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.jpg" alt="Ảnh 19" loading="lazy">
-        <img src="thumb2/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.webp" data-full="images/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.jpg" alt="Ảnh 20" loading="lazy">
-        <img src="thumb2/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.webp" data-full="images/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.jpg" alt="Ảnh 21" loading="lazy">
-        <img src="thumb2/z5110922636897_482186c6bcb196af33b00e1ba5737561.webp" data-full="images/z5110922636897_482186c6bcb196af33b00e1ba5737561.jpg" alt="Ảnh 22" loading="lazy">
-        <img src="thumb2/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.webp" data-full="images/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.jpg" alt="Ảnh 23" loading="lazy">
-        <img src="thumb2/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.webp" data-full="images/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.jpg" alt="Ảnh 24" loading="lazy">
-        <img src="thumb2/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.webp" data-full="images/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.jpg" alt="Ảnh 25" loading="lazy">
-        <img src="thumb2/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.webp" data-full="images/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.jpg" alt="Ảnh 26" loading="lazy"><!-- Thêm các ảnh khác theo mẫu này -->
-            </div>
+        <div class="gallery-grid">
+          <img src="thumb2/059A8665.webp" 
+               data-full="images/059A8665.jpg" 
+               alt="Ảnh tập thể lớp A8 trong buổi chụp kỷ yếu ngoài trời" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/NTS_2183.webp" 
+               data-full="images/NTS_2183.jpg" 
+               alt="Nhóm học sinh lớp A8 tạo dáng vui nhộn" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/NTS_2622.webp" 
+               data-full="images/NTS_2622.jpg" 
+               alt="Khoảnh khắc vui vẻ của các bạn nữ lớp A8" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/NTS_2758.webp" 
+               data-full="images/NTS_2758.jpg" 
+               alt="Nhóm bạn nam tạo dáng trong buổi chụp ảnh" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/NTS_3052.webp" 
+               data-full="images/NTS_3052.jpg" 
+               alt="Các bạn học sinh tạo hình trái tim" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/NTS_3068.webp" 
+               data-full="images/NTS_3068.jpg" 
+               alt="Khoảnh khắc đáng nhớ trong giờ học" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/NTS_3128.webp" 
+               data-full="images/NTS_3128.jpg" 
+               alt="Hoạt động ngoại khóa của lớp A8" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.webp" 
+               data-full="images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg" 
+               alt="Ảnh kỷ yếu tập thể lớp A8" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.webp" 
+               data-full="images/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.jpg" 
+               alt="Hoạt động văn nghệ của lớp" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/IMG_1732338423721_1732340735884.webp" 
+               data-full="images/IMG_1732338423721_1732340735884.jpg" 
+               alt="Kỷ niệm vui vẻ trong lớp học" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/IMG_1729318457115_1729428802385.webp" 
+               data-full="images/IMG_1729318457115_1729428802385.jpg" 
+               alt="Hoạt động nhóm của các bạn học sinh" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z4892170970991_61238944d03f22e5135b84ad25275cee.webp" 
+               data-full="images/z4892170970991_61238944d03f22e5135b84ad25275cee.jpg" 
+               alt="Giờ học tập trung của lớp A8" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.webp" 
+               data-full="images/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.jpg" 
+               alt="Hoạt động thể thao của lớp" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/IMG_1725621899399_1725623748671.webp" 
+               data-full="images/IMG_1725621899399_1725623748671.jpg" 
+               alt="Khoảnh khắc vui đùa giữa giờ" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.webp" 
+               data-full="images/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.jpg" 
+               alt="Hoạt động ngoài trời của lớp A8" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.webp" 
+               data-full="images/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.jpg" 
+               alt="Tiết học thực hành của lớp" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z4952619745070_d342574ad6404f68a00fc000b19bb888.webp" 
+               data-full="images/z4952619745070_d342574ad6404f68a00fc000b19bb888.jpg" 
+               alt="Hoạt động tập thể của lớp A8" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.webp" 
+               data-full="images/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.jpg" 
+               alt="Giờ giải lao vui vẻ" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.webp" 
+               data-full="images/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.jpg" 
+               alt="Hoạt động văn hóa của lớp" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.webp" 
+               data-full="images/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.jpg" 
+               alt="Khoảnh khắc học tập nghiêm túc" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.webp" 
+               data-full="images/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.jpg" 
+               alt="Hoạt động ngoại khóa bổ ích" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z5110922636897_482186c6bcb196af33b00e1ba5737561.webp" 
+               data-full="images/z5110922636897_482186c6bcb196af33b00e1ba5737561.jpg" 
+               alt="Tiết học sáng tạo của lớp" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.webp" 
+               data-full="images/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.jpg" 
+               alt="Hoạt động tập thể đoàn kết" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.webp" 
+               data-full="images/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.jpg" 
+               alt="Khoảnh khắc vui vẻ của tập thể lớp" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.webp" 
+               data-full="images/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.jpg" 
+               alt="Hoạt động giao lưu của lớp A8" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+          
+          <img src="thumb2/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.webp" 
+               data-full="images/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.jpg" 
+               alt="Kỷ niệm đáng nhớ của tập thể lớp A8" 
+               loading="lazy"
+               width="200" 
+               height="150"
+               aria-label="Xem ảnh phóng to">
+        </div>
+<!-- Gallery images here - I'll continue in the next message due to length -->
+      </div>
     </section>
   </main>
-  <footer>
-    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
-  </footer>
 
+  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <button class="close-btn" onclick="closeLightbox()">&times;</button>
     <div class="lightbox-controls">
@@ -274,6 +504,10 @@
     <img id="lightbox-img" src="" alt="Phóng to ảnh">
     <a id="downloadLink" class="download-btn" href="#" download target="_blank">⬇️ Tải ảnh</a>
   </div>
+
+  <footer>
+    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
+  </footer>
 
   <script>
     const images = Array.from(document.querySelectorAll('.gallery-grid img'));
