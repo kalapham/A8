@@ -1,335 +1,618 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-theme="light">
 <head>
   <link rel="icon" href="images/logo-a8.png" type="image/png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Album ảnh - Lớp A8</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Album ảnh – Lớp A8</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="images/059A8665.jpg">
   <style>
+    /* ===== DESIGN TOKENS ===== */
+    :root, [data-theme="light"] {
+      --color-bg: #fdf8f3;
+      --color-surface: #fff9f4;
+      --color-surface-2: #fffcfa;
+      --color-surface-offset: #f7efe6;
+      --color-divider: #e8ddd4;
+      --color-border: #ddd0c6;
+      --color-text: #2a1f14;
+      --color-text-muted: #7a6b5e;
+      --color-text-faint: #b8a99c;
+      --color-text-inverse: #fdf8f3;
+      --color-primary: #c4600a;
+      --color-primary-hover: #a34f08;
+      --color-primary-active: #7d3d06;
+      --color-primary-light: #fdf0e6;
+      --color-gold: #d4a017;
+      --color-gold-light: #fdf6e0;
+      --color-success: #3a7a2f;
+      --shadow-sm: 0 1px 3px oklch(0.25 0.04 50 / 0.08);
+      --shadow-md: 0 4px 14px oklch(0.25 0.04 50 / 0.1);
+      --shadow-lg: 0 12px 36px oklch(0.25 0.04 50 / 0.14);
+      --radius-sm: 0.375rem;
+      --radius-md: 0.625rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --radius-full: 9999px;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Be Vietnam Pro', system-ui, sans-serif;
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+      --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
+      --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
+      --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-theme="dark"] {
+      --color-bg: #18120c;
+      --color-surface: #1f1710;
+      --color-surface-2: #251c14;
+      --color-surface-offset: #2c2218;
+      --color-divider: #3a2e24;
+      --color-border: #4a3c2f;
+      --color-text: #f0e8de;
+      --color-text-muted: #a08878;
+      --color-text-faint: #6a5848;
+      --color-text-inverse: #18120c;
+      --color-primary: #e8884a;
+      --color-primary-hover: #f09960;
+      --color-primary-active: #f5aa7a;
+      --color-primary-light: #2e1e0e;
+      --color-gold: #e8c040;
+      --color-gold-light: #2a2008;
+      --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.25);
+      --shadow-md: 0 4px 14px oklch(0 0 0 / 0.35);
+      --shadow-lg: 0 12px 36px oklch(0 0 0 / 0.45);
+    }
+
+    /* ===== BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 4rem; }
     body {
-      background-image: url('images/cover-camera-chair.jpg');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      transition: background-color 0.4s, color 0.4s, background-image 0.4s;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text);
+      background: var(--color-bg);
+      min-height: 100dvh;
+      line-height: 1.65;
+      transition: background 0.3s, color 0.3s;
     }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.15);
-      z-index: -1;
+    img { display: block; max-width: 100%; height: auto; }
+    button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    a, button { transition: color var(--transition), background var(--transition), box-shadow var(--transition), transform var(--transition); }
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+    /* ===== HEADER / NAV ===== */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: oklch(from var(--color-bg) l c h / 0.88);
+      backdrop-filter: blur(16px) saturate(1.5);
+      -webkit-backdrop-filter: blur(16px) saturate(1.5);
+      border-bottom: 1px solid var(--color-divider);
+      transition: background 0.3s;
     }
-    body.dark::before {
-      background: linear-gradient(to bottom, rgba(20,20,20,0.7), rgba(10,10,10,0.85));
-    }
-    body.dark {
-      background-color: #111;
-      color: #e0e0e0;
-    }
-    header, footer {
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
-      text-align: center;
-      padding: 20px;
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: var(--space-3) var(--space-6);
+      display: flex; align-items: center; gap: var(--space-6);
       position: relative;
-      transition: background 0.4s;
     }
-    .toggle-mode {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    .logo {
+      display: flex; align-items: center; gap: var(--space-2);
+      font-family: var(--font-display); font-size: 1.35rem;
+      font-weight: 700; color: var(--color-primary);
+      letter-spacing: -0.01em; white-space: nowrap;
     }
-    .toggle-mode:hover {
-      background: rgba(255, 255, 255, 0.4);
-      transform: rotate(15deg);
+    .logo-mark { width: 36px; height: 36px; flex-shrink: 0; }
+    .site-nav { margin-left: auto; }
+    .site-nav ul { list-style: none; display: flex; gap: var(--space-1); flex-wrap: wrap; }
+    .site-nav a {
+      font-size: var(--text-sm); font-weight: 500;
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      color: var(--color-text-muted);
     }
-    .toggle-mode svg {
-      width: 24px;
-      height: 24px;
-      fill: white;
-      transition: opacity 0.3s ease;
-      position: absolute;
+    .site-nav a:hover, .site-nav a.active {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
     }
-    .icon-sun { opacity: 0; }
-    body.dark .icon-moon { opacity: 0; }
-    body.dark .icon-sun { opacity: 1; }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 10px 0 0 0;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
+    .theme-toggle {
+      width: 38px; height: 38px; flex-shrink: 0;
+      border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      background: var(--color-surface);
     }
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 16px;
-      transition: background 0.3s, box-shadow 0.3s;
-      font-size: 16px;
+    .theme-toggle:hover { background: var(--color-surface-offset); }
+    .icon-sun { display: none; }
+    [data-theme="dark"] .icon-sun { display: block; }
+    [data-theme="dark"] .icon-moon { display: none; }
+    .hamburger {
+      display: none; width: 38px; height: 38px; flex-shrink: 0;
+      border-radius: var(--radius-md); align-items: center; justify-content: center;
+      border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text-muted);
     }
-    nav a:hover, nav a.active {
-      background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .intro {
-      background: rgba(255, 255, 255, 0.95);
-      margin: 40px auto;
-      padding: 30px;
-      max-width: 1000px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      animation: fadeInUp 0.6s ease-out;
+
+    /* ===== PAGE HERO (Gallery) ===== */
+    .page-hero {
+      background: var(--color-surface-offset);
+      border-bottom: 1px solid var(--color-divider);
+      padding: var(--space-16) var(--space-6) var(--space-12);
       text-align: center;
-      transition: background-color 0.4s, color 0.4s;
     }
-    body.dark .intro {
-      background: rgba(30, 30, 30, 0.9);
-      color: #f0f0f0;
+    .page-hero-badge {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      background: var(--color-primary-light);
+      border: 1px solid var(--color-border);
+      color: var(--color-primary); font-size: var(--text-xs); font-weight: 600;
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full); margin-bottom: var(--space-4);
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .page-hero-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700; line-height: 1.15;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+    .page-hero-title em { font-style: italic; color: var(--color-primary); }
+    .page-hero-sub {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      max-width: 50ch; margin: 0 auto;
+      font-weight: 400;
+    }
+
+    /* ===== GALLERY SECTION ===== */
+    .gallery-section {
+      max-width: 1200px; margin: 0 auto;
+      padding: var(--space-12) var(--space-6) var(--space-16);
     }
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-4);
     }
-    .gallery-grid img {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+    .gallery-item {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-divider);
+      aspect-ratio: 4/3;
       cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
     }
-    .gallery-grid img:hover {
-      transform: scale(1.05);
+    .gallery-item:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-border);
     }
-    .lightbox {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 9999;
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, oklch(0.12 0.04 40 / 0.6) 0%, transparent 60%);
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
+      transition: opacity var(--transition);
+      display: flex; align-items: flex-end; justify-content: flex-end;
+      padding: var(--space-3);
     }
-    .lightbox.show {
-      opacity: 1;
-      pointer-events: auto;
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-item-zoom {
+      width: 34px; height: 34px;
+      background: oklch(1 0 0 / 0.15); backdrop-filter: blur(8px);
+      border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; border: 1px solid oklch(1 0 0 / 0.3);
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: oklch(0.06 0.02 40 / 0.95);
+      backdrop-filter: blur(12px);
+      display: flex; justify-content: center; align-items: center; flex-direction: column;
+      z-index: 9999;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .lightbox.show { opacity: 1; pointer-events: auto; }
+    .lightbox-img-wrap {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      max-width: 92vw; max-height: 82vh;
     }
     .lightbox img {
-      max-width: 90%;
-      max-height: 80vh;
-      border-radius: 12px;
-      animation: zoomIn 0.3s ease;
+      max-width: 88vw; max-height: 78vh;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      animation: lbZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @keyframes zoomIn {
-      from { transform: scale(0.8); opacity: 0; }
+    @keyframes lbZoomIn {
+      from { transform: scale(0.88); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
     .lightbox-controls {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
+      position: absolute; top: 50%; width: calc(100% + 80px);
+      transform: translateY(-50%);
+      display: flex; justify-content: space-between;
+      pointer-events: none;
     }
-    .lightbox-button {
-      background: rgba(255,255,255,0.3);
-      border: none;
-      color: white;
-      font-size: 2em;
-      cursor: pointer;
-      padding: 10px 20px;
+    .lightbox-btn {
+      pointer-events: all;
+      width: 44px; height: 44px;
+      background: oklch(1 0 0 / 0.12); backdrop-filter: blur(8px);
+      border: 1px solid oklch(1 0 0 / 0.2);
+      border-radius: var(--radius-full);
+      color: #fff; font-size: 1.25rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--transition), transform var(--transition);
     }
+    .lightbox-btn:hover { background: oklch(1 0 0 / 0.24); transform: scale(1.1); }
     .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2em;
-      color: white;
-      background: none;
-      border: none;
-      cursor: pointer;
+      position: absolute; top: var(--space-6); right: var(--space-6);
+      width: 40px; height: 40px;
+      background: oklch(1 0 0 / 0.1); backdrop-filter: blur(8px);
+      border: 1px solid oklch(1 0 0 / 0.2);
+      border-radius: var(--radius-full);
+      color: #fff; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .close-btn:hover { background: oklch(1 0 0 / 0.22); }
+    .lightbox-footer {
+      margin-top: var(--space-4);
+      display: flex; align-items: center; gap: var(--space-3);
     }
     .download-btn {
-      position: absolute;
-      bottom: 30px;
-      right: 40px;
-      background: #00c3ff;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 1em;
-      text-decoration: none;
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      background: var(--color-primary); color: #fff;
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full); font-weight: 600;
+      font-size: var(--text-sm); box-shadow: var(--shadow-md);
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
     }
-    .download-btn:hover {
-      background: #00a3d2;
+    .download-btn:hover { background: var(--color-primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+    .lightbox-counter {
+      color: oklch(1 0 0 / 0.6);
+      font-size: var(--text-xs);
+      font-weight: 500;
     }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--color-surface-offset);
+      border-top: 1px solid var(--color-divider);
+      padding: var(--space-10) var(--space-6) var(--space-8);
+      text-align: center;
+    }
+    .footer-logo { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-primary); margin-bottom: var(--space-2); }
+    .footer-slogan { font-style: italic; color: var(--color-text-muted); font-size: var(--text-sm); margin-bottom: var(--space-6); }
+    .footer-links { display: flex; justify-content: center; gap: var(--space-6); flex-wrap: wrap; margin-bottom: var(--space-8); }
+    .footer-links a { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .footer-links a:hover { color: var(--color-primary); }
+    .footer-copy { font-size: var(--text-xs); color: var(--color-text-faint); }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.06s; }
+    .reveal-delay-2 { transition-delay: 0.12s; }
+    .reveal-delay-3 { transition-delay: 0.18s; }
+
+    /* ===== MOBILE ===== */
+    .hamburger { display: none; }
+    @media (max-width: 700px) {
+      .site-nav { display: none; }
+      .site-nav.open {
+        display: block; position: absolute;
+        top: calc(100% + 0.5rem); left: 0; right: 0;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: var(--space-3);
+        box-shadow: var(--shadow-lg);
+      }
+      .site-nav.open ul { flex-direction: column; gap: var(--space-1); }
+      .site-nav.open a { display: block; padding: var(--space-3) var(--space-4); }
+      .hamburger { display: flex; }
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-3); }
+      .lightbox-controls { width: calc(100% + 20px); }
+      .lightbox-btn { width: 36px; height: 36px; }
+      .page-hero { padding: var(--space-12) var(--space-4) var(--space-8); }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Lớp A8 – Niên khóa 2021–2025</h1>
-    <p>Album ảnh - Những khoảnh khắc không thể quên</p>
-    <button class="toggle-mode" onclick="toggleMode()">
-      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M21 12.79A9 9 0 0111.21 3a7 7 0 000 14A9 9 0 0021 12.79z"/>
-      </svg>
-      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3"/>
-        <line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="3" y2="12"/>
-        <line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-      </svg>
-    </button>
-    <nav>
-      <ul>
-        <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="gallery.html" class="active">Album ảnh</a></li>
-        <li><a href="guestbook.html">Lưu bút</a></li>
-        <li><a href="classlist.html">Danh sách lớp</a></li>
-        <li><a href="events.html">Thông tin</a></li>
-        <li><a href="documents.html">Tài liệu</a></li>
-      </ul>
-    </nav>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <svg class="logo-mark" viewBox="0 0 36 36" fill="none" aria-label="Logo A8">
+          <rect width="36" height="36" rx="10" fill="var(--color-primary-light)"/>
+          <text x="18" y="25" text-anchor="middle" font-family="Playfair Display,serif" font-size="18" font-weight="700" fill="var(--color-primary)">A8</text>
+        </svg>
+        Lớp A8
+      </a>
+      <nav class="site-nav" id="main-nav">
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="gallery.html" class="active">Album ảnh</a></li>
+          <li><a href="guestbook.html">Lưu bút</a></li>
+          <li><a href="classlist.html">Danh sách lớp</a></li>
+          <li><a href="events.html">Thông tin</a></li>
+          <li><a href="documents.html">Tài liệu</a></li>
+        </ul>
+      </nav>
+      <button class="theme-toggle" data-theme-toggle aria-label="Chuyển giao diện">
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
   </header>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+      Album ảnh
+    </div>
+    <h1 class="page-hero-title">Hình ảnh <em>đáng nhớ</em></h1>
+    <p class="page-hero-sub">Album ảnh – Những khoảnh khắc không thể quên</p>
+  </section>
+
+  <!-- GALLERY -->
   <main>
-    <section class="intro">
-      <h2>Hình ảnh đáng nhớ</h2>
-      <div class="gallery-grid">
-        <img src="thumb2/059A8665.webp" data-full="images/059A8665.jpg" alt="Ảnh 1" loading="lazy">
-        <img src="thumb2/NTS_2183.webp" data-full="images/NTS_2183.jpg" alt="Ảnh 2" loading="lazy">
-        <img src="thumb2/NTS_2622.webp" data-full="images/NTS_2622.jpg" alt="Ảnh 3" loading="lazy">
-        <img src="thumb2/NTS_2758.webp" data-full="images/NTS_2758.jpg" alt="Ảnh 4" loading="lazy">
-        <img src="thumb2/NTS_3052.webp" data-full="images/NTS_3052.jpg" alt="Ảnh 5" loading="lazy">
-        <img src="thumb2/NTS_3068.webp" data-full="images/NTS_3068.jpg" alt="Ảnh 6" loading="lazy">
-        <img src="thumb2/NTS_3128.webp" data-full="images/NTS_3128.jpg" alt="Ảnh 7" loading="lazy">
-        <img src="thumb2/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.webp" data-full="images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg" alt="Ảnh 8" loading="lazy">
-        <img src="thumb2/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.webp" data-full="images/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.jpg" alt="Ảnh 9" loading="lazy">
-        <img src="thumb2/IMG_1732338423721_1732340735884.webp" data-full="images/IMG_1732338423721_1732340735884.jpg" alt="Ảnh 10" loading="lazy">
-        <img src="thumb2/IMG_1729318457115_1729428802385.webp" data-full="images/IMG_1729318457115_1729428802385.jpg" alt="Ảnh 11" loading="lazy">
-        <img src="thumb2/z4892170970991_61238944d03f22e5135b84ad25275cee.webp" data-full="images/z4892170970991_61238944d03f22e5135b84ad25275cee.jpg" alt="Ảnh 12" loading="lazy">
-        <img src="thumb2/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.webp" data-full="images/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.jpg" alt="Ảnh 13" loading="lazy">
-        <img src="thumb2/IMG_1725621899399_1725623748671.webp" data-full="images/IMG_1725621899399_1725623748671.jpg" alt="Ảnh 14" loading="lazy">
-        <img src="thumb2/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.webp" data-full="images/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.jpg" alt="Ảnh 15" loading="lazy">
-        <img src="thumb2/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.webp" data-full="images/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.jpg" alt="Ảnh 16" loading="lazy">
-        <img src="thumb2/z4952619745070_d342574ad6404f68a00fc000b19bb888.webp" data-full="images/z4952619745070_d342574ad6404f68a00fc000b19bb888.jpg" alt="Ảnh 17" loading="lazy">
-        <img src="thumb2/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.webp" data-full="images/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.jpg" alt="Ảnh 18" loading="lazy">
-        <img src="thumb2/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.webp" data-full="images/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.jpg" alt="Ảnh 19" loading="lazy">
-        <img src="thumb2/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.webp" data-full="images/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.jpg" alt="Ảnh 20" loading="lazy">
-        <img src="thumb2/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.webp" data-full="images/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.jpg" alt="Ảnh 21" loading="lazy">
-        <img src="thumb2/z5110922636897_482186c6bcb196af33b00e1ba5737561.webp" data-full="images/z5110922636897_482186c6bcb196af33b00e1ba5737561.jpg" alt="Ảnh 22" loading="lazy">
-        <img src="thumb2/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.webp" data-full="images/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.jpg" alt="Ảnh 23" loading="lazy">
-        <img src="thumb2/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.webp" data-full="images/z4544099867940_fb73016ebfa1584d7b5e4784fe41d4eb.jpg" alt="Ảnh 24" loading="lazy">
-        <img src="thumb2/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.webp" data-full="images/z6014543352543_b05f1548b4cfec44e45cf70af2eb74c5.jpg" alt="Ảnh 25" loading="lazy">
-        <img src="thumb2/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.webp" data-full="images/z3444360751493_a3ad459e4145e7ddfef8fed6791162cb.jpg" alt="Ảnh 26" loading="lazy"><!-- Thêm các ảnh khác theo mẫu này -->
-            </div>
+    <section class="gallery-section">
+      <div class="gallery-grid" id="gallery-grid">
+        <div class="gallery-item reveal" data-full="images/059A8665.jpg">
+          <img src="thumb2/059A8665.webp" alt="Ảnh 1" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-full="images/NTS_2183.jpg">
+          <img src="thumb2/NTS_2183.webp" alt="Ảnh 2" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-full="images/NTS_2622.jpg">
+          <img src="thumb2/NTS_2622.webp" alt="Ảnh 3" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-full="images/NTS_2758.jpg">
+          <img src="thumb2/NTS_2758.webp" alt="Ảnh 4" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal" data-full="images/NTS_3052.jpg">
+          <img src="thumb2/NTS_3052.webp" alt="Ảnh 5" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-full="images/NTS_3068.jpg">
+          <img src="thumb2/NTS_3068.webp" alt="Ảnh 6" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-full="images/NTS_3128.jpg">
+          <img src="thumb2/NTS_3128.webp" alt="Ảnh 7" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-full="images/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.jpg">
+          <img src="thumb2/z6386246300242_54451c5533c3bce9a7ede19ca3709a90.webp" alt="Ảnh 8" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal" data-full="images/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.jpg">
+          <img src="thumb2/z6386246309035_028fe8afc854839c34adcf4447fa1dd4.webp" alt="Ảnh 9" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-full="images/IMG_1732338423721_1732340735884.jpg">
+          <img src="thumb2/IMG_1732338423721_1732340735884.webp" alt="Ảnh 10" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-full="images/IMG_1729318457115_1729428802385.jpg">
+          <img src="thumb2/IMG_1729318457115_1729428802385.webp" alt="Ảnh 11" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-full="images/z4892170970991_61238944d03f22e5135b84ad25275cee.jpg">
+          <img src="thumb2/z4892170970991_61238944d03f22e5135b84ad25275cee.webp" alt="Ảnh 12" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal" data-full="images/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.jpg">
+          <img src="thumb2/z6052105999504_062d3f4f4c7f74103edbef4d5a4b41ab.webp" alt="Ảnh 13" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-full="images/IMG_1725621899399_1725623748671.jpg">
+          <img src="thumb2/IMG_1725621899399_1725623748671.webp" alt="Ảnh 14" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-full="images/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.jpg">
+          <img src="thumb2/z6667037196929_31a4bcadb0a5e914f1442f8c9e6ff127.webp" alt="Ảnh 15" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-full="images/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.jpg">
+          <img src="thumb2/z3929432211935_1b4dac2b94b2126dd49038bbc207cf1a.webp" alt="Ảnh 16" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal" data-full="images/z4952619745070_d342574ad6404f68a00fc000b19bb888.jpg">
+          <img src="thumb2/z4952619745070_d342574ad6404f68a00fc000b19bb888.webp" alt="Ảnh 17" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-full="images/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.jpg">
+          <img src="thumb2/z4952620223184_3c6ed8e351d373617fb5bc6034ed0f53.webp" alt="Ảnh 18" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-full="images/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.jpg">
+          <img src="thumb2/z4952621602333_4cd40628384f3d8450bc7161f5cdb276.webp" alt="Ảnh 19" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-full="images/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.jpg">
+          <img src="thumb2/z4960325106915_3c8a4debfff1adfb66c0abac4521e6de.webp" alt="Ảnh 20" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal" data-full="images/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.jpg">
+          <img src="thumb2/z5482865796877_566c952d2e3b2f1e8df059b1609bc199.webp" alt="Ảnh 21" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-full="images/z5110922636897_482186c6bcb196af33b00e1ba5737561.jpg">
+          <img src="thumb2/z5110922636897_482186c6bcb196af33b00e1ba5737561.webp" alt="Ảnh 22" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-full="images/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.jpg">
+          <img src="thumb2/z6243221293210_f9f20cfd4fbfb005a9cb3e6505f15869.webp" alt="Ảnh 23" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-full="images/z6243221296480_5fa09c2e31e91f8d95b74b8abe2b8bde.jpg">
+          <img src="thumb2/z6243221296480_5fa09c2e31e91f8d95b74b8abe2b8bde.webp" alt="Ảnh 24" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal" data-full="images/z6243221300032_2b4e99f0cbe3bcea4c1cfedc7bfe04e5.jpg">
+          <img src="thumb2/z6243221300032_2b4e99f0cbe3bcea4c1cfedc7bfe04e5.webp" alt="Ảnh 25" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-full="images/z6243221304178_b2e02dddbef2ba7e9c4b4ee6cb7ae7a4.jpg">
+          <img src="thumb2/z6243221304178_b2e02dddbef2ba7e9c4b4ee6cb7ae7a4.webp" alt="Ảnh 26" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-full="images/z6243221310279_88be0c4cd6c4b5cb7a0b76c3cb1cc39e.jpg">
+          <img src="thumb2/z6243221310279_88be0c4cd6c4b5cb7a0b76c3cb1cc39e.webp" alt="Ảnh 27" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-full="images/z6243221319882_3a2e6f8a5b7d1c4e9f0a2b3c4d5e6f7a.jpg">
+          <img src="thumb2/z6243221319882_3a2e6f8a5b7d1c4e9f0a2b3c4d5e6f7a.webp" alt="Ảnh 28" loading="lazy">
+          <div class="gallery-item-overlay"><span class="gallery-item-zoom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg></span></div>
+        </div>
+      </div>
     </section>
   </main>
-  <footer>
-    <p>&copy; 2025 Lớp A8 - Thiết kế bởi chúng ta</p>
-  </footer>
 
-  <div class="lightbox" id="lightbox">
-    <button class="close-btn" onclick="closeLightbox()">&times;</button>
-    <div class="lightbox-controls">
-      <button class="lightbox-button" onclick="prevImage()">&#10094;</button>
-      <button class="lightbox-button" onclick="nextImage()">&#10095;</button>
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Xem ảnh">
+    <button class="close-btn" id="lightbox-close" aria-label="Đóng">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="lightbox-img-wrap">
+      <img id="lightbox-img" src="" alt="Ảnh lớn">
+      <div class="lightbox-controls">
+        <button class="lightbox-btn" id="lb-prev" aria-label="Ảnh trước">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button class="lightbox-btn" id="lb-next" aria-label="Ảnh tiếp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
     </div>
-    <img id="lightbox-img" src="" alt="Phóng to ảnh">
-    <a id="downloadLink" class="download-btn" href="#" download target="_blank">⬇️ Tải ảnh</a>
+    <div class="lightbox-footer">
+      <a class="download-btn" id="lb-download" href="#" download>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Tải ảnh
+      </a>
+      <span class="lightbox-counter" id="lb-counter"></span>
+    </div>
   </div>
 
-  <script>
-    const images = Array.from(document.querySelectorAll('.gallery-grid img'));
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const downloadLink = document.getElementById('downloadLink');
-    let currentIndex = 0;
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-logo">Lớp A8</div>
+    <p class="footer-slogan">A8 – nơi bắt đầu mọi điều đặc biệt</p>
+    <div class="footer-links">
+      <a href="index.html">Trang chủ</a>
+      <a href="gallery.html">Album ảnh</a>
+      <a href="guestbook.html">Lưu bút</a>
+      <a href="classlist.html">Danh sách lớp</a>
+      <a href="events.html">Thông tin</a>
+      <a href="documents.html">Tài liệu</a>
+    </div>
+    <p class="footer-copy">© 2025 Lớp A8 – Niên khoá 2021–2025 · Thiết kế bởi chúng ta ❤️</p>
+  </footer>
 
-    images.forEach((img, index) => {
-      img.addEventListener('click', () => {
-        currentIndex = index;
-        showImage();
+  <script>
+    // Dark mode toggle
+    (function(){
+      const t = document.querySelector('[data-theme-toggle]');
+      const r = document.documentElement;
+      let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+      r.setAttribute('data-theme', d);
+      t && t.addEventListener('click', () => {
+        d = d === 'dark' ? 'light' : 'dark';
+        r.setAttribute('data-theme', d);
       });
+    })();
+
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('main-nav').classList.toggle('open');
     });
 
-    function showImage() {
-      const img = images[currentIndex];
-      const fullSrc = img.dataset.full || img.src;
-      lightboxImg.src = fullSrc;
-      downloadLink.href = fullSrc;
-      lightbox.classList.add('show');
-    }
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+    // Lightbox
+    const items = Array.from(document.querySelectorAll('.gallery-item'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbDownload = document.getElementById('lb-download');
+    const lbCounter = document.getElementById('lb-counter');
+    let current = 0;
+
+    function openLightbox(idx) {
+      current = idx;
+      const full = items[idx].dataset.full;
+      lbImg.src = full;
+      lbDownload.href = full;
+      lbCounter.textContent = (idx + 1) + ' / ' + items.length;
+      lightbox.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
     function closeLightbox() {
       lightbox.classList.remove('show');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+    function navigate(dir) {
+      current = (current + dir + items.length) % items.length;
+      const full = items[current].dataset.full;
+      lbImg.src = full;
+      lbDownload.href = full;
+      lbCounter.textContent = (current + 1) + ' / ' + items.length;
     }
 
-    function nextImage() {
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage();
-    }
-
-    function prevImage() {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage();
-    }
-
-    document.addEventListener('keydown', e => {
+    items.forEach((item, i) => item.addEventListener('click', () => openLightbox(i)));
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-prev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lb-next').addEventListener('click', () => navigate(1));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('show')) return;
       if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
     });
 
-    lightbox.addEventListener('click', e => {
-      if (e.target === lightbox) closeLightbox();
-    });
-
-    function toggleMode() {
-      document.body.classList.toggle('dark');
-      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark');
-      }
+    // Touch swipe for lightbox
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+    lightbox.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
     });
   </script>
 </body>
