@@ -276,8 +276,8 @@
       border-color: var(--color-border);
     }
     .student-avatar-ring {
-      width: 92px; height: 120px;
-      border-radius: var(--radius-lg);
+      width: 92px; height: 92px;
+      border-radius: var(--radius-full);
       padding: 3px;
       background: linear-gradient(135deg, var(--color-primary), var(--color-gold));
       display: flex; align-items: center; justify-content: center;
@@ -331,10 +331,12 @@
       to { opacity: 1; transform: scale(1); }
     }
     .popup-content img {
-      max-width: 100%; width: 280px; height: 280px;
+      max-width: 100%; width: 280px;
+      max-height: 70vh;
+      height: auto;
       border-radius: var(--radius-lg);
       margin: 0 auto var(--space-4);
-      object-fit: cover;
+      object-fit: contain;
       box-shadow: var(--shadow-md);
     }
     .popup-content #popupInfo {
@@ -386,7 +388,7 @@
     }
     @media (max-width: 480px) {
       .student-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-      .student-avatar-ring { width: 76px; height: 100px; }
+      .student-avatar-ring { width: 76px; height: 76px; }
     }
   </style>
 </head>
