@@ -506,5 +506,69 @@
     pwdInput.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 </script>
 
+<script>
+  // ===== Đăng nhập Admin =====
+  // Toàn bộ logic xác thực THẬT nằm ở server (/api/auth/login.js).
+  // Script này chỉ gửi request và hiển thị kết quả — không tự ý
+  // kiểm tra hay quyết định "đúng/sai" ở phía client.
+
+  const btn      = document.getElementById('btn-login');
+  const pwdInput = document.getElementById('password');
+  const errBox   = document.getElementById('login-error');
+  const errMsg   = document.getElementById('error-msg');
+
+  function showError(msg) {
+    errMsg.textContent = msg;        // thông báo lỗi màu đỏ dưới ô mật khẩu
+    errBox.classList.add('visible');
+    pwdInput.focus();
+  }
+  function clearError() {
+    errBox.classList.remove('visible');
+  }
+
+  async function doLogin() {
+    clearError();
+    const password = pwdInput.value;
+    if (!password) { showError('Vui lòng nhập mật khẩu.'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Đang xử lý…';
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin', // bắt buộc để trình duyệt lưu cookie server trả về
+        body: JSON.stringify({ password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // Server đã set cookie HttpOnly — JS không đọc và không cần đọc token này.
+        window.location.href = '/admin/dashboard.html';
+      } else {
+        // Hiển thị đúng message server trả về (vd "Sai mật khẩu")
+        showError(data.message || 'Sai mật khẩu. Vui lòng thử lại.');
+      }
+    } catch (err) {
+      showError('Không thể kết nối tới server. Vui lòng thử lại.');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+          <polyline points="10 17 15 12 10 7"/>
+          <line x1="15" y1="12" x2="3" y2="12"/>
+        </svg>
+        Đăng nhập`;
+    }
+  }
+
+  btn.addEventListener('click', doLogin);
+  pwdInput.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+</script>
+
 </body>
 </html>
