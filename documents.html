@@ -366,7 +366,17 @@
     .footer-links a { font-size: var(--text-sm); color: var(--color-text-muted); }
     .footer-links a:hover { color: var(--color-primary); }
     .footer-copy { font-size: var(--text-xs); color: var(--color-text-faint); }
-
+    /* Admin hidden entry — invisible until hovered */
+    .admin-entry {
+        color: inherit;
+        text-decoration: none;
+        opacity: 0.4;
+        transition: opacity var(--transition);
+    }
+    .admin-entry:hover {
+        opacity: 1;
+        color: var(--color-primary);
+    }
     /* ===== SCROLL REVEAL ===== */
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
     .reveal.visible { opacity: 1; transform: none; }
@@ -542,7 +552,9 @@
     <a href="events.html">Thông tin</a>
     <a href="documents.html">Tài liệu</a>
   </div>
-  <p class="footer-copy">© 2025 Lớp A8 – Niên khoá 2021–2025 · Thiết kế bởi chúng ta ❤️ [Tobi - PNT]</p>
+  <p class="footer-copy">© 2025 Lớp A8 · Niên khoá 2021–2025 · Thiết kế bởi chúng ta ·
+  <a href="/admin/login.html" class="admin-entry">[Tobi - PNT]</a>
+  </p>
 </footer>
 
 <script>
