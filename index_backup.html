@@ -930,5 +930,18 @@
   updateCountdown();
   setInterval(updateCountdown, 1000);
 </script>
+
+<script>
+    // Ghi nhận lượt xem trang — âm thầm, không chặn trải nghiệm người dùng.
+    // keepalive: true đảm bảo request vẫn gửi đi kể cả khi người dùng
+    // chuyển trang/đóng tab ngay sau khi vừa load.
+    fetch('/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({ page_name: 'index', event_type: 'view' }),
+    }).catch(() => {}); // im lặng bỏ qua nếu lỗi — không được làm phiền người dùng
+</script>
+  
 </body>
 </html>
