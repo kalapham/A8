@@ -483,7 +483,7 @@
             const data = await res.json();
 
             if (res.ok) {
-                window.location.href = '/admin/dashboard.html';
+                window.location.href = 'dashboard.html';
             } else {
                 showError(data.message || 'Mật khẩu không đúng. Vui lòng thử lại.');
             }
@@ -546,7 +546,7 @@
 
       if (res.ok) {
         // Server đã set cookie HttpOnly — JS không đọc và không cần đọc token này.
-        window.location.href = '/admin/dashboard.html';
+        window.location.href = 'dashboard.html';
       } else {
         // Hiển thị đúng message server trả về (vd "Sai mật khẩu")
         showError(data.message || 'Sai mật khẩu. Vui lòng thử lại.');
