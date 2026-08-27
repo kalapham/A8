@@ -250,7 +250,7 @@
             });
 
             if (res.status === 401) {
-                window.location.href = '/admin/login.html';
+                window.location.href = 'login.html';
                 return;
             }
             if (!res.ok) throw new Error(`Server trả về lỗi ${res.status}`);
@@ -263,7 +263,7 @@
             console.error('[dashboard] Không tải được dữ liệu:', err);
             // Không rõ nguyên nhân -> vẫn đưa về login cho an toàn,
             // thay vì để lộ giao diện rỗng/lỗi.
-            window.location.href = '/admin/login.html';
+            window.location.href = 'login.html';
         }
     }
 
@@ -316,7 +316,7 @@
             console.error('[dashboard] Lỗi khi gọi logout:', err);
         } finally {
             // Dù API logout lỗi hay không, vẫn đưa về login — tránh kẹt ở dashboard.
-            window.location.href = '/admin/login.html';
+            window.location.href = 'login.html';
         }
     });
 
