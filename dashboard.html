@@ -226,45 +226,52 @@
 </div>
 
 <script>
-    // ============================================================
-    // KIỂM TRA TOKEN NGAY KHI TẢI TRANG (yêu cầu bảo mật frontend)
-    // ------------------------------------------------------------
-    // Cookie JWT là HttpOnly nên JS ở đây KHÔNG THỂ tự đọc để biết
-    // "có token hay không" — cách duy nhất là hỏi server. Ta tận
-    // dụng luôn API lấy dữ liệu thống kê để vừa lấy data vừa đóng
-    // vai trò kiểm tra: nếu trả 401 -> chưa đăng nhập/token hỏng ->
-    // đá thẳng về trang login, KHÔNG hiện bất kỳ nội dung nào.
-    //
-    // Đây CHỈ là lớp UX. Bảo mật THẬT nằm ở /api/admin/analytics.js
-    // (và mọi API admin khác) — nơi verify lại JWT từ đầu, không
-    // tin bất cứ gì gửi từ client. Kể cả nếu ai đó sửa/bỏ đoạn JS
-    // này, họ vẫn không lấy được data thật vì API sẽ tự chặn.
-    // ============================================================
     const app = document.getElementById('app');
 
     async function loadDashboard() {
         try {
             const res = await fetch('/api/admin/analytics', {
                 method: 'GET',
-                credentials: 'same-origin',
+                credentials: 'include', // đổi từ 'same-origin' -> 'include' để loại trừ
+                                        // hoàn toàn khả năng cookie bị bỏ sót do lệch origin
+                                        // (vd redirect www/non-www ở tầng Vercel edge)
             });
 
+            // ----- CHỈ redirect về login khi CHẮC CHẮN là lỗi xác thực -----
             if (res.status === 401) {
                 window.location.href = 'login.html';
                 return;
             }
-            if (!res.ok) throw new Error(`Server trả về lỗi ${res.status}`);
+
+            // ----- Lỗi KHÁC 401 (500, 502...) KHÔNG PHẢI lỗi đăng nhập -----
+            // Đây chính là điểm gây ra hiện tượng "vòng lặp đăng nhập" giả:
+            // trước đây mọi lỗi đều bị đá về login, nên nếu API bị lỗi vì lý do
+            // khác (vd Supabase cấu hình sai), bạn sẽ luôn bị đá về dù đăng nhập đúng.
+            // Giờ hiển thị lỗi thật ngay trên trang thay vì giấu bằng redirect.
+            if (!res.ok) {
+                const errText = await res.text().catch(() => '');
+                console.error('[dashboard] Lỗi server (KHÔNG phải lỗi đăng nhập):', res.status, errText);
+                showLoadError(`Không tải được dữ liệu (mã lỗi ${res.status}). Kiểm tra Vercel Function Logs của /api/admin/analytics.`);
+                return;
+            }
 
             const data = await res.json();
             renderStats(data);
             renderDocs();
-            app.style.display = ''; // chỉ hiện giao diện SAU KHI xác thực thành công
+            app.style.display = '';
         } catch (err) {
-            console.error('[dashboard] Không tải được dữ liệu:', err);
-            // Không rõ nguyên nhân -> vẫn đưa về login cho an toàn,
-            // thay vì để lộ giao diện rỗng/lỗi.
-            window.location.href = 'login.html';
+            // Chỉ còn lại lỗi network thật — vẫn KHÔNG redirect mù quáng về login.
+            console.error('[dashboard] Lỗi network:', err);
+            showLoadError('Không kết nối được tới server. Kiểm tra mạng và thử lại.');
         }
+    }
+
+    function showLoadError(msg) {
+        document.body.innerHTML = `
+            <div style="max-width:480px;margin:15vh auto;text-align:center;font-family:'Be Vietnam Pro',sans-serif;padding:0 24px;">
+                <p style="color:#b91c1c;font-weight:600;margin-bottom:12px;">${msg}</p>
+                <a href="login.html" style="color:#c4600a;text-decoration:underline;">← Quay lại đăng nhập</a>
+            </div>`;
     }
 
     function renderStats(data) {
@@ -286,7 +293,6 @@
             </div>`);
     }
 
-    // ----- Danh sách tài liệu: mock UI, CHƯA nối API CRUD thật -----
     function renderDocs() {
         const sampleDocs = [
             { name: 'Kỷ yếu Lớp A8.pdf', type: 'PDF', updated: '20/08/2026' },
@@ -305,22 +311,18 @@
                     </td>
                 </tr>`);
         });
-        // Chưa gắn onclick thật cho Chỉnh sửa/Xoá — sẽ nối API CRUD ở lượt sau.
     }
 
-    // ----- Đăng xuất -----
     document.getElementById('btn-logout').addEventListener('click', async () => {
         try {
-            await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' });
+            await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
         } catch (err) {
             console.error('[dashboard] Lỗi khi gọi logout:', err);
         } finally {
-            // Dù API logout lỗi hay không, vẫn đưa về login — tránh kẹt ở dashboard.
             window.location.href = 'login.html';
         }
     });
 
-    // ----- Dark mode / hamburger (giống các trang khác) -----
     (function () {
         const t = document.querySelector('[data-theme-toggle]');
         const r = document.documentElement;
@@ -332,7 +334,6 @@
         document.getElementById('main-nav').classList.toggle('open');
     });
 
-    // ----- Chạy kiểm tra ngay khi trang tải -----
     loadDashboard();
 </script>
 </body>
